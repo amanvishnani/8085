@@ -17,6 +17,7 @@ public class zero0 {
 
     public Matcher m ;
     public Pattern px[] = new Pattern[63];
+    
     void initializePatt()
     {
         px[0] = Pattern.compile("MOVB,C");
