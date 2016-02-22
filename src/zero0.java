@@ -110,8 +110,16 @@ public class zero0 {
         px[85] = Pattern.compile("ADDH");
         px[86] = Pattern.compile("ADDL");
         px[87] = Pattern.compile("ADDM");
-        
-        
+        px[88] = Pattern.compile("ADI"+data);
+        px[89] = Pattern.compile("ANAA");
+        px[90] = Pattern.compile("ANAB");
+        px[91] = Pattern.compile("ANAC");
+        px[92] = Pattern.compile("ANAD");
+        px[93] = Pattern.compile("ANAE");
+        px[94] = Pattern.compile("ANAH");
+        px[95] = Pattern.compile("ANAL");
+        px[96] = Pattern.compile("ANAM");
+        px[97] = Pattern.compile("ANI"+data);
     }
     public static void main(String[] args) {
         zero0 obj= new zero0();
@@ -337,9 +345,26 @@ public class zero0 {
             case 87:
                 return "86";
             case 88:
-                return "";
+                return "C6";
             case 89:
-                return "";
+                return "A7";
+            case 90:
+                return "A0";
+            case 91:
+                return "A1";
+            case 92:
+                return "A2";
+            case 93:
+                return "A3";
+            case 94:
+                return "A4";
+            case 95:
+                return "A5";
+            case 96:
+                return "A6";
+            case 97:
+                return "E6";    
+                
                 
             default:
                 return "Not Found at "+Integer.toString(x);
