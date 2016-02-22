@@ -16,7 +16,8 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[63];
+    public Pattern px[] = new Pattern[71];
+    String data ="[0-9A-F]{4}(H)?";
     
     void initializePatt()
     {
@@ -84,6 +85,14 @@ public class zero0 {
         px[60] = Pattern.compile("MOVM,E");
         px[61] = Pattern.compile("MOVM,H");
         px[62] = Pattern.compile("MOVM,L");
+        px[63] = Pattern.compile("MVIA,"+data);
+        px[64] = Pattern.compile("MVIB,"+data);
+        px[65] = Pattern.compile("MVIC,"+data);
+        px[66] = Pattern.compile("MVID,"+data);
+        px[67] = Pattern.compile("MVIE,"+data);
+        px[68] = Pattern.compile("MVIH,"+data);
+        px[69] = Pattern.compile("MVIL,"+data);
+        px[70] = Pattern.compile("MVIM,"+data);
         
         
         
