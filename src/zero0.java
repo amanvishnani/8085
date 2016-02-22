@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[88];
+    public Pattern px[] = new Pattern[98];
     String data ="[0-9A-F]{2}(H)?";
     
     void initializePatt()
