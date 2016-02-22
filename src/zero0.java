@@ -234,6 +234,50 @@ public class zero0 {
                 return "67";
             case 48:
                 return "6F";
+            case 49:
+                return "7E";
+            case 50:
+                return "46";
+            case 51:
+                return "4E";
+            case 52:
+                return "56";
+            case 53:
+                return "5E";
+            case 54:
+                return "66";
+            case 55:
+                return "6E";
+            case 56:
+                return "75";
+            case 57:
+                return "70";
+            case 58:
+                return "71";    
+            case 59:
+                return "72";
+            case 60:
+                return "73";    
+            case 61:
+                return "74";    
+            case 62:
+                return "75";
+            case 63:
+                return "3E";
+            case 64:
+                return "06";
+            case 65:
+                return "0E";    
+            case 66:
+                return "16";    
+            case 67:
+                return "1E";
+            case 68:
+                return "26";
+            case 69:
+                return "2E";
+            case 70:
+                return "36";
                 
                 
             default:
