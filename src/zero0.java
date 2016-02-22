@@ -17,7 +17,7 @@ public class zero0 {
 
     public Matcher m ;
     public Pattern px[] = new Pattern[71];
-    String data ="[0-9A-F]{4}(H)?";
+    String data ="[0-9A-F]{2}(H)?";
     
     void initializePatt()
     {
