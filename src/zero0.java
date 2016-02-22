@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[71];
+    public Pattern px[] = new Pattern[80];
     String data ="[0-9A-F]{2}(H)?";
     
     void initializePatt()
@@ -93,7 +93,15 @@ public class zero0 {
         px[68] = Pattern.compile("MVIH,"+data);
         px[69] = Pattern.compile("MVIL,"+data);
         px[70] = Pattern.compile("MVIM,"+data);
-        
+        px[71] = Pattern.compile("ACI,"+data);
+        px[72] = Pattern.compile("ADCA");
+        px[73] = Pattern.compile("ADCB");
+        px[74] = Pattern.compile("ADCC");
+        px[75] = Pattern.compile("ADCD");
+        px[76] = Pattern.compile("ADCE");
+        px[77] = Pattern.compile("ADCH");
+        px[78] = Pattern.compile("ADCL");
+        px[79] = Pattern.compile("ADCM");
         
         
         
@@ -287,7 +295,24 @@ public class zero0 {
                 return "2E";
             case 70:
                 return "36";
-                
+            case 71:
+                return "CE";
+            case 72:
+                return "8F";
+            case 73:
+                return "88";
+            case 74:
+                return "89";
+            case 75:
+                return "8A";
+            case 76:
+                return "8B";
+            case 77:
+                return "8C";
+            case 78:
+                return "8D";    
+            case 79:
+                return "8E";
                 
             default:
                 return "Not Found at "+Integer.toString(x);
