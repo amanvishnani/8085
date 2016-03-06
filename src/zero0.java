@@ -16,9 +16,10 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[113];
+    public Pattern px[] = new Pattern[168];
     String data ="[0-9A-F]{2}(H)?";
     String label = "[A-Za-z]{3}[A-Za-z]*";
+    String addr = "[0-9A-F]{4}(H)?";
     
     void initializePatt()
     {
@@ -136,6 +137,61 @@ public class zero0 {
         px[110] = Pattern.compile("CMPM");
         px[111] = Pattern.compile("CNC"+label);
         px[112] = Pattern.compile("CNZ"+label);
+        px[113] = Pattern.compile("CP"+label);
+        px[114] = Pattern.compile("CPE"+label);
+        px[115] = Pattern.compile("CPI"+data);
+        px[116] = Pattern.compile("CPO"+label);
+        px[117] = Pattern.compile("CZ"+label);
+        px[118] = Pattern.compile("DAA");
+        px[119] = Pattern.compile("DADB");
+        px[120] = Pattern.compile("DADD");
+        px[121] = Pattern.compile("DADH");
+        px[122] = Pattern.compile("DADSP");
+        px[123] = Pattern.compile("DCRA");
+        px[124] = Pattern.compile("DCRB");
+        px[125] = Pattern.compile("DCRC");
+        px[126] = Pattern.compile("DCRD");
+        px[127] = Pattern.compile("DCRE");
+        px[128] = Pattern.compile("DCRH");
+        px[129] = Pattern.compile("DCRL");
+        px[130] = Pattern.compile("DCRM");
+        px[131] = Pattern.compile("DCXB");
+        px[132] = Pattern.compile("DCXD");
+        px[133] = Pattern.compile("DCXH");
+        px[134] = Pattern.compile("DCXSP");
+        px[135] = Pattern.compile("DI");
+        px[136] = Pattern.compile("EI");
+        px[137] = Pattern.compile("HLT");
+        px[138] = Pattern.compile("IN"+data);
+        px[139] = Pattern.compile("INRA");
+        px[140] = Pattern.compile("INRB");
+        px[141] = Pattern.compile("INRC");
+        px[142] = Pattern.compile("INRD");
+        px[143] = Pattern.compile("INRE");
+        px[144] = Pattern.compile("INRH");
+        px[145] = Pattern.compile("INRL");
+        px[146] = Pattern.compile("INRM");
+        px[147] = Pattern.compile("INXB");
+        px[148] = Pattern.compile("INXD");
+        px[149] = Pattern.compile("INXH");
+        px[150] = Pattern.compile("INXSP");
+        px[151] = Pattern.compile("JC"+label);
+        px[152] = Pattern.compile("JM"+label);
+        px[153] = Pattern.compile("JMP"+label);
+        px[154] = Pattern.compile("JNC"+label);
+        px[155] = Pattern.compile("JNZ"+label);
+        px[156] = Pattern.compile("JP"+label);
+        px[157] = Pattern.compile("JPE"+label);
+        px[158] = Pattern.compile("JPO"+label);
+        px[159] = Pattern.compile("JZ"+label);
+        px[160] = Pattern.compile("LDA"+addr);
+        px[161] = Pattern.compile("LDAXB");
+        px[162] = Pattern.compile("LDAXD");
+        px[163] = Pattern.compile("LHLD"+addr);
+        px[164] = Pattern.compile("LXIB");
+        px[165] = Pattern.compile("LXID");
+        px[166] = Pattern.compile("LXIH");
+        px[167] = Pattern.compile("LXISP");
         
     }
     public static void main(String[] args) {
@@ -414,7 +470,116 @@ public class zero0 {
             case 112:
                 return "C4";
             case 113:
-                return "";
+                return "F4";
+            case 114:
+                return "EC";
+            case 115:
+                return "FE";
+            case 116:
+                return "E4";
+            case 117:
+                return "CC";
+            case 118:
+                return "27";
+            case 119:
+                return "09";
+            case 120:
+                return "19";
+            case 121:
+                return "29";
+            case 122:
+                return "39";
+            case 123 :
+                return "3D";
+            case 124:
+                return "05";
+            case 125:
+                return "0D";
+            case 126:
+                return "15";
+            case 127:
+                return "1D";
+            case 128:
+                return "25";
+            case 129:
+                return "2D";
+            case 130:
+                return "35";
+            case 131:
+                return "0B";
+            case 132:
+                return "1B";
+            case 133:
+                return "2B";
+            case 134:
+                return "3B";
+            case 135:
+                return "F3";
+            case 136:
+                return "FB";
+            case 137:
+                return "76";
+            case 138:
+                return "DB";
+            case 139:
+                return "3C";
+            case 140:
+                return "04";
+            case 141:
+                return "0C";
+            case 142:
+                return "14";
+            case 143:
+                return "1C";
+            case 144:
+                return "24";
+            case 145:
+                return "2C";
+            case 146:
+                return "34";
+            case 147:
+                return "03";
+            case 148:
+                return "13";
+            case 149:
+                return "23";
+            case 150:
+                return "33";
+            case 151:
+                return "DA";
+            case 152:
+                return "FA";
+            case 153:
+                return "C3";
+            case 154:
+                return "D2";
+            case 155:
+                return "C2";
+            case 156:
+                return "F2";
+            case 157:
+                return "EA";
+            case 158:
+                return "E2";
+            case 159:
+                return "CA";
+            case 160:
+                return "3A";
+            case 161:
+                return "0A";
+            case 162:
+                return "1A";
+            case 163:
+                return "2A";
+            case 164:
+                return "01";
+            case 165:
+                return "11";
+            case 166:
+                return "21";
+            case 167:
+                return "31";
+            
             default:
                 return "Not Found at "+Integer.toString(x);
                
