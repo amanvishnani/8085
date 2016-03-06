@@ -16,9 +16,9 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[114];
+    public Pattern px[] = new Pattern[113];
     String data ="[0-9A-F]{2}(H)?";
-    String label = "L[A-Za-z]*";
+    String label = "[A-Za-z]{3}[A-Za-z]*";
     
     void initializePatt()
     {
@@ -184,6 +184,8 @@ public class zero0 {
     {
         switch(x)
         {
+            case -1:
+                return "Not found";
             case 0:
                 return "41";
             case 1:
