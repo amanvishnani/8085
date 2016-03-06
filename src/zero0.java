@@ -16,8 +16,9 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[98];
+    public Pattern px[] = new Pattern[114];
     String data ="[0-9A-F]{2}(H)?";
+    String label = "L[A-Za-z]*";
     
     void initializePatt()
     {
@@ -120,6 +121,22 @@ public class zero0 {
         px[95] = Pattern.compile("ANAL");
         px[96] = Pattern.compile("ANAM");
         px[97] = Pattern.compile("ANI"+data);
+        px[98] = Pattern.compile("CALL"+label);
+        px[99] = Pattern.compile("CC"+label);
+        px[100] = Pattern.compile("CM"+label);
+        px[101] = Pattern.compile("CMA");
+        px[102] = Pattern.compile("CMC");
+        px[103] = Pattern.compile("CMPA");
+        px[104] = Pattern.compile("CMPB");
+        px[105] = Pattern.compile("CMPC");
+        px[106] = Pattern.compile("CMPD");
+        px[107] = Pattern.compile("CMPE");
+        px[108] = Pattern.compile("CMPH");
+        px[109] = Pattern.compile("CMPL");
+        px[110] = Pattern.compile("CMPM");
+        px[111] = Pattern.compile("CNC"+label);
+        px[112] = Pattern.compile("CNZ"+label);
+        
     }
     public static void main(String[] args) {
         zero0 obj= new zero0();
@@ -364,8 +381,38 @@ public class zero0 {
                 return "A6";
             case 97:
                 return "E6";    
-                
-                
+            case 98:
+                return "CD";
+            case 99:
+                return "DC";
+            case 100:
+                return "FC";
+            case 101:
+                return "2F";
+            case 102:
+                return "3F";
+            case 103:
+                return "BF";
+            case 104:
+                return "B8";
+            case 105:
+                return "B9";
+            case 106:
+                return "BA";
+            case 107:
+                return "BB";
+            case 108:
+                return "BC";
+            case 109:
+                return "BD";
+            case 110:
+                return "BE";
+            case 111:
+                return "D4";
+            case 112:
+                return "C4";
+            case 113:
+                return "";
             default:
                 return "Not Found at "+Integer.toString(x);
                
