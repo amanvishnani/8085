@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
 public class zero0 {
 
     public Matcher m ;
-    public Pattern px[] = new Pattern[168];
+    public Pattern px[] = new Pattern[246];
     String data ="[0-9A-F]{2}(H)?";
     String label = "[A-Za-z]{3}[A-Za-z]*";
     String addr = "[0-9A-F]{4}(H)?";
@@ -95,7 +95,7 @@ public class zero0 {
         px[68] = Pattern.compile("MVIH,"+data);
         px[69] = Pattern.compile("MVIL,"+data);
         px[70] = Pattern.compile("MVIM,"+data);
-        px[71] = Pattern.compile("ACI,"+data);
+        px[71] = Pattern.compile("ACI"+data);
         px[72] = Pattern.compile("ADCA");
         px[73] = Pattern.compile("ADCB");
         px[74] = Pattern.compile("ADCC");
@@ -137,10 +137,10 @@ public class zero0 {
         px[110] = Pattern.compile("CMPM");
         px[111] = Pattern.compile("CNC"+label);
         px[112] = Pattern.compile("CNZ"+label);
-        px[113] = Pattern.compile("CP"+label);
-        px[114] = Pattern.compile("CPE"+label);
+        px[113] = Pattern.compile("CPE"+label);
+        px[114] = Pattern.compile("CPO"+label);
         px[115] = Pattern.compile("CPI"+data);
-        px[116] = Pattern.compile("CPO"+label);
+        px[116] = Pattern.compile("CP"+label);
         px[117] = Pattern.compile("CZ"+label);
         px[118] = Pattern.compile("DAA");
         px[119] = Pattern.compile("DADB");
@@ -176,13 +176,13 @@ public class zero0 {
         px[149] = Pattern.compile("INXH");
         px[150] = Pattern.compile("INXSP");
         px[151] = Pattern.compile("JC"+label);
-        px[152] = Pattern.compile("JM"+label);
-        px[153] = Pattern.compile("JMP"+label);
+        px[152] = Pattern.compile("JMP"+label);
+        px[153] = Pattern.compile("JM"+label);
         px[154] = Pattern.compile("JNC"+label);
         px[155] = Pattern.compile("JNZ"+label);
-        px[156] = Pattern.compile("JP"+label);
+        px[156] = Pattern.compile("JPO"+label);
         px[157] = Pattern.compile("JPE"+label);
-        px[158] = Pattern.compile("JPO"+label);
+        px[158] = Pattern.compile("JP"+label);
         px[159] = Pattern.compile("JZ"+label);
         px[160] = Pattern.compile("LDA"+addr);
         px[161] = Pattern.compile("LDAXB");
@@ -192,16 +192,100 @@ public class zero0 {
         px[165] = Pattern.compile("LXID");
         px[166] = Pattern.compile("LXIH");
         px[167] = Pattern.compile("LXISP");
+        px[168] = Pattern.compile("NOP");
+        px[169] = Pattern.compile("ORAA");
+        px[170] = Pattern.compile("ORAB");
+        px[171] = Pattern.compile("ORAC");
+        px[172] = Pattern.compile("ORAD");
+        px[173] = Pattern.compile("ORAE");
+        px[174] = Pattern.compile("ORAH");
+        px[175] = Pattern.compile("ORAL");
+        px[176] = Pattern.compile("ORAM");
+        px[177] = Pattern.compile("ORI"+data);
+        px[178] = Pattern.compile("OUT"+data);
+        px[179] = Pattern.compile("PCHL");
+        px[180] = Pattern.compile("POPB");
+        px[181] = Pattern.compile("POPD");
+        px[182] = Pattern.compile("POPH");
+        px[183] = Pattern.compile("POPPSW");
+        px[184] = Pattern.compile("PUSHB");
+        px[185] = Pattern.compile("PUSHD");
+        px[186] = Pattern.compile("PUSHH");
+        px[187] = Pattern.compile("PUSHPSW");
+        px[188] = Pattern.compile("RAL");
+        px[189] = Pattern.compile("RAR");
+        px[190] = Pattern.compile("RC");
+        px[191] = Pattern.compile("RET");
+        px[192] = Pattern.compile("RIM");
+        px[193] = Pattern.compile("RLC");
+        px[194] = Pattern.compile("RM");
+        px[195] = Pattern.compile("RNC");
+        px[196] = Pattern.compile("RNZ");
+        px[197] = Pattern.compile("RP");
+        px[198] = Pattern.compile("RPE");
+        px[199] = Pattern.compile("RPO");
+        px[200] = Pattern.compile("RRC");
+        px[201] = Pattern.compile("RST0");
+        px[202] = Pattern.compile("RST1");
+        px[203] = Pattern.compile("RST2");
+        px[204] = Pattern.compile("RST3");
+        px[205] = Pattern.compile("RST4");
+        px[206] = Pattern.compile("RST5");
+        px[207] = Pattern.compile("RST6");
+        px[208] = Pattern.compile("RST7");
+        px[209] = Pattern.compile("RZ");
+        px[210] = Pattern.compile("SBBA");
+        px[211] = Pattern.compile("SBBB");
+        px[212] = Pattern.compile("SBBC");
+        px[213] = Pattern.compile("SBBD");
+        px[214] = Pattern.compile("SBBE");
+        px[215] = Pattern.compile("SBBH");
+        px[216] = Pattern.compile("SBBL");
+        px[217] = Pattern.compile("SBBM");
+        px[218] = Pattern.compile("SBI"+data);
+        px[219] = Pattern.compile("SHLD"+addr);
+        px[220] = Pattern.compile("SIM");
+        px[221] = Pattern.compile("SPHL");
+        px[222] = Pattern.compile("STA"+addr);
+        px[223] = Pattern.compile("STAXB");
+        px[224] = Pattern.compile("STAXD");
+        px[225] = Pattern.compile("STC");
+        px[226] = Pattern.compile("SUBA");
+        px[227] = Pattern.compile("SUBB");
+        px[228] = Pattern.compile("SUBC");
+        px[229] = Pattern.compile("SUBD");
+        px[230] = Pattern.compile("SUBE");
+        px[231] = Pattern.compile("SUBH");
+        px[232] = Pattern.compile("SUBL");
+        px[233] = Pattern.compile("SUBM");
+        px[234] = Pattern.compile("SUI"+data);
+        px[235] = Pattern.compile("XCHD");
+        px[236] = Pattern.compile("XRAA");
+        px[237] = Pattern.compile("XRAB");
+        px[238] = Pattern.compile("XRAC");
+        px[239] = Pattern.compile("XRAD");
+        px[240] = Pattern.compile("XRAE");
+        px[241] = Pattern.compile("XRAH");
+        px[242] = Pattern.compile("XRAL");
+        px[243] = Pattern.compile("XRAM");
+        px[244] = Pattern.compile("XRI"+data);
+        px[245] = Pattern.compile("XTHL");
         
     }
     public static void main(String[] args) {
+        int flag=1;
         zero0 obj= new zero0();
         Scanner s = new Scanner(System.in);
         long StartTime = System.currentTimeMillis();
         String R ="[BCDE]";
-        String abcd;
+        String abcd="";
         obj.initializePatt();
-        
+        while(flag==1)
+        {
+            if(abcd.equals("STOP"))
+            {
+                flag=0;
+            }
         System.out.println("Enter a String:");
         abcd = s.nextLine();
         abcd = abcd.toUpperCase();
@@ -209,7 +293,7 @@ public class zero0 {
         int foundPatt = obj.findI(abcd);
         System.out.println(foundPatt);
         System.out.println( obj.findOpcode(foundPatt));
-        
+        }
         /*if(m.find())
         {
             System.out.println("Found!\nStarts at "+m.start()+"\nEnds At "+m.end()+"Group: "+m.group());
@@ -470,13 +554,13 @@ public class zero0 {
             case 112:
                 return "C4";
             case 113:
-                return "F4";
-            case 114:
                 return "EC";
+            case 114:
+                return "E4";
             case 115:
                 return "FE";
             case 116:
-                return "E4";
+                return "F4";
             case 117:
                 return "CC";
             case 118:
@@ -548,19 +632,19 @@ public class zero0 {
             case 151:
                 return "DA";
             case 152:
-                return "FA";
-            case 153:
                 return "C3";
+            case 153:
+                return "FA";
             case 154:
                 return "D2";
             case 155:
                 return "C2";
             case 156:
-                return "F2";
+                return "E2";
             case 157:
                 return "EA";
             case 158:
-                return "E2";
+                return "F2";
             case 159:
                 return "CA";
             case 160:
@@ -579,7 +663,163 @@ public class zero0 {
                 return "21";
             case 167:
                 return "31";
-            
+            case 168:
+                return "00";
+            case 169:
+                return "B7";
+            case 170:
+                return "B0";
+            case 171:
+                return "B1";
+            case 172:
+                return "B2";
+            case 173:
+                return "B3";
+            case 174:
+                return "B4";
+            case 175:
+                return "B5";
+            case 176:
+                return "B6";
+            case 177:
+                return "F6";
+            case 178:
+                return "D3";
+            case 179:
+                return "E9";
+            case 180:
+                return "C1";
+            case 181:
+                return "D1";
+            case 182:
+                return "E1";
+            case 183:
+                return "F1";
+            case 184:
+                return "C5";
+            case 185:
+                return "D5";
+            case 186:
+                return "E5";
+            case 187:
+                return "F5";
+            case 188:
+                return "17";
+            case 189:
+                return "1F";
+            case 190:
+                return "D8";
+            case 191:
+                return "C9";
+            case 192:
+                return "20";
+            case 193:
+                return "07";
+            case 194:
+                return "F8";
+            case 195:
+                return "D0";
+            case 196:
+                return "C0";
+            case 197:
+                return "F0";
+            case 198:
+                return "E8";
+            case 199:
+                return "E0";
+            case 200:
+                return "0F";
+            case 201:
+                return "C7";
+            case 202:
+                return "CF";
+            case 203:
+                return "D7";
+            case 204:
+                return "DF";
+            case 205:
+                return "E7";
+            case 206:
+                return "EF";
+            case 207:
+                return "F7";
+            case 208:
+                return "FF";
+            case 209:
+                return "C8";
+            case 210:
+                return "9F";
+            case 211:
+                return "98";
+            case 212:
+                return "99";
+            case 213:
+                return "9A";
+            case 214:
+                return "9B";
+            case 215:
+                return "9C";
+            case 216:
+                return "9D";
+            case 217:
+                return "9E";
+            case 218:
+                return "DE";
+            case 219:
+                return "22";
+            case 220:
+                return "30";
+            case 221:
+                return "F9";
+            case 222:
+                return "32";
+            case 223:
+                return "02";
+            case 224:
+                return "12";
+            case 225:
+                return "37";
+            case 226:
+                return "97";
+            case 227:
+                return "90";
+            case 228:
+                return "91";
+            case 229:
+                return "92";
+            case 230:
+                return "93";
+            case 231:
+                return "94";
+            case 232:
+                return "95";
+            case 233:
+                return "96";
+            case 234:
+                return "D6";
+            case 235:
+                return "EB";
+            case 236:
+                return "AF";
+            case 237:
+                return "A8";
+            case 238:
+                return "A9";
+            case 239:
+                return "AA";
+            case 240:
+                return "AB";
+            case 241:
+                return "AC";
+            case 242:
+                return "AD";
+            case 243:
+                return "AE";
+            case 244:
+                return "EE";
+            case 245:
+                return "E3";
+               
             default:
                 return "Not Found at "+Integer.toString(x);
                
