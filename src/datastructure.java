@@ -182,6 +182,37 @@ public class datastructure {
         return "NaN";
         
     }
+    public int setData(String address,String data)
+    {
+        try{
+            if (data.length()!=2)
+                {
+                    System.out.println("Length != 2");
+                    return -1;
+                }
+                memory[Integer.parseInt(address, 16)]=data;
+                
+            }catch(Exception e){System.out.println(e+"\n String not a Hex Number");}
+        return 1;
+    }
+    
+    public String getM()
+    {
+        String localH,localL;
+        localH= getH();
+        localL= getL();
+        String temp = localH.concat(localL);
+        return (getData(temp));
+    }
+    public int SetM(String x)
+    {
+        String localH,localL;
+        localH= getH();
+        localL= getL();
+        String temp = localH.concat(localL);
+        setData(temp,x);
+        return 1;
+    }
     public static void main(String[] args) {
        
        
