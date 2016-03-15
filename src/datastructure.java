@@ -176,7 +176,9 @@ public class datastructure {
                 if (data.length()!=2)
                 {
                     System.out.println("Length != 2");
+                    return "invalid";
                 }
+                return data;
             }catch(Exception e){System.out.println(e+"\n String not a Hex Number");}
         }
         return "NaN";
