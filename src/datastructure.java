@@ -163,7 +163,7 @@ public class datastructure {
     }
     public String getData(String x)
     {
-        int d=-1;
+        String data="nan";
         if (x.length()>4)
         {
             System.out.println("Greater than FFFF");
@@ -172,16 +172,12 @@ public class datastructure {
         else
         {
             try{
-                String data = memory[d= Integer.parseInt(x, 16)];
-                if (data.length()!=2)
-                {
-                    System.out.println("Length != 2");
-                    return "invalid";
-                }
+                int d=Integer.parseInt(x, 16);
+                data = memory[d];
                 return data;
             }catch(Exception e){System.out.println(e+"\n String not a Hex Number");}
         }
-        return "NaN";
+        return data;
         
     }
     public int setData(String address,String data)
@@ -219,6 +215,7 @@ public class datastructure {
        
        
         Scanner x = new Scanner(System.in);
+        /*
         int d=-1;
         String data=null;
         for(int i=0;i<65536;i++)
@@ -243,6 +240,13 @@ public class datastructure {
         
         System.out.println(data);
         System.out.print(d);
+        */
+        datastructure obj = new datastructure();
+        obj.SetH("FF");
+        obj.SetL("FF");
+        obj.SetM("AA");
+        System.out.println(obj.getM());
+        System.out.println(obj.getData("FFFF"));
     }
     
 }
