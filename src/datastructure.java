@@ -1,5 +1,7 @@
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -211,6 +213,57 @@ public class datastructure {
         setData(temp,x);
         return 1;
     }
+    
+    public String ExtractData(String x)
+    {
+        Pattern p = Pattern.compile(" [0-9A-F]{2}");
+        Matcher m = p.matcher(x);
+        if(m.find())
+        {
+        String temp = m.group();
+        temp = temp.substring(1, 3);
+        return temp;
+        }
+        return "";
+    }
+    
+    public String ExtractAddress(String x)
+    {
+        Pattern p = Pattern.compile(" [0-9A-F]{4}");
+        Matcher m = p.matcher(x);
+        if(m.find())
+        {
+        String temp = m.group();
+        temp = temp.substring(1, 5);
+        return temp;
+        }
+        return "";
+    }
+        
+    public String Trimmer(String x)
+    {
+        x = x.trim().replaceAll(" +"," ");
+        return x;
+    }
+    public String ExtractLabel (String x)
+    {
+        int d =x.indexOf(":");
+        if(-1!=d) {
+            
+            return x.substring(0, d);
+        }
+        else {
+            return "";
+        }
+    }
+    public String getLabel(String x)
+    {
+        int d = x.indexOf(":");
+        x = x.substring(d+1, x.length()).trim();
+        d= x.indexOf(" ");
+        x = x.substring(d+1, x.length()).trim();
+        return x;
+    }
     public static void main(String[] args) {
        
        
@@ -242,11 +295,9 @@ public class datastructure {
         System.out.print(d);
         */
         datastructure obj = new datastructure();
-        obj.SetH("FF");
-        obj.SetL("FF");
-        obj.SetM("AA");
-        System.out.println(obj.getM());
-        System.out.println(obj.getData("FFFF"));
+        //System.out.println("Found ="+obj.ExtractAddress("LXIH 0525H"));
+        String l =obj.getLabel("Label: Mov A,B");
+        System.out.println("-"+l+"-");
     }
     
 }
