@@ -13,9 +13,33 @@ import java.util.regex.Pattern;
  * @author Aman
  */
 public class datastructure {
+    public static int LABEL=0,OPCODE=1,HEXC=2,LP;
     public static String[] memory = new String[65536];
+    public static String[][] map = new String[16384][3];
     public String A,B,C,D,E,H,L,SP,IP;
     int S,Z,Ac,P,Cy;
+    public static String int2addr(int x)
+    {
+        String temp = Integer.toHexString(x);
+        temp = temp.toUpperCase();
+        if(temp.length()==1)
+        {
+            temp = "000".concat(temp);
+            return temp;
+        }
+        else if(temp.length()==2)
+        {
+            temp = "00".concat(temp);
+            return temp;
+        }
+        else if(temp.length()==3)
+        {
+            temp = "0".concat(temp);
+            return temp;
+        }
+        else 
+        {return temp;}
+    }
     public int SetA(String x)
     {
         A=x;
