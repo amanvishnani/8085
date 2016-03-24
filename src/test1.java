@@ -1,5 +1,6 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
 
 
 public class test1 extends javax.swing.JFrame {
@@ -7,7 +8,9 @@ public class test1 extends javax.swing.JFrame {
     public static String[] memory = new String[65536];
     public static String A,B,C,D,E,H,L,SP,IP;
     static int S,Z,Ac,P,Cy;
-    public static int LABEL=0,OPCODE=1,HEXC=2,LP;
+    public static int LABEL=0,OPCODE=1,MEM=1,HEXC=2,SYMPTR,SYMPTR1;
+    public static String[][] ST = new String[100][2];
+    public static String[][] ST1 = new String[100][2];
     public static String[][] map = new String[16384][3];
     public Matcher m ;
     public Pattern px[] = new Pattern[246];
@@ -16,6 +19,113 @@ public class test1 extends javax.swing.JFrame {
     public String addr = "[0-9A-F]{4}(H)?";
     public String space ="( )*";
     public String space1 = "( )+";
+    
+    public int Pass1(String[] x)
+    {
+        int LP=0;
+        ST = null;
+        ST = new String[100][2];
+        SYMPTR=0;
+        ST1 = null;
+        ST1 = new String[100][2];
+        SYMPTR1=0;
+        for(int i=0; i<x.length; i++)
+        {
+            int a1 = findI(x[i]);
+            if(a1>=0)
+            {
+                String a2 = findOpcode(a1);
+                int a3 = OpcodeLength(a2);
+                map[LP][HEXC] = a2;
+                String l =ExtractLabel(x[i]);
+                map[LP][LABEL] = l;
+                if(l.length()!=0)
+                    {        
+                        map[LP][OPCODE] = x[i].substring(x[i].indexOf(":")+1, x[i].length());
+                        ST1[SYMPTR1][LABEL] = l;
+                        System.out.println("Breakpoint");
+                        ST1[SYMPTR1][MEM] = int2addr(LP);
+                        SYMPTR1++;
+                    }
+                else
+                    {
+                        map[LP][OPCODE]=x[i];
+                    }
+                if(a3==1)
+                {
+                    LP = LP+1;
+                }
+                else if(a3 == 2)
+                {
+                    LP = LP + 1;
+                    map[LP][HEXC] = ExtractData(x[i]);
+                    map[LP][OPCODE]="";
+                    map[LP][LABEL]="";
+                    LP = LP + 1;
+                }
+                else if(a3 == 3)
+                {
+                    l = ExtractAddress(x[i]);
+                    
+                    if(l.length()!=0)
+                    {        
+                        LP = LP +1;
+                        map[LP][OPCODE]="";
+                        map[LP][LABEL]="";
+                        map[LP][HEXC]=l.substring(2, 4);
+                        LP = LP +1;
+                        map[LP][OPCODE]="";
+                        map[LP][LABEL]="";
+                        map[LP][HEXC]=l.substring(0, 2);
+                        LP = LP +1;
+                    }
+                    else 
+                    {
+                        l = getLabel(x[i]);
+                        
+                        LP = LP +1;
+                        ST[SYMPTR][LABEL]=l;
+                        ST[SYMPTR][MEM]=int2addr(LP);
+                        SYMPTR++;
+                        map[LP][OPCODE]="";
+                        map[LP][LABEL]="";
+                        LP = LP + 1;
+                        map[LP][OPCODE]="";
+                        map[LP][LABEL]="";
+                        LP = LP + 1;
+                    }
+                }
+                
+            }
+            else
+            {
+            }
+        }
+        return 0;
+    }
+    
+    public static String int2addr(int x)
+    {
+        String temp = Integer.toHexString(x);
+        temp = temp.toUpperCase();
+        if(temp.length()==1)
+        {
+            temp = "000".concat(temp);
+            return temp;
+        }
+        else if(temp.length()==2)
+        {
+            temp = "00".concat(temp);
+            return temp;
+        }
+        else if(temp.length()==3)
+        {
+            temp = "0".concat(temp);
+            return temp;
+        }
+        else 
+        {return temp;}
+    }
     
     public int SetA(String x)
     {
@@ -230,12 +340,14 @@ public class test1 extends javax.swing.JFrame {
     
     public String ExtractData(String x)
     {
-        Pattern p = Pattern.compile(" [0-9A-F]{2}");
+        x = x.substring(x.indexOf(","),x.length());
+        x = x.substring(x.indexOf(" ")+1,x.length());
+        Pattern p = Pattern.compile("[0-9A-F]{2}");
         Matcher m1 = p.matcher(x);
         if(m1.find())
         {
-        String temp = m.group();
-        temp = temp.substring(1, 3);
+        String temp = m1.group();
+        temp = temp.substring(0, 2);
         return temp;
         }
         return "";
@@ -247,7 +359,7 @@ public class test1 extends javax.swing.JFrame {
         Matcher m1 = p.matcher(x);
         if(m1.find())
         {
-        String temp = m.group();
+        String temp = m1.group();
         temp = temp.substring(1, 5);
         return temp;
         }
@@ -273,9 +385,15 @@ public class test1 extends javax.swing.JFrame {
     public String getLabel(String x)
     {
         int d = x.indexOf(":");
-        x = x.substring(d+1, x.length()).trim();
+        x = Trimmer(x.substring(d+1, x.length()));
         d= x.indexOf(" ");
         x = x.substring(d+1, x.length()).trim();
+        if(x.length()==0 || x==null)
+        {
+            JOptionPane.showMessageDialog(this, "Label Not found");
+            return "";
+        }
+        else
         return x;
     }
 
@@ -1050,6 +1168,263 @@ public class test1 extends javax.swing.JFrame {
         }
     }
     
+    public int OpcodeLength(String s)
+{
+	switch(s)
+	{
+	case "8F":
+	case "88":
+	case "89":
+	case "8A":
+	case "8B":
+	case "8C":
+	case "8D":
+	case "8E":
+	case "87":
+	case "80":
+	case "81":
+	case "82":
+	case "83":
+	case "84":
+	case "85":
+	case "86":
+	case "A7":
+	case "A0":
+	case "A1":
+	case "A2":
+	case "A3":
+	case "A4":
+	case "A5":
+	case "A6":
+	case "2F":
+	case "3F":
+	case "BF":
+	case "B8":
+	case "B9":
+	case "BA":
+	case "BB":
+	case "BC":
+	case "BD":
+	case "BE":
+	case "27":
+	case "09":
+	case "19":
+	case "29":
+	case "39":
+	case "3D":
+	case "05":
+	case "0D":
+	case "15":
+	case "1D":
+	case "25":
+	case "2D":
+	case "35":
+	case "0B":
+	case "1B":
+	case "2B":
+	case "3B":
+	case "F3":
+	case "FB":
+	case "76":
+	case "3C":
+	case "04":
+	case "0C":
+	case "14":
+	case "1C":
+	case "24":
+	case "2C":
+	case "34":
+	case "03":
+	case "13":
+	case "23":
+	case "33":
+	case "0A":
+	case "1A":
+	case "7F":
+	case "78":
+	case "79":
+	case "7A":
+	case "7B":
+	case "7C":
+	case "7D":
+	case "7E":
+	case "47":
+	case "40":
+	case "41":
+	case "42":
+	case "43":
+	case "44":
+	case "45":
+	case "46":
+	case "4F":
+	case "48":
+	case "49":
+	case "4A":
+	case "4B":
+	case "4C":
+	case "4D":
+	case "4E":
+	case "57":
+	case "50":
+	case "51":
+	case "52":
+	case "53":
+	case "54":
+	case "55":
+	case "56":
+	case "5F":
+	case "58":
+	case "59":
+	case "5A":
+	case "5B":
+	case "5C":
+	case "5D":
+	case "5E":
+	case "67":
+	case "60":
+	case "61":
+	case "62":
+	case "63":
+	case "64":
+	case "65":
+	case "66":
+	case "6F":
+	case "68":
+	case "69":
+	case "6A":
+	case "6B":
+	case "6C":
+	case "6D":
+	case "6E":
+	case "77":
+	case "70":
+	case "71":
+	case "72":
+	case "73":
+	case "74":
+	case "75":
+	case "00":
+	case "B7":
+	case "B0":
+	case "B1":
+	case "B2":
+	case "B3":
+	case "B4":
+	case "B5":
+	case "B6":
+	case "E9":
+	case "C1":
+	case "D1":
+	case "E1":
+	case "F1":
+	case "C5":
+	case "D5":
+	case "E5":
+	case "F5":
+	case "17":
+	case "1F":
+	case "D8":
+	case "C9":
+	case "20":
+	case "07":
+	case "F8":
+	case "D0":
+	case "F0":
+	case "E8":
+	case "E0":
+	case "0F":
+	case "C7":
+	case "CF":
+	case "D7":
+	case "DF":
+	case "E7":
+	case "EF":
+	case "F7":
+	case "FF":
+	case "C8":
+	case "9F":
+	case "98":
+	case "99":
+	case "9A":
+	case "9B":
+	case "9C":
+	case "9D":
+	case "9E":
+	case "30":
+	case "F9":
+	case "02":
+	case "12":
+	case "37":
+	case "97":
+	case "90":
+	case "91":
+	case "92":
+	case "93":
+	case "94":
+	case "95":
+	case "96":
+	case "EB":
+	case "AF":
+	case "A8":
+	case "A9":
+	case "AA":
+	case "AB":
+	case "AC":
+	case "AD":
+	case "AE":
+	case "E3":
+		return 1;
+	case "CE":
+	case "C6":
+	case "E6":
+	case "FE":
+	case "DB":
+	case "3E":
+	case "06":
+	case "0E":
+	case "16":
+	case "1E":
+	case "26":
+	case "2E":
+	case "36":
+	case "F6":
+	case "D3":
+	case "DE":
+	case "D6":
+	case "EE":
+		return 2;
+	case "CD":
+	case "DC":
+	case "FC":
+	case "D4":
+	case "C4":
+	case "F4":
+	case "EC":
+	case "E4":
+	case "CC":
+	case "DA":
+	case "FA":
+	case "C3":
+	case "D2":
+	case "C2":
+	case "F2":
+	case "EA":
+	case "E2":
+	case "CA":
+	case "3A":
+	case "2A":
+	case "01":
+	case "11":
+	case "21":
+	case "31":
+	case "22":
+	case "32":
+		return 3;
+	default:
+	    System.out.print("Invalied opcode");
+}
+  return 0;
+}
     
     String[] code_token;
     public int run_code_index=0;
@@ -1058,6 +1433,7 @@ public class test1 extends javax.swing.JFrame {
      */
     public test1() {
         initComponents();
+        initializePatt();
     }
 
     /**
@@ -1764,16 +2140,17 @@ public class test1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i=0,k=0,j=0;
+        System.out.println(findI("MOV A,B"));
         String code = code_av.getText();
         code_token = code.split("\\n");
         String[] temp= new String[code_token.length];
         
         for (j=0;j<code_token.length;j++)
         {
-            code_token[j]=code_token[j].trim();
+            code_token[j]=Trimmer(code_token[j]);
             if(0!=code_token[j].length())
             {
-                temp[i]=code_token[j].replaceAll(" ", "");
+                temp[i]=code_token[j];
                 i++;
             }
             else
@@ -1786,7 +2163,14 @@ public class test1 extends javax.swing.JFrame {
         {
             temp2[j]=temp[j];
         }
-        run_code.setListData(temp2);
+        Pass1(temp2);
+        String test123[];
+        test123 = new String[20];
+        for(int index=0;index<20;index++)
+        {
+            test123[index] = map[index][HEXC];
+        }
+        run_code.setListData(test123);
         run_code_index=0;
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -1880,7 +2264,10 @@ public class test1 extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new test1().setVisible(true);
+                test1 t1 = new test1();
+                t1.setVisible(true);
+                        
+                
             }
         });
     }
