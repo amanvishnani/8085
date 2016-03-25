@@ -365,6 +365,392 @@ public class test1 extends javax.swing.JFrame {
         }
         return "";
     }
+    
+    /* MOV INSTRUCTIONS */
+    void _7F()
+{
+	String t;
+	t=getA();
+	SetA(t);
+}
+void _78()
+{
+	String t;
+	t=getB();
+	SetA(t);
+}
+void _79()
+{
+	String t;
+	t=getC();
+	SetA(t);
+}
+void _7A()
+{
+	String t;
+	t=getD();
+	SetA(t);
+}
+void _7B()
+{
+	String t;
+	t=getE();
+	SetA(t);
+}
+void _7C()
+{
+	String t;
+	t=getH();
+	SetA(t);
+}
+void _7D()
+{
+	String t;
+	t=getL();
+	SetA(t);
+}
+void _7E()
+{
+	String t;
+	t=getM();
+	SetA(t);
+}
+void _47()
+{
+	String t;
+	t=getA();
+	SetB(t);
+}
+void _40()
+{
+	String t;
+	t=getB();
+	SetB(t);
+}
+void _41()
+{
+	String t;
+	t=getC();
+	SetB(t);
+}
+void _42()
+{
+	String t;
+	t=getD();
+	SetB(t);
+}
+void _43()
+{
+	String t;
+	t=getE();
+	SetB(t);
+}
+void _44()
+{
+	String t;
+	t=getH();
+	SetB(t);
+}
+void _45()
+{
+	String t;
+	t=getL();
+	SetB(t);
+}
+void _46()
+{
+	String t;
+	t=getM();
+	SetB(t);
+}
+void _4F()
+{
+	String t;
+	t=getA();
+	SetC(t);
+}
+void _48()
+{
+	String t;
+	t=getB();
+	SetC(t);
+}
+void _49()
+{
+	String t;
+	t=getC();
+	SetC(t);
+}
+void _4A()
+{
+	String t;
+	t=getD();
+	SetC(t);
+}
+void _4B()
+{
+	String t;
+	t=getE();
+	SetC(t);
+}
+void _4C()
+{
+	String t;
+	t=getH();
+	SetC(t);
+}
+void _4D()
+{
+	String t;
+	t=getL();
+	SetC(t);
+}
+void _4E()
+{
+	String t;
+	t=getM();
+	SetC(t);
+}
+void _57()
+{
+	String t;
+	t=getA();
+	SetD(t);
+}
+void _50()
+{
+	String t;
+	t=getB();
+	SetD(t);
+}
+void _51()
+{
+	String t;
+	t=getC();
+	SetD(t);
+}
+void _52()
+{
+	String t;
+	t=getD();
+	SetD(t);
+}
+void _53()
+{
+	String t;
+	t=getE();
+	SetD(t);
+}
+void _54()
+{
+	String t;
+	t=getH();
+	SetD(t);
+}
+void _55()
+{
+	String t;
+	t=getL();
+	SetD(t);
+}
+void _56()
+{
+	String t;
+	t=getM();
+	SetD(t);
+}
+void _5F()
+{
+	String t;
+	t=getA();
+	SetE(t);
+}
+void _58()
+{
+	String t;
+	t=getB();
+	SetE(t);
+}
+void _59()
+{
+	String t;
+	t=getC();
+	SetE(t);
+}
+void _5A()
+{
+	String t;
+	t=getD();
+	SetE(t);
+}
+void _5B()
+{
+	String t;
+	t=getE();
+	SetE(t);
+}
+void _5C()
+{
+	String t;
+	t=getH();
+	SetE(t);
+}
+void _5D()
+{
+	String t;
+	t=getL();
+	SetE(t);
+}
+void _5E()
+{
+	String t;
+	t=getM();
+	SetE(t);
+}
+void _67()
+{
+	String t;
+	t=getA();
+	SetH(t);
+}
+void _60()
+{
+	String t;
+	t=getB();
+	SetH(t);
+}
+void _61()
+{
+	String t;
+	t=getC();
+	SetH(t);
+}
+void _62()
+{
+	String t;
+	t=getD();
+	SetH(t);
+}
+void _63()
+{
+	String t;
+	t=getE();
+	SetH(t);
+}
+void _64()
+{
+	String t;
+	t=getH();
+	SetH(t);
+}
+void _65()
+{
+	String t;
+	t=getL();
+	SetH(t);
+}
+void _66()
+{
+	String t;
+	t=getM();
+	SetH(t);
+}
+void _6F()
+{
+	String t;
+	t=getA();
+	SetL(t);
+}
+void _68()
+{
+	String t;
+	t=getB();
+	SetL(t);
+}
+void _69()
+{
+	String t;
+	t=getC();
+	SetL(t);
+}
+void _6A()
+{
+	String t;
+	t=getD();
+	SetL(t);
+}
+void _6B()
+{
+	String t;
+	t=getE();
+	SetL(t);
+}
+void _6C()
+{
+	String t;
+	t=getH();
+	SetL(t);
+}
+void _6D()
+{
+	String t;
+	t=getL();
+	SetL(t);
+}
+void _6E()
+{
+	String t;
+	t=getM();
+	SetL(t);
+}
+void _77()
+{
+	String t;
+	t=getA();
+	SetM(t);
+}
+void _70()
+{
+	String t;
+	t=getB();
+	SetM(t);
+}
+void _71()
+{
+	String t;
+	t=getC();
+	SetM(t);
+}
+void _72()
+{
+	String t;
+	t=getD();
+	SetM(t);
+}
+void _73()
+{
+	String t;
+	t=getE();
+	SetM(t);
+}
+void _74()
+{
+	String t;
+	t=getH();
+	SetM(t);
+}
+void _75()
+{
+	String t;
+	t=getL();
+	SetM(t);
+}
+void _76()
+{
+	String t;
+	t=getM();
+	SetM(t);
+}
         
     public String Trimmer(String x)
     {
@@ -2140,7 +2526,6 @@ public class test1 extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int i=0,k=0,j=0;
-        System.out.println(findI("MOV A,B"));
         String code = code_av.getText();
         code_token = code.split("\\n");
         String[] temp= new String[code_token.length];
