@@ -8,10 +8,10 @@ public class test1 extends javax.swing.JFrame {
     public static String[] memory = new String[65536];
     public static String A,B,C,D,E,H,L,SP,IP;
     static int S,Z,Ac,P,Cy;
-    public static int LABEL=0,OPCODE=1,MEM=1,HEXC=2,SYMPTR,SYMPTR1;
+    public static int LABEL=0,OPCODE=1,MEM=1,SYMPTR,SYMPTR1;
     public static String[][] ST = new String[100][2];
     public static String[][] ST1 = new String[100][2];
-    public static String[][] map = new String[16384][3];
+    public static String[][] map = new String[16384][2];
     public Matcher m ;
     public Pattern px[] = new Pattern[246];
     public String data ="[0-9A-F]{2}(H)?";
@@ -36,7 +36,7 @@ public class test1 extends javax.swing.JFrame {
             {
                 String a2 = findOpcode(a1);
                 int a3 = OpcodeLength(a2);
-                map[LP][HEXC] = a2;
+                memory[LP] = a2;
                 String l =ExtractLabel(x[i]);
                 map[LP][LABEL] = l;
                 if(l.length()!=0)
@@ -58,7 +58,7 @@ public class test1 extends javax.swing.JFrame {
                 else if(a3 == 2)
                 {
                     LP = LP + 1;
-                    map[LP][HEXC] = ExtractData(x[i]);
+                    memory[LP] = ExtractData(x[i]);
                     map[LP][OPCODE]="";
                     map[LP][LABEL]="";
                     LP = LP + 1;
@@ -72,11 +72,11 @@ public class test1 extends javax.swing.JFrame {
                         LP = LP +1;
                         map[LP][OPCODE]="";
                         map[LP][LABEL]="";
-                        map[LP][HEXC]=l.substring(2, 4);
+                        memory[LP]=l.substring(2, 4);
                         LP = LP +1;
                         map[LP][OPCODE]="";
                         map[LP][LABEL]="";
-                        map[LP][HEXC]=l.substring(0, 2);
+                        memory[LP]=l.substring(0, 2);
                         LP = LP +1;
                     }
                     else 
@@ -369,387 +369,259 @@ public class test1 extends javax.swing.JFrame {
     /* MOV INSTRUCTIONS */
     void _7F()
 {
-	String t;
-	t=getA();
-	SetA(t);
+	SetA(getA());
 }
 void _78()
 {
-	String t;
-	t=getB();
-	SetA(t);
+	SetA(getB());
 }
 void _79()
 {
-	String t;
-	t=getC();
-	SetA(t);
+	SetA(getC());
 }
 void _7A()
 {
-	String t;
-	t=getD();
-	SetA(t);
+	SetA(getD());
 }
 void _7B()
 {
-	String t;
-	t=getE();
-	SetA(t);
+	SetA(getE());
 }
 void _7C()
 {
-	String t;
-	t=getH();
-	SetA(t);
+	SetA(getH());
 }
 void _7D()
 {
-	String t;
-	t=getL();
-	SetA(t);
+	SetA(getL());
 }
 void _7E()
 {
-	String t;
-	t=getM();
-	SetA(t);
+	SetA(getM());
 }
 void _47()
 {
-	String t;
-	t=getA();
-	SetB(t);
+	SetB(getA());
 }
 void _40()
 {
-	String t;
-	t=getB();
-	SetB(t);
+	SetB(getB());
 }
 void _41()
 {
-	String t;
-	t=getC();
-	SetB(t);
+	SetB(getC());
 }
 void _42()
 {
-	String t;
-	t=getD();
-	SetB(t);
+	SetB(getD());
 }
 void _43()
 {
-	String t;
-	t=getE();
-	SetB(t);
+	SetB(getE());
 }
 void _44()
 {
-	String t;
-	t=getH();
-	SetB(t);
+	SetB(getH());
 }
 void _45()
 {
-	String t;
-	t=getL();
-	SetB(t);
+	SetB(getL());
 }
 void _46()
 {
-	String t;
-	t=getM();
-	SetB(t);
+	SetB(getM());
 }
 void _4F()
 {
-	String t;
-	t=getA();
-	SetC(t);
+	SetC(getA());
 }
 void _48()
 {
-	String t;
-	t=getB();
-	SetC(t);
+	SetC(getB());
 }
 void _49()
 {
-	String t;
-	t=getC();
-	SetC(t);
+	SetC(getC());
 }
 void _4A()
 {
-	String t;
-	t=getD();
-	SetC(t);
+	SetC(getD());
 }
 void _4B()
 {
-	String t;
-	t=getE();
-	SetC(t);
+	SetC(getE());
 }
 void _4C()
 {
-	String t;
-	t=getH();
-	SetC(t);
+	SetC(getH());
 }
 void _4D()
-{
-	String t;
-	t=getL();
-	SetC(t);
+{ 
+	SetC(getL());
 }
 void _4E()
-{
-	String t;
-	t=getM();
-	SetC(t);
+{ 
+	SetC(getM());
 }
 void _57()
 {
-	String t;
-	t=getA();
-	SetD(t);
+	SetD(getA());
 }
 void _50()
 {
-	String t;
-	t=getB();
-	SetD(t);
+	SetD(getB());
 }
 void _51()
 {
-	String t;
-	t=getC();
-	SetD(t);
+	SetD(getC());
 }
 void _52()
 {
-	String t;
-	t=getD();
-	SetD(t);
+	SetD(getD());
 }
 void _53()
 {
-	String t;
-	t=getE();
-	SetD(t);
+	SetD(getE());
 }
 void _54()
 {
-	String t;
-	t=getH();
-	SetD(t);
+	SetD(getH());
 }
 void _55()
 {
-	String t;
-	t=getL();
-	SetD(t);
+	SetD(getL());
 }
 void _56()
 {
-	String t;
-	t=getM();
-	SetD(t);
+	SetD(getM());
 }
 void _5F()
 {
-	String t;
-	t=getA();
-	SetE(t);
+	SetE(getA());
 }
 void _58()
 {
-	String t;
-	t=getB();
-	SetE(t);
+	SetE(getB());
 }
 void _59()
 {
-	String t;
-	t=getC();
-	SetE(t);
+	SetE(getC());
 }
 void _5A()
 {
-	String t;
-	t=getD();
-	SetE(t);
+	SetE(getD());
 }
 void _5B()
 {
-	String t;
-	t=getE();
-	SetE(t);
+	SetE(getE());
 }
 void _5C()
 {
-	String t;
-	t=getH();
-	SetE(t);
+	SetE(getH());
 }
 void _5D()
 {
-	String t;
-	t=getL();
-	SetE(t);
+	SetE(getL());
 }
 void _5E()
 {
-	String t;
-	t=getM();
-	SetE(t);
+	SetE(getM());
 }
 void _67()
 {
-	String t;
-	t=getA();
-	SetH(t);
+	SetH(getA());
 }
 void _60()
 {
-	String t;
-	t=getB();
-	SetH(t);
+	SetH(getB());
 }
 void _61()
 {
-	String t;
-	t=getC();
-	SetH(t);
+	SetH(getC());
 }
 void _62()
 {
-	String t;
-	t=getD();
-	SetH(t);
+	SetH(getD());
 }
 void _63()
 {
-	String t;
-	t=getE();
-	SetH(t);
+	SetH(getE());
 }
 void _64()
 {
-	String t;
-	t=getH();
-	SetH(t);
+	SetH(getH());
 }
 void _65()
 {
-	String t;
-	t=getL();
-	SetH(t);
+	SetH(getL());
 }
 void _66()
 {
-	String t;
-	t=getM();
-	SetH(t);
+	SetH(getM());
 }
 void _6F()
 {
-	String t;
-	t=getA();
-	SetL(t);
+	SetL(getA());
 }
 void _68()
 {
-	String t;
-	t=getB();
-	SetL(t);
+	SetL(getB());
 }
 void _69()
 {
-	String t;
-	t=getC();
-	SetL(t);
+	SetL(getC());
 }
 void _6A()
 {
-	String t;
-	t=getD();
-	SetL(t);
+	SetL(getD());
 }
 void _6B()
 {
-	String t;
-	t=getE();
-	SetL(t);
+	SetL(getE());
 }
 void _6C()
 {
-	String t;
-	t=getH();
-	SetL(t);
+	SetL(getH());
 }
 void _6D()
 {
-	String t;
-	t=getL();
-	SetL(t);
+	SetL(getL());
 }
 void _6E()
 {
-	String t;
-	t=getM();
-	SetL(t);
+	SetL(getM());
 }
 void _77()
 {
-	String t;
-	t=getA();
-	SetM(t);
+	SetM(getA());
 }
 void _70()
 {
-	String t;
-	t=getB();
-	SetM(t);
+	SetM(getB());
 }
 void _71()
 {
-	String t;
-	t=getC();
-	SetM(t);
+	SetM(getC());
 }
 void _72()
 {
-	String t;
-	t=getD();
-	SetM(t);
+	SetM(getD());
 }
 void _73()
 {
-	String t;
-	t=getE();
-	SetM(t);
+	SetM(getE());
 }
 void _74()
 {
-	String t;
-	t=getH();
-	SetM(t);
+	SetM(getH());
 }
 void _75()
 {
-	String t;
-	t=getL();
-	SetM(t);
+	SetM(getL());
 }
 void _76()
 {
-	String t;
-	t=getM();
-	SetM(t);
+	SetM(getM());
 }
         
     public String Trimmer(String x)
@@ -2551,10 +2423,7 @@ void _76()
         Pass1(temp2);
         String test123[];
         test123 = new String[20];
-        for(int index=0;index<20;index++)
-        {
-            test123[index] = map[index][HEXC];
-        }
+        System.arraycopy(memory, 0, test123, 0, 20);
         run_code.setListData(test123);
         run_code_index=0;
     }//GEN-LAST:event_jButton1ActionPerformed
