@@ -20,6 +20,29 @@ public class test1 extends javax.swing.JFrame {
     public String space ="( )*";
     public String space1 = "( )+";
     
+    public void Pass2()
+    {
+        for(int i=0;i<SYMPTR;i++)
+        {
+            String localLabel,localmem;
+            localLabel=ST[i][LABEL];
+            localmem = ST[i][MEM];
+            for(int j=0;j<SYMPTR1;j++)
+            {
+                if(ST1[j][LABEL].equals(localLabel))
+                {
+                    String localval= ST1[j][MEM];
+                    setData(localmem, localval.substring(2, 4));
+                    int x = Integer.parseInt(localmem, 16);
+                    x++;
+                    localmem = int2addr(x);
+                    setData(localmem, localval.substring(0, 2));
+                }
+            }
+            
+        }
+    }
+    
     public int Pass1(String[] x)
     {
         int LP=0;
@@ -34,18 +57,30 @@ public class test1 extends javax.swing.JFrame {
             int a1 = findI(x[i]);
             if(a1>=0)
             {
+                int flag=0;
                 String a2 = findOpcode(a1);
                 int a3 = OpcodeLength(a2);
                 memory[LP] = a2;
                 String l =ExtractLabel(x[i]);
                 map[LP][LABEL] = l;
                 if(l.length()!=0)
-                    {        
+                    {
                         map[LP][OPCODE] = x[i].substring(x[i].indexOf(":")+1, x[i].length());
+                        for(int g=0;g<SYMPTR1;g++)
+                        {
+                            if(ST1[g][LABEL].equalsIgnoreCase(l))
+                            {
+                                JOptionPane.showMessageDialog(this, l+" already Exists at "+ST1[g][MEM]+" Terminating rest of the process");
+                                flag=1;
+                            }
+                        }
+                        if(flag==0)
+                        {
                         ST1[SYMPTR1][LABEL] = l;
                         System.out.println("Breakpoint");
                         ST1[SYMPTR1][MEM] = int2addr(LP);
                         SYMPTR1++;
+                        }
                     }
                 else
                     {
@@ -2421,11 +2456,22 @@ void _76()
             temp2[j]=temp[j];
         }
         Pass1(temp2);
+        Pass2();
         String test123[];
         test123 = new String[20];
         System.arraycopy(memory, 0, test123, 0, 20);
         run_code.setListData(test123);
         run_code_index=0;
+        System.out.println("Symbol Table for Where to Load\nLABEL\tMEMORY");
+        for(int e=0; e<10; e++)
+        {
+            System.out.println(ST[e][LABEL]+"\t"+ST[e][MEM]);
+        }
+        System.out.println("Symbol Table for Symbol and their LOACTIONS\nLABEL\tMEMORY");
+        for(int e=0; e<10; e++)
+        {
+            System.out.println(ST1[e][LABEL]+"\t"+ST1[e][MEM]);
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
