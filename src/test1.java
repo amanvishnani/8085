@@ -1,6 +1,7 @@
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 public class test1 extends javax.swing.JFrame {
@@ -20,6 +21,94 @@ public class test1 extends javax.swing.JFrame {
     public String space ="( )*";
     public String space1 = "( )+";
     
+    String[] getMyCode()
+    {
+        int i=0,k=0,j=0;
+        String code = code_av.getText();
+        code_token = code.split("\\n");
+        String[] temp= new String[code_token.length];
+        
+        for (j=0;j<code_token.length;j++)
+        {
+            code_token[j]=Trimmer(code_token[j]);
+            if(0!=code_token[j].length())
+            {
+                temp[i]=code_token[j];
+                i++;
+            }
+            else
+            {
+                k++;
+            }
+        }
+        String[] temp2 = new String[temp.length-k];
+        for(j=0;j<temp.length-k;j++)
+        {
+            temp2[j]=temp[j];
+        }
+        return temp2;
+    }
+    
+    public void iniMap()
+    {
+        for(int i=0;i<65536;i++)
+        {
+            memory[i]="00";
+        }
+        for(int i=0;i<16383;i++)
+        {
+            map[i][LABEL]="";
+            map[i][OPCODE]="";
+        }
+    }
+    
+    void refreshCode()
+    {
+        String S1 = CodeHead.getText();
+        int codehead ;
+        try{
+            if(S1.length()!=0)
+            {
+                codehead = Integer.parseInt(S1, 16);
+            }
+            else
+            {
+                codehead = 0;
+            }
+           if(codehead<0 || codehead>16383)
+           {
+               JOptionPane.showMessageDialog(this, "{Make sure given Code Segment Head is in Specified Range} ");
+           }
+           else
+           {
+           DefaultTableModel x = (DefaultTableModel) CodeTable.getModel();
+           x.setRowCount(0);
+           Object obj[] = new Object[4];
+           int START=0, END=20;
+            if(codehead<=16383 && codehead>16363)
+            {
+                START =16363;
+                END = 16383;
+            }
+            else 
+            {
+                START = codehead;
+                END = codehead+20;
+            }
+            for(int i =START ; i<END ; i++ )
+                {
+                    obj[0]=int2addr(i);
+                    obj[1]=map[i][LABEL];
+                    obj[2]=map[1][OPCODE];
+                    obj[3]=memory[i];
+                    x.addRow(obj);
+                }
+           }
+        }catch(Exception NumberfException)
+            {
+                JOptionPane.showMessageDialog(this, "{Make sure given Code Segment Head is a Hex Number} ");
+            }
+    }
     public void Pass2()
     {
         for(int i=0;i<SYMPTR;i++)
@@ -1784,7 +1873,7 @@ void _76()
         jTabbedPane2 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        CodeTable = new javax.swing.JTable();
         jLabel23 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
         CodeHead = new javax.swing.JTextField();
@@ -1792,7 +1881,7 @@ void _76()
         jLabel25 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        DataTable = new javax.swing.JTable();
         jLabel20 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         DataHead = new javax.swing.JTextField();
@@ -1800,7 +1889,7 @@ void _76()
         jLabel22 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTable3 = new javax.swing.JTable();
+        StackTable = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         StackHead = new javax.swing.JTextField();
@@ -1944,7 +2033,7 @@ void _76()
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        CodeTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -1986,15 +2075,16 @@ void _76()
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setSelectionBackground(new java.awt.Color(255, 255, 51));
-        jTable1.setShowHorizontalLines(true);
-        jTable1.setShowVerticalLines(true);
-        jScrollPane3.setViewportView(jTable1);
+        CodeTable.setSelectionBackground(new java.awt.Color(255, 255, 51));
+        CodeTable.setShowHorizontalLines(true);
+        CodeTable.setShowVerticalLines(true);
+        jScrollPane3.setViewportView(CodeTable);
 
         jLabel23.setText("Code Space ranges from 0000 to 3FFF");
 
         jLabel24.setText("Display Memory from :");
 
+        CodeHead.setText("0000");
         CodeHead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 CodeHeadActionPerformed(evt);
@@ -2044,7 +2134,7 @@ void _76()
 
         jTabbedPane2.addTab("CODE", jPanel1);
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        DataTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -2086,15 +2176,16 @@ void _76()
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setSelectionBackground(new java.awt.Color(255, 255, 0));
-        jTable2.setShowHorizontalLines(true);
-        jTable2.setShowVerticalLines(true);
-        jScrollPane4.setViewportView(jTable2);
+        DataTable.setSelectionBackground(new java.awt.Color(255, 255, 0));
+        DataTable.setShowHorizontalLines(true);
+        DataTable.setShowVerticalLines(true);
+        jScrollPane4.setViewportView(DataTable);
 
         jLabel20.setText("Data Space ranges from 4000 to DFFF");
 
         jLabel21.setText("Display Memory From :");
 
+        DataHead.setText("0000");
         DataHead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DataHeadActionPerformed(evt);
@@ -2144,7 +2235,7 @@ void _76()
 
         jTabbedPane2.addTab("DATA", jPanel2);
 
-        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+        StackTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -2186,15 +2277,16 @@ void _76()
                 return canEdit [columnIndex];
             }
         });
-        jTable3.setSelectionBackground(new java.awt.Color(255, 255, 0));
-        jTable3.setShowHorizontalLines(true);
-        jTable3.setShowVerticalLines(true);
-        jScrollPane5.setViewportView(jTable3);
+        StackTable.setSelectionBackground(new java.awt.Color(255, 255, 0));
+        StackTable.setShowHorizontalLines(true);
+        StackTable.setShowVerticalLines(true);
+        jScrollPane5.setViewportView(StackTable);
 
         jLabel13.setText("Stack Space is from E000 to FFFF ");
 
         jLabel15.setText("Display Memory From :");
 
+        StackHead.setText("0000");
         StackHead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StackHeadActionPerformed(evt);
@@ -2432,30 +2524,10 @@ void _76()
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int i=0,k=0,j=0;
-        String code = code_av.getText();
-        code_token = code.split("\\n");
-        String[] temp= new String[code_token.length];
         
-        for (j=0;j<code_token.length;j++)
-        {
-            code_token[j]=Trimmer(code_token[j]);
-            if(0!=code_token[j].length())
-            {
-                temp[i]=code_token[j];
-                i++;
-            }
-            else
-            {
-                k++;
-            }
-        }
-        String[] temp2 = new String[temp.length-k];
-        for(j=0;j<temp.length-k;j++)
-        {
-            temp2[j]=temp[j];
-        }
-        Pass1(temp2);
+        iniMap();
+        
+        Pass1(getMyCode());
         Pass2();
         String test123[];
         test123 = new String[20];
@@ -2472,6 +2544,7 @@ void _76()
         {
             System.out.println(ST1[e][LABEL]+"\t"+ST1[e][MEM]);
         }
+        refreshCode();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -2532,6 +2605,7 @@ void _76()
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        refreshCode();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
@@ -2576,8 +2650,11 @@ void _76()
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
+    private javax.swing.JTable CodeTable;
     private javax.swing.JTextField DataHead;
+    private javax.swing.JTable DataTable;
     private javax.swing.JTextField StackHead;
+    private javax.swing.JTable StackTable;
     private javax.swing.JTextArea code_av;
     private javax.swing.JLabel code_here;
     private javax.swing.JTextField jA;
@@ -2637,9 +2714,6 @@ void _76()
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTabbedPane jTabbedPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jZ;
     private javax.swing.JList run_code;
