@@ -87,8 +87,8 @@ public class test1 extends javax.swing.JFrame {
            int START=0, END=20;
             if(codehead<=16383 && codehead>16363)
             {
-                START =16363;
-                END = 16383;
+                START =16364;
+                END = 16384;
             }
             else 
             {
@@ -99,7 +99,7 @@ public class test1 extends javax.swing.JFrame {
                 {
                     obj[0]=int2addr(i);
                     obj[1]=map[i][LABEL];
-                    obj[2]=map[1][OPCODE];
+                    obj[2]=map[i][OPCODE];
                     obj[3]=memory[i];
                     x.addRow(obj);
                 }
@@ -109,27 +109,128 @@ public class test1 extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "{Make sure given Code Segment Head is a Hex Number} ");
             }
     }
+    
+    void refreshData()
+    {
+        String S1 = DataHead.getText();
+        int datahead ;
+        try{
+            if(S1.length()!=0)
+            {
+                datahead = Integer.parseInt(S1, 16);
+            }
+            else
+            {
+                datahead = 16384;
+            }
+           if(datahead<16384 || datahead>57343)
+           {
+               JOptionPane.showMessageDialog(this, "{Make sure given Code Segment Head is in Specified Range} ");
+           }
+           else
+           {
+           DefaultTableModel x = (DefaultTableModel) DataTable.getModel();
+           x.setRowCount(0);
+           Object obj[] = new Object[4];
+           int START=57323, END=57343;
+            if(datahead<=57343 && datahead>57323)
+            {
+                START =57324;
+                END = 57344;
+            }
+            else 
+            {
+                START = datahead;
+                END = datahead+20;
+            }
+            for(int i =START ; i<END ; i++ )
+                {
+                    obj[0]=int2addr(i);
+                    obj[1]=memory[i];
+                    x.addRow(obj);
+                }
+           }
+        }catch(Exception NumberfException)
+            {
+                JOptionPane.showMessageDialog(this, "{Make sure given Data Segment Head is a Hex Number} ");
+            }
+    }
+    
+    void refreshStack()
+    {
+        String S1 = StackHead.getText();
+        int stackhead ;
+        try{
+            if(S1.length()!=0)
+            {
+                stackhead = Integer.parseInt(S1, 16);
+            }
+            else
+            {
+                stackhead = 57344;
+            }
+           if(stackhead<57344 || stackhead>65535)
+           {
+               JOptionPane.showMessageDialog(this, "{Make sure given Stack Segment Head is in Specified Range} ");
+           }
+           else
+           {
+           DefaultTableModel x = (DefaultTableModel) StackTable.getModel();
+           x.setRowCount(0);
+           Object obj[] = new Object[4];
+           int START=57344, END=57364;
+            if(stackhead<=65535 && stackhead>65515)
+            {
+                START =65516;
+                END = 65536;
+            }
+            else 
+            {
+                START = stackhead;
+                END = stackhead+20;
+            }
+            for(int i =START ; i<END ; i++ )
+                {
+                    obj[0]=int2addr(i);
+                    obj[1]=memory[i];
+                    x.addRow(obj);
+                }
+           }
+        }catch(Exception NumberfException)
+            {
+                JOptionPane.showMessageDialog(this, "{Make sure given Data Segment Head is a Hex Number} ");
+            }
+    }
+    
     public void Pass2()
     {
         for(int i=0;i<SYMPTR;i++)
         {
             String localLabel,localmem;
-            localLabel=ST[i][LABEL];
+            localLabel=ST[i][LABEL].trim();
             localmem = ST[i][MEM];
             for(int j=0;j<SYMPTR1;j++)
             {
+                ST1[j][LABEL] = ST1[j][LABEL].trim();
                 if(ST1[j][LABEL].equals(localLabel))
                 {
                     String localval= ST1[j][MEM];
                     setData(localmem, localval.substring(2, 4));
+                    System.out.println(localval.substring(2, 4)+" is set at "+localmem);
                     int x = Integer.parseInt(localmem, 16);
                     x++;
                     localmem = int2addr(x);
                     setData(localmem, localval.substring(0, 2));
+                    System.out.println(localval.substring(0, 2)+" is set at "+localmem);
                 }
             }
             
         }
+    }
+    
+    public String extractOpcode(String S)
+    {
+        return S.substring(S.indexOf(":")+1, S.length());
     }
     
     public int Pass1(String[] x)
@@ -152,9 +253,10 @@ public class test1 extends javax.swing.JFrame {
                 memory[LP] = a2;
                 String l =ExtractLabel(x[i]);
                 map[LP][LABEL] = l;
+                map[LP][OPCODE] = extractOpcode(x[i]);
+//                System.out.println(map[LP][OPCODE]+" for "+i);
                 if(l.length()!=0)
                     {
-                        map[LP][OPCODE] = x[i].substring(x[i].indexOf(":")+1, x[i].length());
                         for(int g=0;g<SYMPTR1;g++)
                         {
                             if(ST1[g][LABEL].equalsIgnoreCase(l))
@@ -166,14 +268,10 @@ public class test1 extends javax.swing.JFrame {
                         if(flag==0)
                         {
                         ST1[SYMPTR1][LABEL] = l;
-                        System.out.println("Breakpoint");
+                        //System.out.println("Breakpoint");
                         ST1[SYMPTR1][MEM] = int2addr(LP);
                         SYMPTR1++;
                         }
-                    }
-                else
-                    {
-                        map[LP][OPCODE]=x[i];
                     }
                 if(a3==1)
                 {
@@ -2076,6 +2174,7 @@ void _76()
             }
         });
         CodeTable.setSelectionBackground(new java.awt.Color(255, 255, 51));
+        CodeTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
         CodeTable.setShowHorizontalLines(true);
         CodeTable.setShowVerticalLines(true);
         jScrollPane3.setViewportView(CodeTable);
@@ -2177,6 +2276,7 @@ void _76()
             }
         });
         DataTable.setSelectionBackground(new java.awt.Color(255, 255, 0));
+        DataTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
         DataTable.setShowHorizontalLines(true);
         DataTable.setShowVerticalLines(true);
         jScrollPane4.setViewportView(DataTable);
@@ -2185,7 +2285,7 @@ void _76()
 
         jLabel21.setText("Display Memory From :");
 
-        DataHead.setText("0000");
+        DataHead.setText("4000");
         DataHead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DataHeadActionPerformed(evt);
@@ -2278,6 +2378,7 @@ void _76()
             }
         });
         StackTable.setSelectionBackground(new java.awt.Color(255, 255, 0));
+        StackTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
         StackTable.setShowHorizontalLines(true);
         StackTable.setShowVerticalLines(true);
         jScrollPane5.setViewportView(StackTable);
@@ -2286,7 +2387,7 @@ void _76()
 
         jLabel15.setText("Display Memory From :");
 
-        StackHead.setText("0000");
+        StackHead.setText("FFFF");
         StackHead.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 StackHeadActionPerformed(evt);
@@ -2544,6 +2645,7 @@ void _76()
         {
             System.out.println(ST1[e][LABEL]+"\t"+ST1[e][MEM]);
         }
+        
         refreshCode();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -2585,6 +2687,7 @@ void _76()
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        refreshStack();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void StackHeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StackHeadActionPerformed
@@ -2597,6 +2700,7 @@ void _76()
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        refreshData();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void CodeHeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CodeHeadActionPerformed
