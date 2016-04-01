@@ -288,6 +288,11 @@ public class datastructure {
         x = x.substring(d+1, x.length()).trim();
         return x;
     }
+    
+    public String extractOpcode(String S)
+    {
+        return S.substring(S.indexOf(":")+1, S.length());
+    }
     public int OpcodeLength(String s)
 {
 	switch(s)
@@ -586,7 +591,7 @@ public class datastructure {
         */
         datastructure obj = new datastructure();
         String b=null;
-        System.out.println(obj.ExtractData("MVI D,05"));
+        System.out.println(obj.extractOpcode("MVI D , 05H"));
         //System.out.println("Found ="+obj.ExtractAddress("LXIH 0525H"));
         String l =obj.getLabel("Label: Mov A,B");
         System.out.println("-"+l+"-");
