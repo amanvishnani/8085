@@ -2032,6 +2032,7 @@ void _76()
             }
         });
 
+        jA.setEditable(false);
         jA.setText("NULL");
         jA.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2047,6 +2048,7 @@ void _76()
 
         jLabel4.setText("REG (C)");
 
+        jB.setEditable(false);
         jB.setText("NULL");
         jB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2054,6 +2056,7 @@ void _76()
             }
         });
 
+        jC.setEditable(false);
         jC.setText("NULL");
         jC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2065,6 +2068,7 @@ void _76()
 
         jLabel6.setText("REG (E)");
 
+        jD.setEditable(false);
         jD.setText("NULL");
         jD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2072,12 +2076,14 @@ void _76()
             }
         });
 
+        jE.setEditable(false);
         jE.setText("NULL");
 
         jLabel7.setText("REG (H)");
 
         jLabel8.setText("REG (L)");
 
+        jH.setEditable(false);
         jH.setText("NULL");
         jH.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2085,6 +2091,7 @@ void _76()
             }
         });
 
+        jL.setEditable(false);
         jL.setText("NULL");
 
         jLabel9.setText("Instruction Ptr.:");

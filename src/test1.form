@@ -323,6 +323,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jA">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
       <Events>
@@ -351,6 +352,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jB">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
       <Events>
@@ -359,6 +361,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jC">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
       <Events>
@@ -377,6 +380,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jD">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
       <Events>
@@ -385,6 +389,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jE">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
     </Component>
@@ -400,6 +405,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jH">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
       <Events>
@@ -408,6 +414,7 @@
     </Component>
     <Component class="javax.swing.JTextField" name="jL">
       <Properties>
+        <Property name="editable" type="boolean" value="false"/>
         <Property name="text" type="java.lang.String" value="NULL"/>
       </Properties>
     </Component>
