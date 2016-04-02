@@ -21,6 +21,47 @@ public class test1 extends javax.swing.JFrame {
     public String space ="( )*";
     public String space1 = "( )+";
     
+    
+    String getLSB(String S)
+    {
+        if(S.length()==2)
+        {
+            return S.substring(1, 2);
+        }
+        else if(S.length()==4)
+        {
+            return S.substring(2, 4);
+        }
+        else
+        {
+            return "";
+        }
+    }
+    
+    String getMSB(String S)
+    {
+        if(S.length()==2)
+        {
+            return S.substring(0, 1);
+        }
+        else if(S.length()==4)
+        {
+            return S.substring(0, 2);
+        }
+        else
+        {
+            return "";
+        }
+    }
+    
+    int hex2int(String S)
+    {
+        try{
+            return Integer.parseInt(S, 16);
+        }catch(Exception NumException){JOptionPane.showMessageDialog(this, "Problem with hex to int converssion , HEX="+S);}
+        return -1;
+    }
+    
     String[] getMyCode()
     {
         int i=0,k=0,j=0;
