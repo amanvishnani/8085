@@ -18,6 +18,749 @@ public class datastructure {
     public static String[][] map = new String[16384][3];
     public String A,B,C,D,E,H,L,SP,IP;
     int S,Z,Ac,P,Cy;
+    int execute(String op)
+{
+    switch(s)
+	{
+	case "8F":
+            _8F();
+            break;
+	case "88":
+            _88();
+            break;
+	case "89":
+            _89();
+            break;
+	case "8A":
+            _8A();
+            break;
+	case "8B":
+            _8B();
+            break;
+	case "8C":
+            _8C();
+            break;
+	case "8D":
+            _8D();
+            break;
+	case "8E":
+            _8E();
+            break;
+	case "87":
+            _87();
+            break;
+	case "80":
+            _80();
+            break;
+	case "81":
+            _81();
+            break;
+	case "82":
+            _82();
+            break;
+	case "83":
+            _83();
+            break;
+	case "84":
+            _84();
+            break;
+	case "85":
+            _85();
+            break;
+	case "86":
+            _86();
+            break;
+	case "A7":
+            _A7();
+            break;
+	case "A0":
+            _A0();
+            break;
+	case "A1":
+            _A1();
+            break;
+	case "A2":
+            _A2();
+            break;
+	case "A3":
+            _A3();
+            break;
+	case "A4":
+            _A4();
+            break;
+	case "A5":
+            _A5();
+            break;
+	case "A6":
+            _A6();
+            break;
+	case "2F":
+            _2F();
+            break;
+	case "3F":
+            _3F();
+            break;
+	case "BF":
+            _BF();
+            break;
+	case "B8":
+            _B8();
+            break;
+	case "B9":
+            _B9();
+            break;
+	case "BA":
+            _BA();
+            break;
+	case "BB":
+            _BB();
+            break;
+	case "BC":
+            _BC();
+            break;
+	case "BD":
+            _BD();
+            break;
+	case "BE":
+            _BE();
+            break;
+	case "27":
+            _27();
+            break;
+	case "09":
+            _09();
+            break;
+	case "19":
+            _19();
+            break;
+	case "29":
+            _29();
+            break;
+	case "39":
+            _39();
+            break;
+	case "3D":
+            _3D();
+            break;
+	case "05":
+            _05();
+            break;
+	case "0D":
+            _0D();
+            break;
+	case "15":
+            _15();
+            break;
+	case "1D":
+            _1D();
+            break;
+	case "25":
+            _25();
+            break;
+	case "2D":
+            _2D();
+            break;
+	case "35":
+            _35();
+            break;
+	case "0B":
+            _0B();
+            break;
+	case "1B":
+            _1B();
+            break;
+	case "2B":
+            _2B();
+            break;
+	case "3B":
+            _3B();
+            break;
+	case "F3":
+            _F3();
+            break;
+	case "FB":
+            _FB();
+            break;
+	case "76":
+            _76();
+            break;
+	case "3C":
+            _3C();
+            break;
+	case "04":
+            _04();
+            break;
+	case "0C":
+            _0C();
+            break;
+	case "14":
+            _14();
+            break;
+	case "1C":
+            _1C();
+            break;
+	case "24":
+            _24();
+            break;
+	case "2C":
+            _2C();
+            break;
+	case "34":
+			_34();
+			break;
+	case "03":
+			_03();
+			break;
+	case "13":
+			_13();
+			break;
+	case "23":
+			_23();
+			break;
+	case "33":
+			_33();
+			break;
+	case "0A":
+			_0A();
+			break;
+	case "1A":
+			_1A();
+			break;
+	case "7F":
+			_7F();
+			break;
+	case "78":
+			_78();
+			break;
+	case "79":
+			_79();
+			break;
+	case "7A":
+			_7A();
+			break;
+	case "7B":
+			_7B();
+			break;
+	case "7C":
+			_7C();
+			break;
+	case "7D":
+			_7D();
+			break;
+	case "7E":
+			_7E();
+			break;
+	case "47":
+			_47();
+			break;
+	case "40":
+			_40();
+			break;
+	case "41":
+			_41();
+			break;
+	case "42":
+			_42();
+			break;
+	case "43":
+			_43();
+			break;
+	case "44":
+			_44();
+			break;
+	case "45":
+			_45();
+			break;
+	case "46":
+			_46();
+			break;
+	case "4F":
+			_4F();
+			break;
+	case "48":
+			_48();
+			break;
+	case "49":
+			_49();
+			break;
+	case "4A":
+			_4A();
+			break;
+	case "4B":
+			_4B();
+			break;
+	case "4C":
+			_4C();
+			break;
+	case "4D":
+			_4D();
+			break;
+	case "4E":
+			_4E();
+			break;
+	case "57":
+			_57();
+			break;
+	case "50":
+			_50();
+			break;
+	case "51":
+			_51();
+			break;
+	case "52":
+			_52();
+			break;
+	case "53":
+			_53();
+			break;
+	case "54":
+			_54();
+			break;
+	case "55":
+			_55();
+			break;
+	case "56":
+			_56();
+			break;
+	case "5F":
+			_5F();
+			break;
+	case "58":
+			_58();
+			break;
+	case "59":
+			_59();
+			break;
+	case "5A":
+			_5A();
+			break;
+	case "5B":
+			_5B();
+			break;
+	case "5C":
+			_5C();
+			break;
+	case "5D":
+			_5D();
+			break;
+	case "5E":
+			_5E();
+			break;
+	case "67":
+			_67();
+			break;
+	case "60":
+			_60();
+			break;
+	case "61":
+			_61();
+			break;
+	case "62":
+			_62();
+			break;
+	case "63":
+			_63();
+			break;
+	case "64":
+			_64();
+			break;
+	case "65":
+			_65();
+			break;
+	case "66":
+			_66();
+			break;
+	case "6F":
+			_6F();
+			break;
+	case "68":
+			_68();
+			break;
+	case "69":
+			_69();
+			break;
+	case "6A":
+			_6A();
+			break;
+	case "6B":
+			_6B();
+			break;
+	case "6C":
+			_6C();
+			break;
+	case "6D":
+			_6D();
+			break;
+	case "6E":
+			_6E();
+			break;
+	case "77":
+			_77();
+			break;
+	case "70":
+			_70();
+			break;
+	case "71":
+			_71();
+			break;
+	case "72":
+			_72();
+			break;
+	case "73":
+			_73();
+			break;
+	case "74":
+			_74();
+			break;
+	case "75":
+			_75();
+			break;
+	case "00":
+			_00();
+			break;
+	case "B7":
+			_B7();
+			break;
+	case "B0":
+			_B0();
+			break;
+	case "B1":
+			_B1();
+			break;
+	case "B2":
+			_B2();
+			break;
+	case "B3":
+			_B3();
+			break;
+	case "B4":
+			_B4();
+			break;
+	case "B5":
+			_B5();
+			break;
+	case "B6":
+			_B6();
+			break;
+	case "E9":
+			_E9();
+			break;
+	case "C1":
+			_C1();
+			break;
+	case "D1":
+			_D1();
+			break;
+	case "E1":
+			_E1();
+			break;
+	case "F1":
+			_F1();
+			break;
+	case "C5":
+			_C5();
+			break;
+	case "D5":
+			_D5();
+			break;
+	case "E5":
+			_E5();
+			break;
+	case "F5":
+			_F5();
+			break;
+	case "17":
+			_17();
+			break;
+	case "1F":
+			_1F();
+			break;
+	case "D8":
+			_D8();
+			break;
+	case "C9":
+			_C9();
+			break;
+	case "20":
+			_20();
+			break;
+	case "07":
+			_07();
+			break;
+	case "F8":
+			_F8();
+			break;
+	case "D0":
+			_D0();
+			break;
+	case "F0":
+			_F0();
+			break;
+	case "E8":
+			_E8();
+			break;
+	case "E0":
+			_E0();
+			break;
+	case "0F":
+			_0F();
+			break;
+	case "C7":
+			_C7();
+			break;
+	case "CF":
+			_CF();
+			break;
+	case "D7":
+			_D7();
+			break;
+	case "DF":
+			_DF();
+			break;
+	case "E7":
+			_E7();
+			break;
+	case "EF":
+			_EF();
+			break;
+	case "F7":
+			_F7();
+			break;
+	case "FF":
+			_FF();
+			break;
+	case "C8":
+			_C8();
+			break;
+	case "9F":
+			_9F();
+			break;
+	case "98":
+			_98();
+			break;
+	case "99":
+			_99();
+			break;
+	case "9A":
+			_9A();
+			break;
+	case "9B":
+			_9B();
+			break;
+	case "9C":
+			_9C();
+			break;
+	case "9D":
+			_9D();
+			break;
+	case "9E":
+			_9E();
+			break;
+	case "30":
+			_30();
+			break;
+	case "F9":
+			_F9();
+			break;
+	case "02":
+			_02();
+			break;
+	case "12":
+			_12();
+			break;
+	case "37":
+			_37();
+			break;
+	case "97":
+			_97();
+			break;
+	case "90":
+			_90();
+			break;
+	case "91":
+			_91();
+			break;
+	case "92":
+			_92();
+			break;
+	case "93":
+			_93();
+			break;
+	case "94":
+			_94();
+			break;
+	case "95":
+			_95();
+			break;
+	case "96":
+			_96();
+			break;
+	case "EB":
+			_EB();
+			break;
+	case "AF":
+			_AF();
+			break;
+	case "A8":
+			_A8();
+			break;
+	case "A9":
+			_A9();
+			break;
+	case "AA":
+			_AA();
+			break;
+	case "AB":
+			_AB();
+			break;
+	case "AC":
+			_AC();
+			break;
+	case "AD":
+			_AD();
+			break;
+	case "AE":
+			_AE();
+			break;
+	case "E3":
+			_E3();
+			break;
+	case "CE":
+			_CE();
+			break;
+	case "C6":
+			_C6();
+			break;
+	case "E6":
+			_E6();
+			break;
+	case "FE":
+			_FE();
+			break;
+	case "DB":
+			_DB();
+			break;
+	case "3E":
+			_3E();
+			break;
+	case "06":
+			_06();
+			break;
+	case "0E":
+			_0E();
+			break;
+	case "16":
+			_16();
+			break;
+	case "1E":
+			_1E();
+			break;
+	case "26":
+			_26();
+			break;
+	case "2E":
+			_2E();
+			break;
+	case "36":
+			_36();
+			break;
+	case "F6":
+			_F6();
+			break;
+	case "D3":
+			_D3();
+			break;
+	case "DE":
+			_DE();
+			break;
+	case "D6":
+			_D6();
+			break;
+	case "EE":
+			_EE();
+			break;
+	case "CD":
+			_CD();
+			break;
+	case "DC":
+			_DC();
+			break;
+	case "FC":
+			_FC();
+			break;
+	case "D4":
+			_D4();
+			break;
+	case "C4":
+			_C4();
+			break;
+	case "F4":
+			_F4();
+			break;
+	case "EC":
+			_EC();
+			break;
+	case "E4":
+			_E4();
+			break;
+	case "CC":
+			_CC();
+			break;
+	case "DA":
+			_DA();
+			break;
+	case "FA":
+			_FA();
+			break;
+	case "C3":
+			_C3();
+			break;
+	case "D2":
+			_D2();
+			break;
+	case "C2":
+			_C2();
+			break;
+	case "F2":
+			_F2();
+			break;
+	case "EA":
+			_EA();
+			break;
+	case "E2":
+			_E2();
+			break;
+	case "CA":
+			_CA();
+			break;
+	case "3A":
+			_3A();
+			break;
+	case "2A":
+			_2A();
+			break;
+	case "01":
+			_01();
+			break;
+	case "11":
+			_11();
+			break;
+	case "21":
+			_21();
+			break;
+	case "31":
+			_31();
+			break;
+	case "22":
+			_22();
+			break;
+	case "32":
+			_32();
+			break;
+	
+}
+    return 1;
+}
     public static String int2addr(int x)
     {
         String temp = Integer.toHexString(x);
