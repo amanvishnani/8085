@@ -2675,7 +2675,11 @@ void _76()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         iniMap();
-        
+        /*int SetA = SetA("08");
+        int SetB = SetB("04");
+        SetCy(1);
+        String _8F;
+        _8F = _8F();*/
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -2797,9 +2801,436 @@ void _76()
             }
         });
     }
+String _87()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getA());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getA()))) > 15)
+    {
+        SetAc(1);
+    }
 
-    
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
 
+}
+String _80()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getB());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getB()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _81()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getC());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getC()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _82()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getD());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getD()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _83()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getE()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _84()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getH());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getH()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _85()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getL());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getL()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _86()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    r2 = hex2int(getM());
+    if((r1+r2)>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8F()
+{
+   int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getA());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getA()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _88()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getB());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getB()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _89()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getC());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getC()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8A()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getD());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getD()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8B()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getE()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8C()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getH());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getH()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8D()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getL());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getL()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _8E()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getE()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+    if(temp.length()<=2)
+    {
+	SetA(temp);
+        return "0";
+    }
+    else
+    {
+	return temp.substring((temp.length() - 2),temp.length());
+    }
+
+}
+String _97()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    r3=r1-r2;
+    if (r1<0)
+    {
+        SetS(1);
+    }
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
