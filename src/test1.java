@@ -2675,11 +2675,10 @@ void _76()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
         iniMap();
-        /*int SetA = SetA("08");
-        int SetB = SetB("04");
-        SetCy(1);
-        String _8F;
-        _8F = _8F();*/
+        int SetA = SetA("05");
+        int SetB = SetB("05");
+        String _05;
+        _05 = _05();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -2801,12 +2800,13 @@ void _76()
             }
         });
     }
+    //ADD A
 String _87()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getA());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getA()))) > 15)
     {
@@ -2825,12 +2825,13 @@ String _87()
     }
 
 }
+//ADD B
 String _80()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getB());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getB()))) > 15)
     {
@@ -2849,12 +2850,13 @@ String _80()
     }
 
 }
+//ADD C
 String _81()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getC());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getC()))) > 15)
     {
@@ -2873,12 +2875,13 @@ String _81()
     }
 
 }
+//ADD D
 String _82()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getD());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getD()))) > 15)
     {
@@ -2897,12 +2900,13 @@ String _82()
     }
 
 }
+//ADD E
 String _83()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getE());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getE()))) > 15)
     {
@@ -2921,12 +2925,13 @@ String _83()
     }
 
 }
+//ADD H
 String _84()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getH());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getH()))) > 15)
     {
@@ -2945,12 +2950,13 @@ String _84()
     }
 
 }
+//ADD L
 String _85()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getL());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getL()))) > 15)
     {
@@ -2969,12 +2975,13 @@ String _85()
     }
 
 }
+//ADD M
 String _86()
 {
     int r1,r2;
     r1 = hex2int(getA());
     r2 = hex2int(getM());
-    if((r1+r2)>31)
+    if((r1+r2)>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))) > 15)
     {
@@ -2993,6 +3000,7 @@ String _86()
     }
 
 }
+//ADC A
 String _8F()
 {
    int r1,r2,r3;
@@ -3021,6 +3029,7 @@ String _8F()
     }
 
 }
+//ADC B
 String _88()
 {
     int r1,r2,r3;
@@ -3049,6 +3058,7 @@ String _88()
     }
 
 }
+//ADC C
 String _89()
 {
     int r1,r2,r3;
@@ -3077,6 +3087,7 @@ String _89()
     }
 
 }
+//ADC D
 String _8A()
 {
     int r1,r2,r3;
@@ -3105,6 +3116,7 @@ String _8A()
     }
 
 }
+//ADC E
 String _8B()
 {
     int r1,r2,r3;
@@ -3133,6 +3145,7 @@ String _8B()
     }
 
 }
+//ADC H
 String _8C()
 {
     int r1,r2,r3;
@@ -3161,6 +3174,7 @@ String _8C()
     }
 
 }
+//ADC L
 String _8D()
 {
     int r1,r2,r3;
@@ -3193,10 +3207,10 @@ String _8E()
 {
     int r1,r2,r3;
     r1 = hex2int(getA());
-    r2 = hex2int(getE());
+    r2 = hex2int(getM());
     if((r1+r2+getCy())>31)
         {SetCy(1);}
-    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getE()))+getCy()) > 15)
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))+getCy()) > 15)
     {
         SetAc(1);
     }
@@ -3217,20 +3231,511 @@ String _8E()
     }
 
 }
+//SUB A
 String _97()
 {
     int r1,r2,r3;
     r1 = hex2int(getA());
-    r2 = hex2int(getE());
+    r2 = hex2int(getA());
     r3=r1-r2;
-    if (r1<0)
+    if (r3<0)
     {
         SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
     }
+    else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
     return"0";
 }
+//SUB B
+String _90()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getB());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB C
+String _91()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getC());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB D
+String _92()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getD());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB E
+String _93()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB H
+String _94()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getH());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB L
+String _95()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getL());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//SUB M
+String _96()
+{
+        int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getM());
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    return"0";
+
+}
+//INR A
+String _3C()
+{
+    int r;
+    r=hex2int(getA());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetA(temp);
+    return "0";
+}
+//INR B
+String _04()
+{
+    int r;
+    r=hex2int(getB());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetB(temp);
+    return "0";
+
+}
+//INR C
+String _0C()
+{
+    int r;
+    r=hex2int(getC());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetC(temp);
+    return "0";
+
+}
+//INR D
+String _14()
+{
+    int r;
+    r=hex2int(getD());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetD(temp);
+    return "0";
+
+}
+//INT E
+String _1C()
+{
+    int r;
+    r=hex2int(getE());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetE(temp);
+    return "0";
+
+}
+//INR H
+String _24()
+{
+    int r;
+    r=hex2int(getH());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetH(temp);
+    return "0";
+
+}
+//INR L
+String _2C()
+{
+    int r;
+    r=hex2int(getL());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetL(temp);
+    return "0";
+
+}
+//INR M
+String _34()
+{
+    int r;
+    r=hex2int(getM());
+    r++;
+    String temp = Integer.toHexString(r);
+    SetM(temp);
+    return "0";
+
+}
+//CMP A
+String _BF()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getA());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+}
+//CMP B
+String _B8()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getB());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//CMP C
+String _B9()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getC());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//CMP D
+String _BA()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getD());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//CMP E
+String _BB()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getE());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//CMP H
+String _BC()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getH());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//CMP L
+String _BD()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getL());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+String _BE()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getM());
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    return "0";
+
+}
+//DCR A
+String _3D()
+{
+    int r;
+    r=hex2int(getA());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetA(temp);
+    return "0";
+}
+//DCR B
+String _05()
+{
+    int r;
+    r=hex2int(getB());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetB(temp);
+    return "0";
+
+}
+//DCR C
+String _0D()
+{
+    int r;
+    r=hex2int(getC());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetC(temp);
+    return "0";
+
+}
+//DCR D
+String _15()
+{
+    int r;
+    r=hex2int(getD());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetD(temp);
+    return "0";
+
+}
+//DCR E
+String _1D()
+{
+    int r;
+    r=hex2int(getE());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetE(temp);
+    return "0";
+}
+//DCR H
+String _25()
+{
+    int r;
+    r=hex2int(getH());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetH(temp);
+    return "0";
+}
+//DCR L
+String _2D()
+{
+    int r;
+    r=hex2int(getL());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetL(temp);
+    return "0";
+
+}
+//DCR M
+String _35()
+{
+    int r;
+    r=hex2int(getM());
+    r--;
+    if(r==0)
+        SetZ(1);
+    String temp = Integer.toHexString(r);
+    SetM(temp);
+    return "0";
+}
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
