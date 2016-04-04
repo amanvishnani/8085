@@ -9,7 +9,7 @@ public class test1 extends javax.swing.JFrame {
     public static String[] memory = new String[65536];
     public static String A,B,C,D,E,H,L,SP,IP;
     static int S,Z,Ac,P,Cy;
-    public static int LABEL=0,OPCODE=1,MEM=1,SYMPTR,SYMPTR1;
+    public static int LABEL=0,OPCODE=1,MEM=1,SYMPTR,SYMPTR1,oldIP;
     public static String[][] ST = new String[100][2];
     public static String[][] ST1 = new String[100][2];
     public static String[][] map = new String[16384][2];
@@ -25,9 +25,16 @@ public class test1 extends javax.swing.JFrame {
     void IncIP()
     {
         int x = hex2int(getIP());
-        x++;
         if(x<16383)
         {
+            int ch =hex2int(CodeHead.getText());
+            
+            if(x>=(ch+20))
+            {
+                CodeHead.setText(int2addr(ch+1));
+                refreshCode();
+            }
+            x++;
             SetIP(int2addr(x));
         }
         else
@@ -2722,7 +2729,7 @@ void _76()
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+        oldIP=0;
         iniMap();
         int SetA = SetA("05");
         int SetC = SetC("05");
@@ -2751,10 +2758,17 @@ void _76()
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
-        run_code.setSelectedIndex(run_code_index);
-        run_code_index++;
-        System.out.println(run_code.getSelectedValue());
+        int nip= hex2int(getIP());
+        IncIP();
+        nip = nip - hex2int(CodeHead.getText());
+
+        CodeTable.addRowSelectionInterval(nip, nip);
+        if(oldIP!=nip)
+            CodeTable.removeRowSelectionInterval(oldIP, oldIP);
+        oldIP=nip;
+       // run_code.setSelectedIndex(run_code_index);
+       // run_code_index++;
+       // System.out.println(run_code.getSelectedValue());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActionPerformed
