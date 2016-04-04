@@ -4258,6 +4258,7 @@ String _AF()
     return "0";
  
 }
+//XRA B
 String _A8()
 {
     int r1,r2;
@@ -4276,6 +4277,7 @@ String _A8()
     }
     return "0";
 }
+//XRA C
 String _A9()
 {
     int r1,r2;
@@ -4294,6 +4296,7 @@ String _A9()
     }
     return "0";
 }
+//XRA D
 String _AA()
 {
     int r1,r2;
@@ -4312,6 +4315,7 @@ String _AA()
     }
     return "0";
 }
+//XRA E
 String _AB()
 {
     int r1,r2;
@@ -4330,6 +4334,7 @@ String _AB()
     }
     return "0";
 }
+//XRA H
 String _AC()
 {
     int r1,r2;
@@ -4348,6 +4353,7 @@ String _AC()
     }
     return "0";
 }
+//XRA L
 String _AD()
 {
     int r1,r2;
@@ -4366,6 +4372,7 @@ String _AD()
     }
     return "0";
 }
+//XRA M
 String _AE()
 {
     int r1,r2;
