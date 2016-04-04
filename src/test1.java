@@ -2731,10 +2731,12 @@ void _76()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP=0;
         iniMap();
-        int SetA = SetA("05");
-        int SetC = SetC("05");
-        String _81;
-        _81 = _81();
+        int SetB = SetB("01");
+        int SetC = SetC("02");
+        SetH("03");
+        SetL("04");
+        String _09;
+        _09 = _09();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -3855,6 +3857,34 @@ String _35()
     SetM(temp);
     return "0";
 }
+//XCHG
+String _EB()
+{
+    String r1,r2;
+    r1=getD();
+    r2=getE();
+    SetD(getH());
+    SetE(getL());
+    SetH(r1);
+    SetL(r2);
+    return "0";
+}
+//DAD B
+String _09()
+ {
+     int r1,r2;
+     r1=hex2int(getB().concat(getC()));
+     r2=hex2int(getH().concat(getL()));
+     if((r1+r2<65535))
+         SetCy(1);
+     String temp=Integer.toHexString(r1+r2);
+     String t1 = temp.substring(temp.length()-2,temp.length());
+     String t2 =  temp.substring(temp.length()-4,temp.length()-2);
+     SetL(t1);
+     SetH(t2);
+     return "0";
+ }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
