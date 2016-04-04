@@ -45,29 +45,33 @@ public class test1 extends javax.swing.JFrame {
     
     String getLSB(String S)
     {
-        if(S.length()==2)
+        if(S.length()==1)
+        {
+            return "0"+S;
+        }
+        else if(S.length()==2)
         {
             return S.substring(1, 2);
         }
-        else if(S.length()==4)
-        {
-            return S.substring(2, 4);
-        }
         else
         {
-            return "";
+            return S.substring(S.length()-2, S.length());
         }
     }
     
     String getMSB(String S)
     {
+        if(S.length()==1)
+        {
+            return "0";
+        }
         if(S.length()==2)
         {
             return S.substring(0, 1);
         }
-        else if(S.length()==4)
+        else if(S.length()>2)
         {
-            return S.substring(0, 2);
+            return S.substring(S.length()-4, S.length()-2);
         }
         else
         {
@@ -2731,12 +2735,11 @@ void _76()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP=0;
         iniMap();
-        int SetB = SetB("01");
-        int SetC = SetC("02");
-        SetH("03");
-        SetL("04");
-        String _09;
-        _09 = _09();
+        SetB("00");
+        SetC("01");
+        SetH("FF");
+        SetL("FF");
+        _09();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -3873,13 +3876,15 @@ String _EB()
 String _09()
  {
      int r1,r2;
-     r1=hex2int(getB().concat(getC()));
-     r2=hex2int(getH().concat(getL()));
-     if((r1+r2<65535))
+     r1=hex2int(getB()+getC());
+     r2=hex2int(getH()+getL());
+     System.out.println("r1= "+r1+" r2= "+r2);
+     if((r1+r2>65535))
          SetCy(1);
-     String temp=Integer.toHexString(r1+r2);
-     String t1 = temp.substring(temp.length()-2,temp.length());
-     String t2 =  temp.substring(temp.length()-4,temp.length()-2);
+     String temp=int2addr(r1+r2);
+     System.out.println(temp);
+     String t1 = getLSB(temp);
+     String t2 =  getMSB(temp);
      SetL(t1);
      SetH(t2);
      return "0";
