@@ -3922,33 +3922,6 @@ String _29()
      SetH(t2);
      return "0";
 }
-//XCHG
-String _EB()
-{
-    String r1,r2;
-    r1=getD();
-    r2=getE();
-    SetD(getH());
-    SetE(getL());
-    SetH(r1);
-    SetL(r2);
-    return "0";
-}
-//DAD B
-String _09()
- {
-     int r1,r2;
-     r1=hex2int(getB().concat(getC()));
-     r2=hex2int(getH().concat(getL()));
-     if((r1+r2<65535))
-         SetCy(1);
-     String temp=Integer.toHexString(r1+r2);
-     String t1 = temp.substring(temp.length()-2,temp.length());
-     String t2 =  temp.substring(temp.length()-4,temp.length()-2);
-     SetL(t1);
-     SetH(t2);
-     return "0";
- }
 //ANA A
 String _A7()
 {
@@ -4245,7 +4218,6 @@ String _B5()
         SetZ(1);
     }
     return "0";
-
 }
 //ORA M
 String _B6()
@@ -4265,9 +4237,153 @@ String _B6()
         SetZ(1);
     }
     return "0";
-
 }
-
+//XRA A
+String _AF()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getA());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+ 
+}
+String _A8()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getB());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _A9()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getC());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _AA()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getD());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _AB()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getE());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _AC()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getH());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _AD()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getL());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
+String _AE()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=hex2int(getM());
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    return "0";
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
