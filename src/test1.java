@@ -22,6 +22,20 @@ public class test1 extends javax.swing.JFrame {
     public String space1 = "( )+";
     
     
+    void IncIP()
+    {
+        int x = hex2int(getIP());
+        x++;
+        if(x<16383)
+        {
+            SetIP(int2addr(x));
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this, "IP exceeding 3FFF (16383)");
+        }
+    }
+    
     String getLSB(String S)
     {
         if(S.length()==2)
@@ -65,7 +79,7 @@ public class test1 extends javax.swing.JFrame {
     String[] getMyCode()
     {
         int i=0,k=0,j=0;
-        String code = code_av.getText();
+        String code = code_av.getText().toUpperCase();
         code_token = code.split("\\n");
         String[] temp= new String[code_token.length];
         
@@ -101,6 +115,20 @@ public class test1 extends javax.swing.JFrame {
             map[i][LABEL]="";
             map[i][OPCODE]="";
         }
+        SetA("00");
+        SetB("00");
+        SetC("00");
+        SetD("00");
+        SetE("00");
+        SetH("00");
+        SetL("00");
+        SetCy(0);
+        SetAc(0);
+        SetS(0);
+        SetZ(0);
+        SetP(0);
+        SetIP("0000");
+        SetSP("FFFF");
     }
     
     void refreshCode()
@@ -362,6 +390,7 @@ public class test1 extends javax.swing.JFrame {
             }
             else
             {
+                JOptionPane.showMessageDialog(this, "Instruction "+x[i]+" NOT Valid\n Skipping invalid Instruction");
             }
         }
         return 0;
@@ -630,7 +659,7 @@ public class test1 extends javax.swing.JFrame {
     }
     
     /* MOV INSTRUCTIONS */
-    void _7F()
+void _7F()
 {
 	SetA(getA());
 }
@@ -2018,6 +2047,7 @@ void _76()
         CodeHead = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         DataTable = new javax.swing.JTable();
@@ -2026,6 +2056,7 @@ void _76()
         DataHead = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         StackTable = new javax.swing.JTable();
@@ -2034,6 +2065,7 @@ void _76()
         StackHead = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -2055,7 +2087,7 @@ void _76()
         code_av.setRows(5);
         jScrollPane1.setViewportView(code_av);
 
-        jButton1.setText("Token >");
+        jButton1.setText("LOAD >");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -2150,20 +2182,20 @@ void _76()
 
         jLabel11.setText("S");
 
-        jS.setText("1");
+        jS.setText("0");
         jS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jSActionPerformed(evt);
             }
         });
 
-        jZ.setText("1");
+        jZ.setText("0");
 
-        jAc.setText("1");
+        jAc.setText("0");
 
-        jP.setText("1");
+        jP.setText("0");
 
-        jCy.setText("1");
+        jCy.setText("0");
 
         jLabel12.setText("Z");
 
@@ -2175,7 +2207,7 @@ void _76()
 
         jLabel19.setText("Flags:");
 
-        jTextField18.setText("FF H");
+        jTextField18.setText("00");
 
         jSeparator4.setOrientation(javax.swing.SwingConstants.VERTICAL);
 
@@ -2247,6 +2279,8 @@ void _76()
 
         jLabel25.setText("20 Max results will be displayed");
 
+        jLabel26.setText("H");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -2259,6 +2293,8 @@ void _76()
                         .addComponent(jLabel24)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(CodeHead, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel26)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5))
                     .addComponent(jLabel23)
@@ -2272,7 +2308,8 @@ void _76()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel24)
                     .addComponent(CodeHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(jButton5)
+                    .addComponent(jLabel26))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel25)
                 .addGap(18, 18, 18)
@@ -2349,6 +2386,8 @@ void _76()
 
         jLabel22.setText("20 Max results will be displayed");
 
+        jLabel27.setText("H");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -2361,7 +2400,9 @@ void _76()
                         .addComponent(jLabel21)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(DataHead, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel27)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4))
                     .addComponent(jLabel22))
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -2374,7 +2415,8 @@ void _76()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel21)
                     .addComponent(DataHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(jButton4)
+                    .addComponent(jLabel27))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2451,11 +2493,13 @@ void _76()
 
         jLabel17.setText("20 Max results will be displayed");
 
+        jLabel28.setText("H");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2468,10 +2512,12 @@ void _76()
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(StackHead, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))
                             .addComponent(jLabel13))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 110, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2481,7 +2527,8 @@ void _76()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(StackHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(jButton3)
+                    .addComponent(jLabel28))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel17)
                 .addGap(13, 13, 13)
@@ -2509,47 +2556,49 @@ void _76()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jSP)
-                                            .addComponent(jIP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel19)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jB)
-                                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jD)
-                                                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jH, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addGap(18, 18, 18)
-                                                .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addGap(3, 3, 3)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(jE, javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(jSP)
+                                                .addComponent(jIP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel19)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel1)
+                                                .addGroup(layout.createSequentialGroup()
+                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jB)
+                                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jD)
+                                                        .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(jH, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addGap(18, 18, 18)
+                                                    .addComponent(jSeparator4, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGap(3, 3, 3)
+                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jA, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jC, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                    .addComponent(jE, javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(jL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2676,9 +2725,9 @@ void _76()
         
         iniMap();
         int SetA = SetA("05");
-        int SetB = SetB("05");
-        String _05;
-        _05 = _05();
+        int SetC = SetC("05");
+        String _81;
+        _81 = _81();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -2814,16 +2863,19 @@ String _87()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD B
 String _80()
@@ -2839,15 +2891,19 @@ String _80()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+            switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADD C
@@ -2864,16 +2920,19 @@ String _81()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD D
 String _82()
@@ -2889,16 +2948,19 @@ String _82()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD E
 String _83()
@@ -2914,16 +2976,19 @@ String _83()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD H
 String _84()
@@ -2937,18 +3002,20 @@ String _84()
     {
         SetAc(1);
     }
-
-    String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        String temp = Integer.toHexString(r1+r2);
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD L
 String _85()
@@ -2964,16 +3031,19 @@ String _85()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADD M
 String _86()
@@ -2989,16 +3059,19 @@ String _86()
     }
 
     String temp = Integer.toHexString(r1+r2);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
-
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 }
 //ADC A
 String _8F()
@@ -3006,7 +3079,7 @@ String _8F()
    int r1,r2,r3;
     r1 = hex2int(getA());
     r2 = hex2int(getA());
-    if((r1+r2+getCy())>31)
+    if((r1+r2+getCy())>255)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getA()))+getCy()) > 15)
     {
@@ -3018,15 +3091,19 @@ String _8F()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC B
@@ -3047,15 +3124,19 @@ String _88()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC C
@@ -3076,15 +3157,19 @@ String _89()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+            switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC D
@@ -3105,15 +3190,19 @@ String _8A()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC E
@@ -3134,15 +3223,19 @@ String _8B()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC H
@@ -3163,15 +3256,19 @@ String _8C()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //ADC L
@@ -3192,15 +3289,19 @@ String _8D()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 String _8E()
@@ -3220,15 +3321,19 @@ String _8E()
         r3++;
     }
     String temp = Integer.toHexString(r3);
-    if(temp.length()<=2)
-    {
-	SetA(temp);
-        return "0";
-    }
-    else
-    {
-	return temp.substring((temp.length() - 2),temp.length());
-    }
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+ return "0";
 
 }
 //SUB A
@@ -3240,6 +3345,7 @@ String _97()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -3250,7 +3356,7 @@ String _97()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    return"0";
+    return "0";
 }
 //SUB B
 String _90()
@@ -3779,6 +3885,9 @@ String _35()
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
