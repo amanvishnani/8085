@@ -2193,6 +2193,7 @@ void _76()
 
         jLabel11.setText("S");
 
+        jS.setEditable(false);
         jS.setText("0");
         jS.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2200,12 +2201,16 @@ void _76()
             }
         });
 
+        jZ.setEditable(false);
         jZ.setText("0");
 
+        jAc.setEditable(false);
         jAc.setText("0");
 
+        jP.setEditable(false);
         jP.setText("0");
 
+        jCy.setEditable(false);
         jCy.setText("0");
 
         jLabel12.setText("Z");
@@ -2614,7 +2619,7 @@ void _76()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2638,7 +2643,7 @@ void _76()
                 .addComponent(code_here)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
-                .addGap(27, 743, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4391,6 +4396,7 @@ String _AE()
     }
     return "0";
 }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
