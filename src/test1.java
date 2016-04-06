@@ -673,258 +673,322 @@ public class test1 extends javax.swing.JFrame {
 void _7F()
 {
 	SetA(getA());
+        IncIP();
 }
 void _78()
 {
 	SetA(getB());
+        IncIP();
 }
 void _79()
 {
 	SetA(getC());
+        IncIP();
 }
 void _7A()
 {
 	SetA(getD());
+        IncIP();
 }
 void _7B()
 {
 	SetA(getE());
+        IncIP();
 }
 void _7C()
 {
 	SetA(getH());
+        IncIP();
 }
 void _7D()
 {
 	SetA(getL());
+        IncIP();
 }
 void _7E()
 {
 	SetA(getM());
+        IncIP();
 }
 void _47()
 {
 	SetB(getA());
+        IncIP();
 }
 void _40()
 {
 	SetB(getB());
+        IncIP();
 }
 void _41()
 {
 	SetB(getC());
+        IncIP();
 }
 void _42()
 {
 	SetB(getD());
+        IncIP();
 }
 void _43()
 {
 	SetB(getE());
+        IncIP();
 }
 void _44()
 {
 	SetB(getH());
+        IncIP();
 }
 void _45()
 {
 	SetB(getL());
+        IncIP();
 }
 void _46()
 {
 	SetB(getM());
+        IncIP();
 }
 void _4F()
 {
 	SetC(getA());
+        IncIP();
 }
 void _48()
 {
 	SetC(getB());
+        IncIP();
 }
 void _49()
 {
 	SetC(getC());
+        IncIP();
 }
 void _4A()
 {
 	SetC(getD());
+        IncIP();
 }
 void _4B()
 {
 	SetC(getE());
+        IncIP();
 }
 void _4C()
 {
 	SetC(getH());
+        IncIP();
 }
 void _4D()
 { 
 	SetC(getL());
+        IncIP();
 }
 void _4E()
 { 
 	SetC(getM());
+        IncIP();
 }
 void _57()
 {
 	SetD(getA());
+        IncIP();
 }
 void _50()
 {
 	SetD(getB());
+        IncIP();
 }
 void _51()
 {
 	SetD(getC());
+        IncIP();
 }
 void _52()
 {
 	SetD(getD());
+        IncIP();
 }
 void _53()
 {
 	SetD(getE());
+        IncIP();
 }
 void _54()
 {
 	SetD(getH());
+        IncIP();
 }
 void _55()
 {
 	SetD(getL());
+        IncIP();
 }
 void _56()
 {
 	SetD(getM());
+        IncIP();
 }
 void _5F()
 {
 	SetE(getA());
+        IncIP();
 }
 void _58()
 {
 	SetE(getB());
+        IncIP();
 }
 void _59()
 {
 	SetE(getC());
+        IncIP();
 }
 void _5A()
 {
 	SetE(getD());
+        IncIP();
 }
 void _5B()
 {
 	SetE(getE());
+        IncIP();
 }
 void _5C()
 {
 	SetE(getH());
+        IncIP();
 }
 void _5D()
 {
 	SetE(getL());
+        IncIP();
 }
 void _5E()
 {
 	SetE(getM());
+        IncIP();
 }
 void _67()
 {
 	SetH(getA());
+        IncIP();
 }
 void _60()
 {
 	SetH(getB());
+        IncIP();
 }
 void _61()
 {
 	SetH(getC());
+        IncIP();
 }
 void _62()
 {
 	SetH(getD());
+        IncIP();
 }
 void _63()
 {
 	SetH(getE());
+        IncIP();
 }
 void _64()
 {
 	SetH(getH());
+        IncIP();
 }
 void _65()
 {
 	SetH(getL());
+        IncIP();
 }
 void _66()
 {
 	SetH(getM());
+        IncIP();
 }
 void _6F()
 {
 	SetL(getA());
+        IncIP();
 }
 void _68()
 {
 	SetL(getB());
+        IncIP();
 }
 void _69()
 {
 	SetL(getC());
+        IncIP();
 }
 void _6A()
 {
 	SetL(getD());
+        IncIP();
 }
 void _6B()
 {
 	SetL(getE());
+        IncIP();
 }
 void _6C()
 {
 	SetL(getH());
+        IncIP();
 }
 void _6D()
 {
 	SetL(getL());
+        IncIP();
 }
 void _6E()
 {
 	SetL(getM());
+        IncIP();
 }
 void _77()
 {
 	SetM(getA());
+        IncIP();
 }
 void _70()
 {
 	SetM(getB());
+        IncIP();
 }
 void _71()
 {
 	SetM(getC());
+        IncIP();
 }
 void _72()
 {
 	SetM(getD());
+        IncIP();
 }
 void _73()
 {
 	SetM(getE());
+        IncIP();
 }
 void _74()
 {
 	SetM(getH());
+        IncIP();
 }
 void _75()
 {
 	SetM(getL());
+        IncIP();
 }
 void _76()
 {
 	SetM(getM());
+        IncIP();
 }
         
     public String Trimmer(String x)
@@ -2380,6 +2444,11 @@ void _76()
         DataTable.setSelectionForeground(new java.awt.Color(0, 0, 0));
         DataTable.setShowHorizontalLines(true);
         DataTable.setShowVerticalLines(true);
+        DataTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DataTableKeyPressed(evt);
+            }
+        });
         jScrollPane4.setViewportView(DataTable);
 
         jLabel20.setText("Data Space ranges from 4000 to DFFF");
@@ -2836,6 +2905,32 @@ void _76()
         refreshCode();
     }//GEN-LAST:event_jButton5ActionPerformed
 
+    private void DataTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DataTableKeyPressed
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==evt.VK_ENTER)
+        {
+            for(int i=0;i<20;i++)
+            {
+                Object y = DataTable.getValueAt(i, 1);
+                Object x = DataTable.getValueAt(i, 0);
+                String q = y.toString().toUpperCase();
+                String p = x.toString();
+                Pattern ppp ;
+                ppp = Pattern.compile("^[A-Fa-f0-9]{2}$");
+                Matcher mmm = ppp.matcher(q);
+                if(!mmm.find())
+                {
+                    JOptionPane.showMessageDialog(this, q+" is not a 1 Byte Hex digit");
+                    DataTable.setValueAt("00",i, 1);
+                }
+                else
+                {
+                    setData(p, q);
+                }
+            }
+        }
+    }//GEN-LAST:event_DataTableKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -2899,6 +2994,7 @@ String _87()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD B
@@ -2927,6 +3023,7 @@ String _80()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -2956,6 +3053,7 @@ String _81()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD D
@@ -2984,6 +3082,7 @@ String _82()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD E
@@ -3012,6 +3111,7 @@ String _83()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD H
@@ -3039,6 +3139,7 @@ String _84()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD L
@@ -3067,6 +3168,7 @@ String _85()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADD M
@@ -3095,6 +3197,7 @@ String _86()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 }
 //ADC A
@@ -3127,6 +3230,7 @@ String _8F()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3160,6 +3264,7 @@ String _88()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3193,6 +3298,7 @@ String _89()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();    
  return "0";
 
 }
@@ -3226,6 +3332,7 @@ String _8A()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3259,6 +3366,7 @@ String _8B()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3292,6 +3400,7 @@ String _8C()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3325,6 +3434,7 @@ String _8D()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3357,6 +3467,7 @@ String _8E()
                 SetA(temp.substring((temp.length() - 2),temp.length()));
                 break;
         }
+        IncIP();
  return "0";
 
 }
@@ -3380,6 +3491,7 @@ String _97()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return "0";
 }
 //SUB B
@@ -3401,6 +3513,7 @@ String _90()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3423,6 +3536,7 @@ String _91()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3445,6 +3559,7 @@ String _92()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3467,6 +3582,7 @@ String _93()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3489,6 +3605,7 @@ String _94()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3511,6 +3628,7 @@ String _95()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3533,6 +3651,7 @@ String _96()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    IncIP();
     return"0";
 
 }
@@ -3544,6 +3663,7 @@ String _3C()
     r++;
     String temp = Integer.toHexString(r);
     SetA(temp);
+    IncIP();
     return "0";
 }
 //INR B
@@ -3554,6 +3674,7 @@ String _04()
     r++;
     String temp = Integer.toHexString(r);
     SetB(temp);
+    IncIP();
     return "0";
 
 }
@@ -3565,6 +3686,7 @@ String _0C()
     r++;
     String temp = Integer.toHexString(r);
     SetC(temp);
+    IncIP();
     return "0";
 
 }
@@ -3576,6 +3698,7 @@ String _14()
     r++;
     String temp = Integer.toHexString(r);
     SetD(temp);
+    IncIP();
     return "0";
 
 }
@@ -3587,6 +3710,7 @@ String _1C()
     r++;
     String temp = Integer.toHexString(r);
     SetE(temp);
+    IncIP();
     return "0";
 
 }
@@ -3598,6 +3722,7 @@ String _24()
     r++;
     String temp = Integer.toHexString(r);
     SetH(temp);
+    IncIP();
     return "0";
 
 }
@@ -3609,6 +3734,7 @@ String _2C()
     r++;
     String temp = Integer.toHexString(r);
     SetL(temp);
+    IncIP();
     return "0";
 
 }
@@ -3620,6 +3746,7 @@ String _34()
     r++;
     String temp = Integer.toHexString(r);
     SetM(temp);
+    IncIP();
     return "0";
 
 }
@@ -3638,6 +3765,7 @@ String _BF()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 }
 //CMP B
@@ -3655,6 +3783,7 @@ String _B8()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3673,6 +3802,7 @@ String _B9()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3691,6 +3821,7 @@ String _BA()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3709,6 +3840,7 @@ String _BB()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3727,6 +3859,7 @@ String _BC()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3745,6 +3878,7 @@ String _BD()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3762,6 +3896,7 @@ String _BE()
         SetZ(0);
         SetCy(0);
     }
+    IncIP();
     return "0";
 
 }
@@ -3775,6 +3910,7 @@ String _3D()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetA(temp);
+    IncIP();
     return "0";
 }
 //DCR B
@@ -3787,6 +3923,7 @@ String _05()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetB(temp);
+    IncIP();
     return "0";
 
 }
@@ -3800,6 +3937,7 @@ String _0D()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetC(temp);
+    IncIP();
     return "0";
 
 }
@@ -3813,6 +3951,7 @@ String _15()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetD(temp);
+    IncIP();
     return "0";
 
 }
@@ -3826,6 +3965,7 @@ String _1D()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetE(temp);
+    IncIP();
     return "0";
 }
 //DCR H
@@ -3838,6 +3978,7 @@ String _25()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetH(temp);
+    IncIP();
     return "0";
 }
 //DCR L
@@ -3850,6 +3991,7 @@ String _2D()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetL(temp);
+    IncIP();
     return "0";
 
 }
@@ -3863,6 +4005,7 @@ String _35()
         SetZ(1);
     String temp = Integer.toHexString(r);
     SetM(temp);
+    IncIP();
     return "0";
 }
 //XCHG
@@ -3875,6 +4018,7 @@ String _EB()
     SetE(getL());
     SetH(r1);
     SetL(r2);
+    IncIP();
     return "0";
 }
 //DAD B
@@ -3892,8 +4036,10 @@ String _09()
      String t2 =  getMSB(temp);
      SetL(t1);
      SetH(t2);
+     IncIP();
      return "0";
- }//DAD D
+ }
+//DAD D
 String _19()
 {
     int r1,r2;
@@ -3908,6 +4054,7 @@ String _19()
      String t2 =  getMSB(temp);
      SetL(t1);
      SetH(t2);
+     IncIP();
      return "0";
 }
 //DAD H
@@ -3925,6 +4072,7 @@ String _29()
      String t2 =  getMSB(temp);
      SetL(t1);
      SetH(t2);
+     IncIP();
      return "0";
 }
 //ANA A
@@ -3944,6 +4092,7 @@ String _A7()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //ANA B
@@ -3963,6 +4112,7 @@ String _A0()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -3983,6 +4133,7 @@ String _A1()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4003,6 +4154,7 @@ String _A2()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4023,6 +4175,7 @@ String _A3()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4043,6 +4196,7 @@ String A4()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4063,6 +4217,7 @@ String _A5()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4083,6 +4238,7 @@ String _A6()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4103,6 +4259,7 @@ String _B7()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4123,6 +4280,7 @@ String _B0()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4143,6 +4301,7 @@ String _B1()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4163,6 +4322,7 @@ String B2()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4183,6 +4343,7 @@ String _B3()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 
 }
@@ -4203,6 +4364,7 @@ String _B4()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //ORA L
@@ -4222,6 +4384,7 @@ String _B5()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //ORA M
@@ -4241,6 +4404,7 @@ String _B6()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA A
@@ -4260,6 +4424,7 @@ String _AF()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
  
 }
@@ -4280,6 +4445,7 @@ String _A8()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA C
@@ -4299,6 +4465,7 @@ String _A9()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA D
@@ -4318,6 +4485,7 @@ String _AA()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA E
@@ -4337,6 +4505,7 @@ String _AB()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA H
@@ -4356,6 +4525,7 @@ String _AC()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA L
@@ -4375,6 +4545,7 @@ String _AD()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 //XRA M
@@ -4394,6 +4565,7 @@ String _AE()
     {
         SetZ(1);
     }
+    IncIP();
     return "0";
 }
 
