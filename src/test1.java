@@ -5008,6 +5008,252 @@ String _37()
     IncIP();
     return "0";
 }
+//CALL LABEL
+void _CD()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    IncIP();
+    String s3 = getIP();
+    String t1 = getMSB(s3);
+    String t2 = getLSB(s3);
+    setData(getSP(), t2);
+    DecSP();
+    setData(getSP(), t1);
+    DecSP();
+    SetIP(s2+s1);
+}
+//RET
+void _C9()
+{
+    IncSP();
+    String s1 = getData(getSP());
+    IncSP();
+    String s2 = getData(getSP());
+    SetIP(s1+s2);
+}
+//JMP
+void _C3()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    SetIP(s2+s1);
+}
+/***************** JUMP PSW    ****************/
+
+//JC Cy=1 _DA()
+void _DA()
+{
+    if(getCy()==1)
+    {
+        _C3();
+    }
+}
+//JNC Cy=0 _D2()
+void _D2()
+{
+    if(getCy()==0)
+    {
+        _C3();
+    }
+}
+//JP S=0 _F2()
+void _F2()
+{
+    if(getS()==0)
+    {
+        _C3();
+    }
+}
+//JM S=1 _FA()
+void _FA()
+{
+    if(getS()==1)
+    {
+        _C3();
+    }
+}
+//JZ Z=1 _CA()
+void _CA()
+{
+    if(getZ()==1)
+    {
+        _C3();
+    }
+}
+//JNZ Z=0 _C2()
+void _C2()
+{
+    if(getZ()==0)
+    {
+        _C3();
+    }
+}
+//JPE P=1 _EA()
+void _EA()
+{
+    if(getP()==1)
+    {
+        _C3();
+    }
+}
+//JPO P=0 _E2()
+void _E2()
+{
+    if(getP()==0)
+    {
+        _C3();
+    }
+}
+
+/***************** RETURN PSW *****************/
+//RC
+void _D8()
+{
+    if(getCy()==1)
+    {
+        _C9();
+    }
+}
+//RNC
+void _D0()
+{
+    if(getCy()==0)
+    {
+        _C9();
+    }
+}
+//RP
+void _F0()
+{
+    if(getS()==0)
+    {
+        _C9();
+    }
+}
+//RM
+void _F8()
+{
+    if(getS()==1)
+    {
+        _C9();
+    }
+}
+//RZ
+void _C8()
+{
+    if(getZ()==1)
+    {
+        _C9();
+    }
+}
+//RNZ
+void _C0()
+{
+    if(getZ()==0)
+    {
+        _C9();
+    }
+}
+//RPE
+void _E8()
+{
+    if(getP()==1)
+    {
+        _C9();
+    }
+}
+//RPO
+void _E0()
+{
+    if(getP()==0)
+    {
+        _C9();
+    }
+}
+
+/********************  CALL PSW  *********************/
+//CC Cy=1 _DC()
+void _DC()
+{
+    if(getCy()==1)
+    {
+        _CD();
+    }
+}
+//CNC Cy=0 _D4()
+void _D4()
+{
+    if(getCy()==0)
+    {
+        _CD();
+    }
+}
+//CP S=0 _F4()
+void _F4()
+{
+    if(getS()==0)
+    {
+        _CD();
+    }
+}
+//CM S=1 _FC()
+void _FC()
+{
+    if(getS()==1)
+    {
+        _CD();
+    }
+}
+//CZ Z=1 _CC()
+void _CC()
+{
+    if(getZ()==1)
+    {
+        _CD();
+    }
+}
+//CNZ Z=0 _C4()
+void _C4()
+{
+    if(getZ()==0)
+    {
+        _CD();
+    }
+}
+//CPE P=1 _EC()
+void _EC()
+{
+    if(getP()==1)
+    {
+        _CD();
+    }
+}
+//CPO P=0 _E4()
+void _E4()
+{
+    if(getP()==1)
+    {
+        _CD();
+    }
+}
+/*************************************/
+void DecSP()
+{
+    int x = hex2int(getSP());
+    x--;
+    SetSP(int2addr(x));
+}
+void IncSP()
+{
+    int x = hex2int(getSP());
+    x++;
+    SetSP(int2addr(x));
+}
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
