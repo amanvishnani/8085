@@ -3470,8 +3470,40 @@ String _8D()
  return "0";
 
 }
-//ADC M
 String _8E()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getM());
+    if((r1+r2+getCy())>31)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getL()))+getCy()) > 15)
+    {
+        SetAc(1);
+    }
+    r3=r1+r2;
+    if(getCy()==1)
+    {
+        r3++;
+    }
+    String temp = Integer.toHexString(r3);
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+        IncIP();
+    return "0";
+}
+//ACI
+String _CE()
 {
     int r1,r2,r3;
     r1 = hex2int(getA());
