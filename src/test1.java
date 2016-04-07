@@ -2856,11 +2856,11 @@ void _36()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP=0;
         iniMap();
-        SetA("01");
-     //   SetCy(1);
-       // SetH("FF");
+        SetA("10");
+        SetCy(1);
+       SetC("0F");
         //SetL("FF");
-        //_07();
+        _9F();
         
         Pass1(getMyCode());
         Pass2();
@@ -2881,7 +2881,7 @@ void _36()
         }
         
         refreshCode();
-        _C6();
+        //_C6();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -3517,14 +3517,15 @@ String _8D()
  return "0";
 
 }
+//ADC M
 String _8E()
 {
     int r1,r2,r3;
     r1 = hex2int(getA());
     r2 = hex2int(getM());
-    if((r1+r2+getCy())>31)
+    if((r1+r2+getCy())>255)
         {SetCy(1);}
-    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getL()))+getCy()) > 15)
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))+getCy()) > 15)
     {
         SetAc(1);
     }
@@ -3790,6 +3791,260 @@ String _D6()
     IncIP();
     return"0";
 }
+//SBB A
+String _9F()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getA());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB B
+String _98()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getB());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB C
+String _99()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getC());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB D
+String _9A()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getD());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB E
+String _9B()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getE());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB H
+String _9C()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getH());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB L
+String _9D()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getL());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBB M
+String _9E()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    r2 = hex2int(getM());
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+//SBI
+String _DE()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    IncIP();
+    r2 = hex2int(getData(IP));
+    int r4;
+    r4=getCy();
+    r3=r1-r2-r4;
+    if (r3<0)
+    {
+        r3*=-1;
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    if(r3>255)
+        SetCy(1);
+    else SetCy(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return "0";
+}
+
 //INR A
 String _3C()
 {
