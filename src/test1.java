@@ -994,41 +994,49 @@ void _3E()
 {
     IncIP();
     SetA(getData(IP));
+    IncIP();
 }
 void _06()
 {
     IncIP();
     SetB(getData(IP));
+    IncIP();
 }
 void _0E()
 {
     IncIP();
     SetC(getData(IP));
+    IncIP();
 }
 void _16()
 {
     IncIP();
     SetD(getData(IP));
+    IncIP();
 }
 void _1E()
 {
     IncIP();
     SetE(getData(IP));
+    IncIP();
 }
 void _26()
 {
     IncIP();
     SetH(getData(IP));
+    IncIP();
 }
 void _2E()
 {
     IncIP();
     SetL(getData(IP));
+    IncIP();
 }
 void _36()
 {
     IncIP();
     SetM(getData(IP));
+    IncIP();
 }
     public String Trimmer(String x)
     {
@@ -4708,6 +4716,7 @@ String _07()
     
     return "0";
 }
+
         
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
