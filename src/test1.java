@@ -4797,6 +4797,28 @@ String _B6()
     IncIP();
     return "0";
 }
+//ORI
+String _F6()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    IncIP();
+    r2=hex2int(getData(IP));
+    int s=r1|r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    IncIP();
+    return "0";
+}
+        
 //XRA A
 String _AF()
 {
@@ -4958,21 +4980,35 @@ String _AE()
     IncIP();
     return "0";
 }
-//RLC 
-String _07()
+//XRI data
+String _EE()
 {
     int r1,r2;
     r1=hex2int(getA());
-    r2=r1;
-    r1=Integer.rotateLeft(r1, 24);
-    int msb = ( r2 & 0xff) >> 7;
-    SetA(Integer.toHexString(r1));
-    SetCy(msb);
-    
+    IncIP();
+    r2=hex2int(getData(IP));
+    int s=r1^r2;
+    String temp = Integer.toHexString(s);
+    SetA(temp);
+    if(s>80)
+    {
+        SetS(1);
+    }
+    if(s==0)
+    {
+        SetZ(1);
+    }
+    IncIP();
     return "0";
 }
-
-        
+//STC 
+String _37()
+{
+    SetCy(1);
+    IncIP();
+    return "0";
+}
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
