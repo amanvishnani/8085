@@ -990,7 +990,46 @@ void _76()
 	SetM(getM());
         IncIP();
 }
-        
+void _3E()
+{
+    IncIP();
+    SetA(getData(IP));
+}
+void _06()
+{
+    IncIP();
+    SetB(getData(IP));
+}
+void _0E()
+{
+    IncIP();
+    SetC(getData(IP));
+}
+void _16()
+{
+    IncIP();
+    SetD(getData(IP));
+}
+void _1E()
+{
+    IncIP();
+    SetE(getData(IP));
+}
+void _26()
+{
+    IncIP();
+    SetH(getData(IP));
+}
+void _2E()
+{
+    IncIP();
+    SetL(getData(IP));
+}
+void _36()
+{
+    IncIP();
+    SetM(getData(IP));
+}
     public String Trimmer(String x)
     {
         x = x.trim().replaceAll(" +"," ");
