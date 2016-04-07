@@ -643,7 +643,7 @@ public class test1 extends javax.swing.JFrame {
     
     public String ExtractData(String x)
     {
-        x = x.substring(x.indexOf(","),x.length());
+        x = x.substring(x.indexOf(",")+1,x.length());
         x = x.substring(x.indexOf(" ")+1,x.length());
         Pattern p = Pattern.compile("[0-9A-F]{2}");
         Matcher m1 = p.matcher(x);
@@ -2809,11 +2809,12 @@ void _76()
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP=0;
         iniMap();
-        SetB("00");
-        SetC("01");
-        SetH("FF");
-        SetL("FF");
-        _09();
+        SetA("01");
+     //   SetCy(1);
+       // SetH("FF");
+        //SetL("FF");
+        //_07();
+        
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -2833,6 +2834,7 @@ void _76()
         }
         
         refreshCode();
+        _C6();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -2840,7 +2842,7 @@ void _76()
         int nip= hex2int(getIP());
         IncIP();
         nip = nip - hex2int(CodeHead.getText());
-
+        
         CodeTable.addRowSelectionInterval(nip, nip);
         if(oldIP!=nip)
             CodeTable.removeRowSelectionInterval(oldIP, oldIP);
@@ -3200,6 +3202,36 @@ String _86()
         IncIP();
  return "0";
 }
+//ADI data
+String _C6()
+{
+    int r1,r2;
+    r1 = hex2int(getA());
+    IncIP();
+    r2 = hex2int(getData(IP));
+    if((r1+r2)>255)
+        {SetCy(1);}
+    if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))) > 15)
+    {
+        SetAc(1);
+    }
+
+    String temp = Integer.toHexString(r1+r2);
+        switch (temp.length()) {
+            case 1:
+                temp= "0"+temp;
+                SetA(temp);
+                return "0";
+            case 2:
+                SetA(temp);
+                return "0";
+            default:
+                SetA(temp.substring((temp.length() - 2),temp.length()));
+                break;
+        }
+        IncIP();
+ return "0";
+}
 //ADC A
 String _8F()
 {
@@ -3438,11 +3470,13 @@ String _8D()
  return "0";
 
 }
+//ADC M
 String _8E()
 {
     int r1,r2,r3;
     r1 = hex2int(getA());
-    r2 = hex2int(getM());
+    IncIP();
+    r2 = hex2int(getData(IP));
     if((r1+r2+getCy())>31)
         {SetCy(1);}
     if( (hex2int(getLSB(getA()))+hex2int(getLSB(getM()))+getCy()) > 15)
@@ -3635,7 +3669,7 @@ String _95()
 //SUB M
 String _96()
 {
-        int r1,r2,r3;
+    int r1,r2,r3;
     r1 = hex2int(getA());
     r2 = hex2int(getM());
     r3=r1-r2;
@@ -3653,7 +3687,29 @@ String _96()
     SetA(temp);
     IncIP();
     return"0";
-
+}
+//SUI Data
+String _D6()
+{
+    int r1,r2,r3;
+    r1 = hex2int(getA());
+    IncIP();
+    r2 = hex2int(getData(IP));
+    r3=r1-r2;
+    if (r3<0)
+    {
+        SetS(1);
+    } 
+    else SetS(0);
+    if(r3==0)
+    {
+        SetZ(1);
+    }
+    else SetZ(0);
+    String temp = Integer.toHexString(r3);
+    SetA(temp);
+    IncIP();
+    return"0";
 }
 //INR A
 String _3C()
@@ -3702,7 +3758,7 @@ String _14()
     return "0";
 
 }
-//INT E
+//INR E
 String _1C()
 {
     int r;
@@ -4568,7 +4624,20 @@ String _AE()
     IncIP();
     return "0";
 }
-
+//RLC 
+String _07()
+{
+    int r1,r2;
+    r1=hex2int(getA());
+    r2=r1;
+    r1=Integer.rotateLeft(r1, 24);
+    int msb = ( r2 & 0xff) >> 7;
+    SetA(Integer.toHexString(r1));
+    SetCy(msb);
+    
+    return "0";
+}
+        
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
