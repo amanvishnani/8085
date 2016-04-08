@@ -4470,7 +4470,7 @@ String _A7()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4490,7 +4490,7 @@ String _A0()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4511,7 +4511,7 @@ String _A1()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4532,7 +4532,7 @@ String _A2()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4553,7 +4553,7 @@ String _A3()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4574,7 +4574,7 @@ String A4()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4595,7 +4595,7 @@ String _A5()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4616,7 +4616,7 @@ String _A6()
     int s=r1&r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4637,7 +4637,7 @@ String _B7()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4658,7 +4658,7 @@ String _B0()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4679,7 +4679,7 @@ String _B1()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4700,7 +4700,7 @@ String B2()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4721,7 +4721,7 @@ String _B3()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4742,7 +4742,7 @@ String _B4()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4762,7 +4762,7 @@ String _B5()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4782,7 +4782,7 @@ String _B6()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4803,7 +4803,7 @@ String _F6()
     int s=r1|r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4824,7 +4824,7 @@ String _AF()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4845,7 +4845,7 @@ String _A8()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4865,7 +4865,7 @@ String _A9()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4885,7 +4885,7 @@ String _AA()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4905,7 +4905,7 @@ String _AB()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4925,7 +4925,7 @@ String _AC()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4945,7 +4945,7 @@ String _AD()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4965,7 +4965,7 @@ String _AE()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
@@ -4986,7 +4986,7 @@ String _EE()
     int s=r1^r2;
     String temp = Integer.toHexString(s);
     SetA(temp);
-    if(s>80)
+    if(s>127)
     {
         SetS(1);
     }
