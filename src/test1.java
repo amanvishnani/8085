@@ -3599,8 +3599,6 @@ void _36()
         oldIP=0;
         jStep.setEnabled(true);
         iniMap();
-        SetA("6D");
-        _27();
         Pass1(getMyCode());
         Pass2();
         String test123[];
