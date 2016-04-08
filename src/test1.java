@@ -987,8 +987,7 @@ void _75()
 }
 void _76()
 {
-	SetM(getM());
-        IncIP();
+    jStep.setEnabled(false);
 }
 void _3E()
 {
@@ -1236,10 +1235,10 @@ void _36()
         px[161] = Pattern.compile("LDAX"+space1+"B");
         px[162] = Pattern.compile("LDAX"+space1+"D");
         px[163] = Pattern.compile("LHLD"+space1+addr);
-        px[164] = Pattern.compile("LXI"+space1+"B");
-        px[165] = Pattern.compile("LXI"+space1+"D");
-        px[166] = Pattern.compile("LXI"+space1+"H");
-        px[167] = Pattern.compile("LXI"+space1+"SP");
+        px[164] = Pattern.compile("LXI"+space1+"B"+space+","+space+addr);
+        px[165] = Pattern.compile("LXI"+space1+"D"+space+","+space+addr);
+        px[166] = Pattern.compile("LXI"+space1+"H"+space+","+space+addr);
+        px[167] = Pattern.compile("LXI"+space1+"SP"+space+","+space+addr);
         px[168] = Pattern.compile("NOP");
         px[169] = Pattern.compile("ORA"+space1+"A");
         px[170] = Pattern.compile("ORA"+space1+"B");
@@ -2124,7 +2123,7 @@ void _36()
         code_here = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         run_code = new javax.swing.JList();
-        jButton2 = new javax.swing.JButton();
+        jStep = new javax.swing.JButton();
         jA = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -2220,10 +2219,10 @@ void _36()
 
         jScrollPane2.setViewportView(run_code);
 
-        jButton2.setText("1 Step >");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        jStep.setText("1 Step >");
+        jStep.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                jStepActionPerformed(evt);
             }
         });
 
@@ -2683,7 +2682,7 @@ void _36()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
+                    .addComponent(jStep)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
@@ -2842,7 +2841,7 @@ void _36()
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(jStep))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2855,13 +2854,10 @@ void _36()
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP=0;
+        jStep.setEnabled(true);
         iniMap();
-        SetA("10");
-        SetCy(1);
-       SetC("0F");
-        //SetL("FF");
-        _9F();
-        
+        setData("0001", "05");
+        setData("0002", "40");
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -2884,7 +2880,7 @@ void _36()
         //_C6();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStepActionPerformed
         // TODO add your handling code here:
         int nip= hex2int(getIP());
         IncIP();
@@ -2897,7 +2893,7 @@ void _36()
        // run_code.setSelectedIndex(run_code_index);
        // run_code_index++;
        // System.out.println(run_code.getSelectedValue());
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jStepActionPerformed
 
     private void jBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActionPerformed
         // TODO add your handling code here:
@@ -5242,6 +5238,124 @@ void _E4()
     }
 }
 /*************************************/
+
+//NOP
+void _00()
+{
+    IncIP();
+}
+//LDA
+void _3A()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    IncIP();
+    SetA(getData(s2+s1));
+}
+
+//LDAX B
+void _0A()
+{
+    String s1 = getData(getB()+getC());
+    SetA(getData(s1));
+    IncIP();
+}
+//LDAX D
+void _1A()
+{
+    String s1 = getData(getD()+getE());
+    SetA(getData(s1));
+    IncIP();
+}
+//LXI B _01()
+void _01()
+{
+    IncIP();
+    SetC(getData(getIP()));
+    IncIP();
+    SetB(getData(getIP()));
+    IncIP();
+}
+//LXI D _11()
+void _11()
+{
+    IncIP();
+    SetE(getData(getIP()));
+    IncIP();
+    SetD(getData(getIP()));
+    IncIP();
+}
+//LXI H _21()
+void _21()
+{
+    IncIP();
+    SetL(getData(getIP()));
+    IncIP();
+    SetH(getData(getIP()));
+    IncIP();
+}
+//LXI SP _31()
+void _31()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    SetSP(s2+s1);
+    IncIP();
+}
+//LHLD
+void _2A()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    int x = hex2int(s2+s1);
+    SetL(getData(int2addr(x)));
+    SetH(getData(int2addr(x+1)));
+    IncIP();
+}
+//STA 
+void _32()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    setData(s2+s1, getA());
+    IncIP();
+}
+//STAX B
+void _02()
+{
+    String s1 = getB();
+    String s2 = getC();
+    setData(s1+s2, getA());
+    IncIP();
+}
+//STAX D
+void _12()
+{
+    String s1 = getD();
+    String s2 = getE();
+    setData(s1+s2, getA());
+    IncIP();
+}
+//SHLD
+void _22()
+{
+    IncIP();
+    String s1 = getData(getIP());
+    IncIP();
+    String s2 = getData(getIP());
+    int x = hex2int(s2+s1);
+    setData(int2addr(x), getL());
+    setData(int2addr(x+1), getH());
+    IncIP();
+}
 void DecSP()
 {
     int x = hex2int(getSP());
@@ -5268,7 +5382,6 @@ void IncSP()
     private javax.swing.JTextField jAc;
     private javax.swing.JTextField jB;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -5323,6 +5436,7 @@ void IncSP()
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JButton jStep;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTextField jTextField18;
     private javax.swing.JTextField jZ;
