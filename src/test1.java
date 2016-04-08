@@ -5478,6 +5478,187 @@ String _17()
     SetA(Integer.toHexString(x));
     return "0";
 }
+//SPHL
+void _F9()
+{
+    SetSP(getH()+getL());
+    IncIP();
+}
+//XTHL
+void _E3()
+{
+    setData(getSP(), getL());
+    DecSP();
+    setData(getSP(), getH());
+    DecSP();
+    IncIP();
+}
+
+//PUSH B
+void _C5()
+{
+    setData(getSP(), getB());
+    DecSP();
+    setData(getSP(), getC());
+    DecSP();
+    IncIP();
+}
+//PUSH D
+void _D5()
+{
+    setData(getSP(), getD());
+    DecSP();
+    setData(getSP(), getE());
+    DecSP();
+    IncIP();    
+}
+//PUSH H
+void E5()
+{
+    setData(getSP(), getH());
+    DecSP();
+    setData(getSP(), getL());
+    DecSP();
+    IncIP();
+}
+//POP B
+void _C1()
+{
+    IncSP();
+    SetC(getData(getSP()));
+    IncSP();
+    SetB(getData(getSP()));
+    IncIP();
+}
+//POP D
+void _D1()
+{
+    IncSP();
+    SetE(getData(getSP()));
+    IncSP();
+    SetD(getData(getSP()));
+    IncIP();
+
+}
+//POP H
+void _E1()
+{
+    IncSP();
+    SetL(getData(getSP()));
+    IncSP();
+    SetH(getData(getSP()));
+    IncIP();
+}
+//POP PSW
+void _F1()
+{
+    IncIP();
+    JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] POP PSW");
+}
+//PUSH PSW
+void _F5()
+{
+    IncIP();
+    JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] PUSH PSW");
+}
+//INX B
+void _03()
+{
+    String s1 = getB();
+    String s2 = getC();
+    int x = hex2int(s1+s2);
+    x++;
+    String s3 = int2addr(x);
+    SetB(getMSB(s3));
+    SetC(getLSB(s3));
+    IncIP();
+}
+//INX D
+void _13()
+{
+    
+    String s1 = getD();
+    String s2 = getE();
+    int x = hex2int(s1+s2);
+    x++;
+    String s3 = int2addr(x);
+    SetD(getMSB(s3));
+    SetE(getLSB(s3));
+    IncIP();
+}
+//INX H
+void _23()
+{
+    
+    String s1 = getH();
+    String s2 = getL();
+    int x = hex2int(s1+s2);
+    x++;
+    String s3 = int2addr(x);
+    SetH(getMSB(s3));
+    SetL(getLSB(s3));
+    IncIP();
+}
+//INX SP
+void _33()
+{
+    IncSP();
+    IncIP();
+}
+//DCX B
+void _0B()
+{
+    String s1 = getB();
+    String s2 = getC();
+    int x = hex2int(s1+s2);
+    x--;
+    if(x<0)
+    {
+        x=x*(-1);
+    }
+    String s3 = int2addr(x);
+    SetB(getMSB(s3));
+    SetC(getLSB(s3));
+    IncIP();
+}
+//DCX D
+void _1B()
+{
+    String s1 = getD();
+    String s2 = getE();
+    int x = hex2int(s1+s2);
+    x--;
+    if(x<0)
+    {
+        x=x*(-1);
+    }
+    String s3 = int2addr(x);
+    SetD(getMSB(s3));
+    SetE(getLSB(s3));
+    IncIP();
+}
+//DCX H
+void _2B()
+{
+    String s1 = getH();
+    String s2 = getL();
+    int x = hex2int(s1+s2);
+    x--;
+    if(x<0)
+    {
+        x=x*(-1);
+    }
+    String s3 = int2addr(x);
+    SetH(getMSB(s3));
+    SetL(getLSB(s3));
+    IncIP();
+}
+//DCX SP
+void _3B()
+{
+    DecSP();
+    IncIP();
+}
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
