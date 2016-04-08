@@ -2856,8 +2856,11 @@ void _36()
         oldIP=0;
         jStep.setEnabled(true);
         iniMap();
-        setData("0001", "05");
-        setData("0002", "40");
+        //setData("0001", "05");
+        //setData("0002", "40");
+        SetA("A9");
+        SetCy(1);
+        _17();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -5368,7 +5371,115 @@ void IncSP()
     x++;
     SetSP(int2addr(x));
 }
-   
+//RST 0
+String _C7()
+{
+    SetIP("0000");
+    return "0";
+}
+//RST 1
+String _CF()
+{
+    SetIP("0008");
+    return "0";
+}
+//RST 2
+String _D7()
+{
+    SetIP("0010");
+    return "0";
+}
+//RST 3
+String _DF()
+{
+    SetIP("0018");
+    return "0";
+}
+//RST 4
+String _E7()
+{
+    SetIP("0020");
+    return "0";
+}
+//RST 5
+String _28()
+{
+    SetIP("0028");
+    return "0";
+}
+//RST 6
+String _F7()
+{
+    SetIP("0030");
+    return "0";
+}
+//RST 7
+String _FF()
+{
+    SetIP("0030");
+    return "0";
+}
+//RLC 
+String _07()
+{
+    int r1 = hex2int(getA());
+    int x = r1 << 1;
+    int y = x / 255;
+    if(y == 1)
+    {
+        x=x%255;
+        SetCy(1);
+        x = x|1;
+    }
+    if(y==0)
+        SetCy(0);
+    SetA(Integer.toHexString(x));
+    return "0";
+}
+//RRC
+String _0F()
+{
+    int r1 = hex2int(getA());
+    int z = r1 & 1;
+    int x = r1 >> 1;
+    if(z == 1)
+    {
+        SetCy(1);
+        x = x|128;
+    }
+    if(z==0)
+        SetCy(0);
+    SetA(Integer.toHexString(x));
+    return "0";
+}
+String _17()
+{
+    int r1 = hex2int(getA());
+    int x = r1 << 1;
+    int y = x / 255;
+    if(y == 1)
+    {
+        
+        x=x%255;
+        if(getCy()==0)
+            x = x & 254;
+        else x = x | 1;
+        SetCy(1);
+        
+    }
+    if(y==0)
+    {
+        if(getCy()==0)
+            x = x & 254;
+        else x = x | 1;
+        SetCy(0);
+    }
+        
+    SetA(Integer.toHexString(x));
+    return "0";
+}
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
