@@ -2,6 +2,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import java.lang.String.*;
 
 
 public class test1 extends javax.swing.JFrame {
@@ -358,10 +359,10 @@ public class test1 extends javax.swing.JFrame {
             _A6();
             break;
 	case "2F":
-            //_2F();
+            _2F();
             break;
 	case "3F":
-            //_3F();
+            _3F();
             break;
 	case "BF":
             _BF();
@@ -388,7 +389,7 @@ public class test1 extends javax.swing.JFrame {
             _BE();
             break;
 	case "27":
-            //_27();
+            _27();
             break;
 	case "09":
             _09();
@@ -706,7 +707,7 @@ public class test1 extends javax.swing.JFrame {
 			_B6();
 			break;
 	case "E9":
-			//_E9();
+			_E9();
 			break;
 	case "C1":
 			_C1();
@@ -898,7 +899,7 @@ public class test1 extends javax.swing.JFrame {
 			_E6();
 			break;
 	case "FE":
-		//	_FE();
+			_FE();
 			break;
 	case "DB":
 		//	_DB();
@@ -3598,7 +3599,8 @@ void _36()
         oldIP=0;
         jStep.setEnabled(true);
         iniMap();
-        
+        SetA("6D");
+        _27();
         Pass1(getMyCode());
         Pass2();
         String test123[];
@@ -4895,6 +4897,7 @@ String _BF()
     IncIP();
     return "0";
 }
+
 //CMP B
 String _B8()
 {
@@ -6419,8 +6422,70 @@ void _3B()
     DecSP();
     IncIP();
 }
-
-
+//CMA
+String _2F()
+{
+    int r1;
+    r1=hex2int(getA());
+    r1=~r1;
+    String temp=Integer.toHexString(r1);
+    
+    SetA(temp.substring((temp.length() - 2),temp.length()));
+    IncIP();
+    return "0";
+    
+}
+//CMC 
+void  _3F()
+{
+    if(getCy()==1)
+        SetCy(0);
+    else SetCy(1);
+    IncIP();
+}
+//DAA
+void _27()
+{
+    int s=hex2int(getA());
+    String temp=Integer.toString(s);
+        SetA(temp.substring((temp.length() - 2),temp.length()));
+        if(s==0)
+            SetZ(1);
+        if(s>99)
+            SetCy(1);
+       if(s>999)
+           SetAc(1);
+       if(s<0)
+           SetS(1);
+       IncIP();
+}
+//PCHL
+void _E9()
+{
+    String r1 = getH();
+    String r2 = getL();
+    r1 = r1 + r2;
+    SetIP(r1);
+    IncIP();
+}
+//CPI data
+void _FE()
+{
+        int r1,r2;
+    r1=hex2int(getA());
+    IncIP();
+    r2=hex2int(getData(IP));
+    if(r1<r2)
+        SetCy(1);
+    if(r1==r2)
+        SetZ(1);
+    if(r1>r2)
+    {
+        SetZ(0);
+        SetCy(0);
+    }
+    IncIP();
+ }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
