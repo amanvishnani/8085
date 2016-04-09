@@ -2920,6 +2920,7 @@ void _36()
         jButton4 = new javax.swing.JButton();
         jLabel22 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane5 = new javax.swing.JScrollPane();
         StackTable = new javax.swing.JTable();
@@ -3137,11 +3138,21 @@ void _36()
                 CodeHeadActionPerformed(evt);
             }
         });
+        CodeHead.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                CodeHeadKeyPressed(evt);
+            }
+        });
 
         jButton5.setText("Set");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+        jButton5.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jButton5KeyPressed(evt);
             }
         });
 
@@ -3249,6 +3260,11 @@ void _36()
                 DataHeadActionPerformed(evt);
             }
         });
+        DataHead.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                DataHeadKeyPressed(evt);
+            }
+        });
 
         jButton4.setText("Set");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -3261,6 +3277,13 @@ void _36()
 
         jLabel27.setText("H");
 
+        jButton2.setText("Apply");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -3269,16 +3292,19 @@ void _36()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel20)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(DataHead, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel27)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4))
                     .addComponent(jLabel22))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel21)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(DataHead, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel27)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(33, 33, 33))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3289,7 +3315,8 @@ void _36()
                     .addComponent(jLabel21)
                     .addComponent(DataHead, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton4)
-                    .addComponent(jLabel27))
+                    .addComponent(jLabel27)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel22)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -3356,6 +3383,11 @@ void _36()
                 StackHeadActionPerformed(evt);
             }
         });
+        StackHead.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                StackHeadKeyPressed(evt);
+            }
+        });
 
         jButton3.setText("Set");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -3372,7 +3404,7 @@ void _36()
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+            .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3390,7 +3422,7 @@ void _36()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton3))
                             .addComponent(jLabel13))
-                        .addGap(0, 110, Short.MAX_VALUE))))
+                        .addGap(0, 143, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -3716,6 +3748,61 @@ void _36()
         }
     }//GEN-LAST:event_DataTableKeyPressed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+             for(int i=0;i<20;i++)
+            {
+                Object y = DataTable.getValueAt(i, 1);
+                Object x = DataTable.getValueAt(i, 0);
+                String q = y.toString().toUpperCase();
+                String p = x.toString();
+                Pattern ppp ;
+                ppp = Pattern.compile("^[A-Fa-f0-9]{2}$");
+                Matcher mmm = ppp.matcher(q);
+                if(!mmm.find())
+                {
+                    JOptionPane.showMessageDialog(this, q+" is not a 1 Byte Hex digit");
+                    DataTable.setValueAt("00",i, 1);
+                }
+                else
+                {
+                    setData(p, q);
+                }
+            }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode()==evt.VK_ENTER)
+         {
+             refreshCode();
+         }
+    }//GEN-LAST:event_jButton5KeyPressed
+
+    private void CodeHeadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CodeHeadKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode()==evt.VK_ENTER)
+         {
+             refreshCode();
+         }
+    }//GEN-LAST:event_CodeHeadKeyPressed
+
+    private void DataHeadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DataHeadKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode()==evt.VK_ENTER)
+         {
+             refreshData();
+         }
+    }//GEN-LAST:event_DataHeadKeyPressed
+
+    private void StackHeadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_StackHeadKeyPressed
+        // TODO add your handling code here:
+         if(evt.getKeyCode()==evt.VK_ENTER)
+         {
+             refreshStack();
+         }
+    }//GEN-LAST:event_StackHeadKeyPressed
+   
     /**
      * @param args the command line arguments
      */
@@ -6575,6 +6662,7 @@ void PARITY()
     private javax.swing.JTextField jAc;
     private javax.swing.JTextField jB;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
