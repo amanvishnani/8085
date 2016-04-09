@@ -1696,6 +1696,7 @@ void _6E()
 void _77()
 {
 	SetM(getA());
+        System.out.println(getM());
         IncIP();
 }
 void _70()
@@ -1863,7 +1864,6 @@ void _36()
         px[47] = Pattern.compile("MOV"+space1+"H"+space+","+space+"A");
         px[48] = Pattern.compile("MOV"+space1+"L"+space+","+space+"A");
         px[49] = Pattern.compile("MOV"+space1+"A"+space+","+space+"M");
-        px[50] = Pattern.compile("MOV"+space1+"A"+space+","+space+"M");
         px[50] = Pattern.compile("MOV"+space1+"B"+space+","+space+"M");
         px[51] = Pattern.compile("MOV"+space1+"C"+space+","+space+"M");
         px[52] = Pattern.compile("MOV"+space1+"D"+space+","+space+"M");
@@ -2196,7 +2196,7 @@ void _36()
             case 55:
                 return "6E";
             case 56:
-                return "75";
+                return "77";
             case 57:
                 return "70";
             case 58:
