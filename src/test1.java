@@ -737,7 +737,7 @@ public class test1 extends javax.swing.JFrame {
 			_17();
 			break;
 	case "1F":
-			//_1F();
+			_1F();
 			break;
 	case "D8":
 			_D8();
@@ -1401,12 +1401,11 @@ public class test1 extends javax.swing.JFrame {
     
     public String ExtractAddress(String x)
     {
-        Pattern p = Pattern.compile(" [0-9A-F]{4}");
+        Pattern p = Pattern.compile("[0-9A-F]{4}");
         Matcher m1 = p.matcher(x);
         if(m1.find())
         {
         String temp = m1.group();
-        temp = temp.substring(1, 5);
         return temp;
         }
         return "";
@@ -6266,30 +6265,19 @@ String _0F()
     SetA(Integer.toHexString(x));
     return "0";
 }
+//RAL
 String _17()
 {
     int r1 = hex2int(getA());
     int x = r1 << 1;
-    int y = x / 255;
-    if(y == 1)
+    int y = x / 256;
+    if(getCy()==1)
     {
-        
-        x=x%255;
-        if(getCy()==0)
-            x = x & 254;
-        else x = x | 1;
-        SetCy(1);
-        
+        x= x|1;
     }
-    if(y==0)
-    {
-        if(getCy()==0)
-            x = x & 254;
-        else x = x | 1;
-        SetCy(0);
-    }
-        
+    SetCy(y);  
     SetA(Integer.toHexString(x));
+    IncIP();
     return "0";
 }
 //SPHL
@@ -6537,6 +6525,43 @@ void _FE()
     }
     IncIP();
  }
+//RAR _1F
+void _1F()
+{
+    int x,y;
+    x =hex2int(getA());
+    y=x%2;
+    x=x>>1;
+    if(getCy()==1)
+    {
+        x = x|128;
+    }
+    SetCy(y);
+    SetA(Integer.toHexString(x));
+    IncIP();
+}
+//PARITY
+void PARITY()
+{
+    int x,counter=0;
+    x = hex2int(A);
+    String s = Integer.toBinaryString(x);
+    char[] c = s.toCharArray();
+    for(int i=0;i<s.length();i++)
+    {
+        if(c[i]=='1')
+            counter++;
+    }
+    if(counter%2==0)
+    {
+        SetP(1);
+    }
+    else
+    {
+        SetP(0);
+    }
+    
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField CodeHead;
     private javax.swing.JTable CodeTable;
