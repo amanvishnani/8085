@@ -1076,7 +1076,7 @@ public class test1 extends javax.swing.JFrame {
                 memory[LP] = a2;
                 String l =ExtractLabel(x[i]);
                 map[LP][LABEL] = l;
-                map[LP][OPCODE] = extractOpcode(x[i]);
+                map[LP][OPCODE] = m.group();
 //                System.out.println(map[LP][OPCODE]+" for "+i);
                 if(l.length()!=0)
                     {
@@ -5849,6 +5849,8 @@ void _DA()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JNC Cy=0 _D2()
 void _D2()
@@ -5857,6 +5859,8 @@ void _D2()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JP S=0 _F2()
 void _F2()
@@ -5865,6 +5869,8 @@ void _F2()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JM S=1 _FA()
 void _FA()
@@ -5873,6 +5879,8 @@ void _FA()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JZ Z=1 _CA()
 void _CA()
@@ -5881,6 +5889,8 @@ void _CA()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JNZ Z=0 _C2()
 void _C2()
@@ -5889,6 +5899,8 @@ void _C2()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JPE P=1 _EA()
 void _EA()
@@ -5897,6 +5909,8 @@ void _EA()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 //JPO P=0 _E2()
 void _E2()
@@ -5905,6 +5919,8 @@ void _E2()
     {
         _C3();
     }
+    else
+        IncIP();
 }
 
 /***************** RETURN PSW *****************/
