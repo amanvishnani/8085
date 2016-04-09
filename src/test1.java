@@ -6327,7 +6327,7 @@ String _07()
     int y = x / 255;
     if(y == 1)
     {
-        x=x%255;
+        x=x%256;
         SetCy(1);
         x = x|1;
     }
@@ -6362,6 +6362,7 @@ String _17()
     {
         x= x|1;
     }
+    x = x&255
     SetCy(y);  
     SetA(Integer.toHexString(x));
     IncIP();
