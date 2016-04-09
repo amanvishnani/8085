@@ -6362,7 +6362,7 @@ String _17()
     {
         x= x|1;
     }
-    x = x&255
+    x = x&255;
     SetCy(y);  
     SetA(Integer.toHexString(x));
     IncIP();
