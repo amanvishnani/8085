@@ -1225,6 +1225,7 @@ public class test1 extends javax.swing.JFrame {
     {
         IP=x;
         jIP.setText(x);
+        refreshCode();
         return 1;
     }
     public String getA()
@@ -3852,7 +3853,7 @@ String _87()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3883,7 +3884,7 @@ String _80()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
             switch (temp.length()) {
             case 1:
@@ -3915,7 +3916,7 @@ String _81()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3946,7 +3947,7 @@ String _82()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3977,7 +3978,7 @@ String _83()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4008,6 +4009,7 @@ String _84()
     {
         SetAc(1);
     }
+    PARITY();
         String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4038,7 +4040,7 @@ String _85()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4069,7 +4071,7 @@ String _86()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4101,7 +4103,7 @@ String _C6()
     {
         SetAc(1);
     }
-
+    PARITY();
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4120,6 +4122,7 @@ String _C6()
         IncIP();
  return "0";
 }
+
 //ADC A
 String _8F()
 {
@@ -4137,6 +4140,7 @@ String _8F()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4173,6 +4177,7 @@ String _88()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4209,6 +4214,7 @@ String _89()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
             switch (temp.length()) {
             case 1:
@@ -4246,6 +4252,7 @@ String _8A()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4282,6 +4289,7 @@ String _8B()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4318,6 +4326,7 @@ String _8C()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4354,6 +4363,7 @@ String _8D()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4390,6 +4400,7 @@ String _8E()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4426,6 +4437,7 @@ String _CE()
     {
         r3++;
     }
+    PARITY();
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4452,6 +4464,7 @@ String _97()
     r1 = hex2int(getA());
     r2 = hex2int(getA());
     r3=r1-r2;
+    PARITY();
     if (r3<0)
     {
         r3*=-1;
@@ -4487,6 +4500,7 @@ String _90()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 
@@ -4511,6 +4525,7 @@ String _91()
     String temp = Integer.toHexString(r3);
     SetA(temp);
     IncIP();
+    PARITY();
     return"0";
 
 }
@@ -4533,6 +4548,7 @@ String _92()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 
@@ -4556,6 +4572,7 @@ String _93()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 
@@ -4579,6 +4596,7 @@ String _94()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 
@@ -4602,6 +4620,7 @@ String _95()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 
@@ -4625,6 +4644,7 @@ String _96()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 }
@@ -4648,6 +4668,7 @@ String _D6()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY();
     IncIP();
     return"0";
 }
@@ -5936,7 +5957,11 @@ void _DA()
         _C3();
     }
     else
+    {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JNC Cy=0 _D2()
 void _D2()
@@ -5946,7 +5971,11 @@ void _D2()
         _C3();
     }
     else
+        {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JP S=0 _F2()
 void _F2()
@@ -5956,7 +5985,11 @@ void _F2()
         _C3();
     }
     else
+        {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JM S=1 _FA()
 void _FA()
@@ -5966,7 +5999,11 @@ void _FA()
         _C3();
     }
     else
+        {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JZ Z=1 _CA()
 void _CA()
@@ -5976,7 +6013,11 @@ void _CA()
         _C3();
     }
     else
+        {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JNZ Z=0 _C2()
 void _C2()
@@ -5986,7 +6027,11 @@ void _C2()
         _C3();
     }
     else
+        {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JPE P=1 _EA()
 void _EA()
@@ -5996,7 +6041,11 @@ void _EA()
         _C3();
     }
     else
+    {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 //JPO P=0 _E2()
 void _E2()
@@ -6006,7 +6055,11 @@ void _E2()
         _C3();
     }
     else
+    {
         IncIP();
+        IncIP();
+        IncIP();
+    }
 }
 
 /***************** RETURN PSW *****************/
