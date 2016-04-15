@@ -1387,8 +1387,12 @@ public class test1 extends javax.swing.JFrame {
     
     public String ExtractData(String x)
     {
+        x = x.substring(x.indexOf(":")+1,x.length());
+        x=x.trim();
         x = x.substring(x.indexOf(",")+1,x.length());
+        x=x.trim();
         x = x.substring(x.indexOf(" ")+1,x.length());
+        x = x.trim();
         Pattern p = Pattern.compile("[0-9A-F]{2}");
         Matcher m1 = p.matcher(x);
         if(m1.find())
@@ -3853,7 +3857,7 @@ String _87()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3884,7 +3888,7 @@ String _80()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
             switch (temp.length()) {
             case 1:
@@ -3916,7 +3920,7 @@ String _81()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3947,7 +3951,7 @@ String _82()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -3978,7 +3982,7 @@ String _83()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4009,7 +4013,7 @@ String _84()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
         String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4040,7 +4044,7 @@ String _85()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4071,7 +4075,7 @@ String _86()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4103,7 +4107,7 @@ String _C6()
     {
         SetAc(1);
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r1+r2);
         switch (temp.length()) {
             case 1:
@@ -4140,7 +4144,7 @@ String _8F()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4177,7 +4181,7 @@ String _88()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4214,7 +4218,7 @@ String _89()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
             switch (temp.length()) {
             case 1:
@@ -4252,7 +4256,7 @@ String _8A()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4289,7 +4293,7 @@ String _8B()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4326,7 +4330,7 @@ String _8C()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4363,7 +4367,7 @@ String _8D()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4400,7 +4404,7 @@ String _8E()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4437,7 +4441,7 @@ String _CE()
     {
         r3++;
     }
-    PARITY();
+    PARITY("A");
     String temp = Integer.toHexString(r3);
         switch (temp.length()) {
             case 1:
@@ -4464,7 +4468,7 @@ String _97()
     r1 = hex2int(getA());
     r2 = hex2int(getA());
     r3=r1-r2;
-    PARITY();
+    PARITY("A");
     if (r3<0)
     {
         r3*=-1;
@@ -4500,7 +4504,7 @@ String _90()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 
@@ -4525,7 +4529,7 @@ String _91()
     String temp = Integer.toHexString(r3);
     SetA(temp);
     IncIP();
-    PARITY();
+    PARITY("A");
     return"0";
 
 }
@@ -4548,7 +4552,7 @@ String _92()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 
@@ -4572,7 +4576,7 @@ String _93()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 
@@ -4596,7 +4600,7 @@ String _94()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 
@@ -4620,7 +4624,7 @@ String _95()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 
@@ -4644,7 +4648,7 @@ String _96()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 }
@@ -4668,7 +4672,7 @@ String _D6()
     else SetZ(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
-    PARITY();
+    PARITY("A");
     IncIP();
     return"0";
 }
@@ -4697,6 +4701,7 @@ String _9F()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4725,6 +4730,7 @@ String _98()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4753,6 +4759,7 @@ String _99()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4781,6 +4788,7 @@ String _9A()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4809,6 +4817,7 @@ String _9B()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4837,6 +4846,7 @@ String _9C()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4865,6 +4875,7 @@ String _9D()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4893,6 +4904,7 @@ String _9E()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -4922,6 +4934,7 @@ String _DE()
     else SetCy(0);
     String temp = Integer.toHexString(r3);
     SetA(temp);
+    PARITY("A");
     IncIP();
     return "0";
 }
@@ -6495,14 +6508,66 @@ void _E1()
 //POP PSW
 void _F1()
 {
+    IncSP();
+    String x = getData(getSP());
+    int y = hex2int(x);
+    if((y&128)==128)
+    {
+        SetS(1);
+    }
+    if((y&64)==64)
+    {
+        SetZ(1);
+    }
+    if((y&16)==16)
+    {
+       SetAc(1);
+    }
+    if((y&4)==4)
+    {
+        SetP(1);
+    }
+    if((y&1)==1)
+    {
+        SetCy(1);
+    }
+    
     IncIP();
-    JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] POP PSW");
+    //JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] POP PSW");
 }
 //PUSH PSW
 void _F5()
 {
+    int x =0;
+    if(getS()==1)
+    {
+        x= x|128;
+    }
+    if(getZ()==1)
+    {
+        x= x|64;
+    }
+    if(getAc()==1)
+    {
+        x= x|16;
+    }
+    if(getP()==1)
+    {
+        x= x|4;
+    }
+    if(getCy()==1)
+    {
+        x= x|1;
+    }
+    setData(getSP(),Integer.toHexString(x));
+    DecSP();
+    SetS(0);
+    SetZ(0);
+    SetAc(0);
+    SetP(0);
+    SetCy(0);
     IncIP();
-    JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] PUSH PSW");
+    //JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] PUSH PSW");
 }
 //INX B
 void _03()
@@ -6637,6 +6702,8 @@ void _27()
            SetAc(1);
        if(s<0)
            SetS(1);
+       
+       PARITY("A");
        IncIP();
 }
 //PCHL
@@ -6682,10 +6749,38 @@ void _1F()
     IncIP();
 }
 //PARITY
-void PARITY()
+void PARITY(String z)
 {
     int x,counter=0;
-    x = hex2int(A);
+    switch(z)
+    {
+        case "A":
+            x = hex2int(A);
+            break;
+        case "B":
+            x = hex2int(B);
+            break;
+        case "C":
+            x = hex2int(C);
+            break;
+        case "D":
+            x = hex2int(D);
+            break;
+        case "E":
+            x = hex2int(E);
+            break;
+        case "H":
+            x = hex2int(H);
+            break;
+        case "L":
+            x = hex2int(L);
+            break;
+        case "M":
+            x = hex2int(getM());
+            break;
+        default :
+            x=0;
+    }
     String s = Integer.toBinaryString(x);
     char[] c = s.toCharArray();
     for(int i=0;i<s.length();i++)
