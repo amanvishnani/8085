@@ -1175,54 +1175,80 @@ public class test1 extends javax.swing.JFrame {
     
     public int SetA(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         A=x;
         jA.setText(x);
         return 1;
     }
     public int SetB(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         B=x;
         jB.setText(x);
         return 1;
     }
     public int SetC(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         C=x;
         jC.setText(x);
         return 1;
     }
     public int SetD(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         D=x;
         jD.setText(x);
         return 1;
     }
     public int SetE(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         E=x;
         jE.setText(x);
         return 1;
     }
     public int SetH(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         H=x;
         jH.setText(x);
         return 1;
     }
     public int SetL(String x)
     {
+        if(x.length()==1)
+            x="0"+x;
         L=x;
         jL.setText(x);
         return 1;
     }
     public int SetSP(String x)
     {
+        if(x.length()==1)
+            x="000"+x;
+        else if(x.length()==2)
+            x="00"+x;
+        else if(x.length()==3)
+            x="0"+x;
         SP=x;
         jSP.setText(x);
         return 1;
     }
     public int SetIP(String x)
     {
+        if(x.length()==1)
+            x="000"+x;
+        else if(x.length()==2)
+            x="00"+x;
+        else if(x.length()==3)
+            x="0"+x;
         IP=x;
         jIP.setText(x);
         refreshCode();
@@ -2954,6 +2980,7 @@ void _36()
 
         code_av.setColumns(20);
         code_av.setRows(5);
+        code_av.setText("MVI A,0FH\nMVI B,12H\nSUB B\nJM NEXT\nSTA 4000H\nNEXT:CALL SBROUT\nHLT\n\nSBROUT:STA 4005H\nRET");
         jScrollPane1.setViewportView(code_av);
 
         jButton1.setText("LOAD >");
@@ -4494,6 +4521,7 @@ String _90()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4518,6 +4546,7 @@ String _91()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4542,6 +4571,7 @@ String _92()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4566,6 +4596,7 @@ String _93()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4590,6 +4621,7 @@ String _94()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4614,6 +4646,7 @@ String _95()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4638,6 +4671,7 @@ String _96()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);
@@ -4662,6 +4696,7 @@ String _D6()
     r3=r1-r2;
     if (r3<0)
     {
+        r3*=-1;
         SetS(1);
     } 
     else SetS(0);

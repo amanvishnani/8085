@@ -280,6 +280,7 @@
           <Properties>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="MVI A,0FH&#xa;MVI B,12H&#xa;SUB B&#xa;JM NEXT&#xa;STA 4000H&#xa;NEXT:CALL SBROUT&#xa;HLT&#xa;&#xa;SBROUT:STA 4005H&#xa;RET"/>
           </Properties>
         </Component>
       </SubComponents>
