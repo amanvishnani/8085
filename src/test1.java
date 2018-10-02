@@ -22,7 +22,6 @@ public class test1 extends javax.swing.JFrame {
     public String space ="( )*";
     public String space1 = "( )+";
     
-    
     void IncIP()
     {
         int x = hex2int(getIP());
