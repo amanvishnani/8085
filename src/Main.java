@@ -21,10 +21,10 @@ public class Main extends javax.swing.JFrame {
     public final String space = "( )*";
     public final String space1 = "( )+";
 
-    void IncIP() {
-        int x = hex2int(getIP());
+    void nextInstructionPointer() {
+        int x = Util.hex2int(getIP());
         if (x < 16383) {
-            int ch = hex2int(CodeHead.getText());
+            int ch = Util.hex2int(CodeHead.getText());
 
             if (x >= (ch + 20)) {
                 CodeHead.setText(int2addr(ch + 1));
@@ -60,14 +60,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    int hex2int(String S) {
-        try {
-            return Integer.parseInt(S, 16);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Problem with hex to int converssion , HEX=" + S);
-        }
-        return -1;
-    }
+    
 
     String[] getMyCode() {
         int i = 0, k = 0, j = 0;
@@ -961,7 +954,7 @@ public class Main extends javax.swing.JFrame {
         return 1;
     }
 
-    public void Pass2() {
+    public void PassTwo() {
         for (int i = 0; i < SYMPTR; i++) {
             String localLabel, localmem;
             localLabel = ST[i][LABEL].trim();
@@ -1348,317 +1341,317 @@ public class Main extends javax.swing.JFrame {
     /* MOV INSTRUCTIONS */
     void _7F() {
         SetA(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _78() {
         SetA(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _79() {
         SetA(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _7A() {
         SetA(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _7B() {
         SetA(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _7C() {
         SetA(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _7D() {
         SetA(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _7E() {
         SetA(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _47() {
         SetB(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _40() {
         SetB(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _41() {
         SetB(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _42() {
         SetB(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _43() {
         SetB(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _44() {
         SetB(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _45() {
         SetB(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _46() {
         SetB(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4F() {
         SetC(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _48() {
         SetC(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _49() {
         SetC(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4A() {
         SetC(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4B() {
         SetC(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4C() {
         SetC(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4D() {
         SetC(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _4E() {
         SetC(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _57() {
         SetD(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _50() {
         SetD(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _51() {
         SetD(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _52() {
         SetD(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _53() {
         SetD(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _54() {
         SetD(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _55() {
         SetD(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _56() {
         SetD(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5F() {
         SetE(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _58() {
         SetE(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _59() {
         SetE(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5A() {
         SetE(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5B() {
         SetE(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5C() {
         SetE(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5D() {
         SetE(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _5E() {
         SetE(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _67() {
         SetH(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _60() {
         SetH(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _61() {
         SetH(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _62() {
         SetH(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _63() {
         SetH(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _64() {
         SetH(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _65() {
         SetH(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _66() {
         SetH(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6F() {
         SetL(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _68() {
         SetL(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _69() {
         SetL(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6A() {
         SetL(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6B() {
         SetL(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6C() {
         SetL(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6D() {
         SetL(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _6E() {
         SetL(getM());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _77() {
         SetM(getA());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _70() {
         SetM(getB());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _71() {
         SetM(getC());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _72() {
         SetM(getD());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _73() {
         SetM(getE());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _74() {
         SetM(getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _75() {
         SetM(getL());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _76() {
@@ -1666,51 +1659,51 @@ public class Main extends javax.swing.JFrame {
     }
 
     void _3E() {
-        IncIP();
+        nextInstructionPointer();
         SetA(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _06() {
-        IncIP();
+        nextInstructionPointer();
         SetB(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _0E() {
-        IncIP();
+        nextInstructionPointer();
         SetC(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _16() {
-        IncIP();
+        nextInstructionPointer();
         SetD(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _1E() {
-        IncIP();
+        nextInstructionPointer();
         SetE(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _26() {
-        IncIP();
+        nextInstructionPointer();
         SetH(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _2E() {
-        IncIP();
+        nextInstructionPointer();
         SetL(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     void _36() {
-        IncIP();
+        nextInstructionPointer();
         SetM(getData(IP));
-        IncIP();
+        nextInstructionPointer();
     }
 
     public String Trimmer(String x) {
@@ -3556,7 +3549,7 @@ public class Main extends javax.swing.JFrame {
         jStep.setEnabled(true);
         iniMap();
         PassOne(getMyCode());
-        Pass2();
+        PassTwo();
         String test123[];
         test123 = new String[20];
         System.arraycopy(memory, 0, test123, 0, 20);
@@ -3577,9 +3570,9 @@ public class Main extends javax.swing.JFrame {
 
     private void jStepActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStepActionPerformed
         // TODO add your handling code here:
-        int nip = hex2int(getIP());
+        int nip = Util.hex2int(getIP());
         execute(getData(getIP()));
-        nip = nip - hex2int(CodeHead.getText());
+        nip = nip - Util.hex2int(CodeHead.getText());
 
         CodeTable.addRowSelectionInterval(nip, nip);
         if (oldIP != nip) {
@@ -3755,12 +3748,12 @@ public class Main extends javax.swing.JFrame {
 
     String _87() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getA()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getA()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3769,29 +3762,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD B
 
     String _80() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getB()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getB()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3800,17 +3793,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -3818,12 +3811,12 @@ public class Main extends javax.swing.JFrame {
 
     String _81() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getC()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getC()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3832,29 +3825,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD D
 
     String _82() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getD()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getD()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3863,29 +3856,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD E
 
     String _83() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getE()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getE()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3894,29 +3887,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD H
 
     String _84() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getH()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getH()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3925,29 +3918,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD L
 
     String _85() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getL()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getL()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3956,29 +3949,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADD M
 
     String _86() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getM()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getM()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -3987,30 +3980,30 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ADI data
 
     String _C6() {
         int r1, r2;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         if ((r1 + r2) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getM()))) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getM()))) > 15) {
             SetAc(1);
         }
         PARITY("A");
@@ -4019,29 +4012,29 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 
 //ADC A
     String _8F() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         if ((r1 + r2 + getCy()) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getA())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getA())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4054,17 +4047,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4072,12 +4065,12 @@ public class Main extends javax.swing.JFrame {
 
     String _88() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getB())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getB())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4090,17 +4083,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4108,12 +4101,12 @@ public class Main extends javax.swing.JFrame {
 
     String _89() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getC())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getC())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4127,17 +4120,17 @@ public class Main extends javax.swing.JFrame {
                 temp = "0" + temp;
 
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4145,12 +4138,12 @@ public class Main extends javax.swing.JFrame {
 
     String _8A() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getD())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getD())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4163,17 +4156,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4181,12 +4174,12 @@ public class Main extends javax.swing.JFrame {
 
     String _8B() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getE())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getE())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4199,17 +4192,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4217,12 +4210,12 @@ public class Main extends javax.swing.JFrame {
 
     String _8C() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getH())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getH())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4235,17 +4228,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4253,12 +4246,12 @@ public class Main extends javax.swing.JFrame {
 
     String _8D() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getL())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getL())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4271,17 +4264,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4289,12 +4282,12 @@ public class Main extends javax.swing.JFrame {
 
     String _8E() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         if ((r1 + r2 + getCy()) > 255) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getM())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getM())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4307,30 +4300,30 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ACI
 
     String _CE() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         if ((r1 + r2 + getCy()) > 31) {
             SetCy(1);
         }
-        if ((hex2int(getLSB(getA())) + hex2int(getLSB(getM())) + getCy()) > 15) {
+        if ((Util.hex2int(getLSB(getA())) + Util.hex2int(getLSB(getM())) + getCy()) > 15) {
             SetAc(1);
         }
         r3 = r1 + r2;
@@ -4343,17 +4336,17 @@ public class Main extends javax.swing.JFrame {
             case 1:
                 temp = "0" + temp;
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             case 2:
                 SetA(temp);
-                IncIP();
+                nextInstructionPointer();
                 return "0";
             default:
                 SetA(temp.substring((temp.length() - 2), temp.length()));
                 break;
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4361,8 +4354,8 @@ public class Main extends javax.swing.JFrame {
 
     String _97() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         r3 = r1 - r2;
         PARITY("A");
         if (r3 < 0) {
@@ -4378,15 +4371,15 @@ public class Main extends javax.swing.JFrame {
         }
         String temp = Integer.toHexString(r3);
         SetA(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SUB B
 
     String _90() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4402,7 +4395,7 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4410,8 +4403,8 @@ public class Main extends javax.swing.JFrame {
 
     String _91() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4426,7 +4419,7 @@ public class Main extends javax.swing.JFrame {
         }
         String temp = Integer.toHexString(r3);
         SetA(temp);
-        IncIP();
+        nextInstructionPointer();
         PARITY("A");
         return "0";
 
@@ -4435,8 +4428,8 @@ public class Main extends javax.swing.JFrame {
 
     String _92() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4452,7 +4445,7 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4460,8 +4453,8 @@ public class Main extends javax.swing.JFrame {
 
     String _93() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4477,7 +4470,7 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4485,8 +4478,8 @@ public class Main extends javax.swing.JFrame {
 
     String _94() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4502,7 +4495,7 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4510,8 +4503,8 @@ public class Main extends javax.swing.JFrame {
 
     String _95() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4527,7 +4520,7 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4535,8 +4528,8 @@ public class Main extends javax.swing.JFrame {
 
     String _96() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4552,16 +4545,16 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SUI Data
 
     String _D6() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         r3 = r1 - r2;
         if (r3 < 0) {
             r3 *= -1;
@@ -4577,15 +4570,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB A
 
     String _9F() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4608,15 +4601,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB B
 
     String _98() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4639,15 +4632,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB C
 
     String _99() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4670,15 +4663,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB D
 
     String _9A() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4701,15 +4694,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB E
 
     String _9B() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4732,15 +4725,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB H
 
     String _9C() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4763,15 +4756,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB L
 
     String _9D() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4794,15 +4787,15 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBB M
 
     String _9E() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4825,16 +4818,16 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SBI
 
     String _DE() {
         int r1, r2, r3;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         int r4;
         r4 = getCy();
         r3 = r1 - r2 - r4;
@@ -4857,29 +4850,29 @@ public class Main extends javax.swing.JFrame {
         String temp = Integer.toHexString(r3);
         SetA(temp);
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 
 //INR A
     String _3C() {
         int r;
-        r = hex2int(getA());
+        r = Util.hex2int(getA());
         r++;
         String temp = Integer.toHexString(r);
         SetA(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //INR B
 
     String _04() {
         int r;
-        r = hex2int(getB());
+        r = Util.hex2int(getB());
         r++;
         String temp = Integer.toHexString(r);
         SetB(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4887,11 +4880,11 @@ public class Main extends javax.swing.JFrame {
 
     String _0C() {
         int r;
-        r = hex2int(getC());
+        r = Util.hex2int(getC());
         r++;
         String temp = Integer.toHexString(r);
         SetC(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4899,11 +4892,11 @@ public class Main extends javax.swing.JFrame {
 
     String _14() {
         int r;
-        r = hex2int(getD());
+        r = Util.hex2int(getD());
         r++;
         String temp = Integer.toHexString(r);
         SetD(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4911,11 +4904,11 @@ public class Main extends javax.swing.JFrame {
 
     String _1C() {
         int r;
-        r = hex2int(getE());
+        r = Util.hex2int(getE());
         r++;
         String temp = Integer.toHexString(r);
         SetE(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4923,11 +4916,11 @@ public class Main extends javax.swing.JFrame {
 
     String _24() {
         int r;
-        r = hex2int(getH());
+        r = Util.hex2int(getH());
         r++;
         String temp = Integer.toHexString(r);
         SetH(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4935,11 +4928,11 @@ public class Main extends javax.swing.JFrame {
 
     String _2C() {
         int r;
-        r = hex2int(getL());
+        r = Util.hex2int(getL());
         r++;
         String temp = Integer.toHexString(r);
         SetL(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4947,11 +4940,11 @@ public class Main extends javax.swing.JFrame {
 
     String _34() {
         int r;
-        r = hex2int(getM());
+        r = Util.hex2int(getM());
         r++;
         String temp = Integer.toHexString(r);
         SetM(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4959,8 +4952,8 @@ public class Main extends javax.swing.JFrame {
 
     String _BF() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -4971,15 +4964,15 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 
 //CMP B
     String _B8() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -4990,7 +4983,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -4998,8 +4991,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B9() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5010,7 +5003,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5018,8 +5011,8 @@ public class Main extends javax.swing.JFrame {
 
     String _BA() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5030,7 +5023,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5038,8 +5031,8 @@ public class Main extends javax.swing.JFrame {
 
     String _BB() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5050,7 +5043,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5058,8 +5051,8 @@ public class Main extends javax.swing.JFrame {
 
     String _BC() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5070,7 +5063,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5078,8 +5071,8 @@ public class Main extends javax.swing.JFrame {
 
     String _BD() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5090,15 +5083,15 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
 
     String _BE() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         if (r1 < r2) {
             SetCy(1);
         }
@@ -5109,7 +5102,7 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5117,28 +5110,28 @@ public class Main extends javax.swing.JFrame {
 
     String _3D() {
         int r;
-        r = hex2int(getA());
+        r = Util.hex2int(getA());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetA(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DCR B
 
     String _05() {
         int r;
-        r = hex2int(getB());
+        r = Util.hex2int(getB());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetB(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5146,14 +5139,14 @@ public class Main extends javax.swing.JFrame {
 
     String _0D() {
         int r;
-        r = hex2int(getC());
+        r = Util.hex2int(getC());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetC(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5161,14 +5154,14 @@ public class Main extends javax.swing.JFrame {
 
     String _15() {
         int r;
-        r = hex2int(getD());
+        r = Util.hex2int(getD());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetD(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5176,42 +5169,42 @@ public class Main extends javax.swing.JFrame {
 
     String _1D() {
         int r;
-        r = hex2int(getE());
+        r = Util.hex2int(getE());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetE(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DCR H
 
     String _25() {
         int r;
-        r = hex2int(getH());
+        r = Util.hex2int(getH());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetH(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DCR L
 
     String _2D() {
         int r;
-        r = hex2int(getL());
+        r = Util.hex2int(getL());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetL(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5219,14 +5212,14 @@ public class Main extends javax.swing.JFrame {
 
     String _35() {
         int r;
-        r = hex2int(getM());
+        r = Util.hex2int(getM());
         r--;
         if (r == 0) {
             SetZ(1);
         }
         String temp = Integer.toHexString(r);
         SetM(temp);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XCHG
@@ -5239,15 +5232,15 @@ public class Main extends javax.swing.JFrame {
         SetE(getL());
         SetH(r1);
         SetL(r2);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DAD B
 
     String _09() {
         int r1, r2;
-        r1 = hex2int(getB() + getC());
-        r2 = hex2int(getH() + getL());
+        r1 = Util.hex2int(getB() + getC());
+        r2 = Util.hex2int(getH() + getL());
         System.out.println("r1= " + r1 + " r2= " + r2);
         if ((r1 + r2 > 65535)) {
             SetCy(1);
@@ -5258,53 +5251,49 @@ public class Main extends javax.swing.JFrame {
         String t2 = getMSB(temp);
         SetL(t1);
         SetH(t2);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DAD D
 
     String _19() {
         int r1, r2;
-        r1 = hex2int(getD() + getE());
-        r2 = hex2int(getH() + getL());
-        System.out.println("r1= " + r1 + " r2= " + r2);
+        r1 = Util.hex2int(getD() + getE());
+        r2 = Util.hex2int(getH() + getL());
         if ((r1 + r2 > 65535)) {
             SetCy(1);
         }
         String temp = int2addr(r1 + r2);
-        System.out.println(temp);
         String t1 = getLSB(temp);
         String t2 = getMSB(temp);
         SetL(t1);
         SetH(t2);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //DAD H
 
     String _29() {
         int r1, r2;
-        r1 = hex2int(getH() + getL());
-        r2 = hex2int(getH() + getL());
-        System.out.println("r1= " + r1 + " r2= " + r2);
+        r1 = Util.hex2int(getH() + getL());
+        r2 = Util.hex2int(getH() + getL());
         if ((r1 + r2 > 65535)) {
             SetCy(1);
         }
         String temp = int2addr(r1 + r2);
-        System.out.println(temp);
         String t1 = getLSB(temp);
         String t2 = getMSB(temp);
         SetL(t1);
         SetH(t2);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ANA A
 
     String _A7() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5314,15 +5303,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ANA B
 
     String _A0() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5332,7 +5321,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5340,8 +5329,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A1() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5351,7 +5340,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5359,8 +5348,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A2() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5370,7 +5359,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5378,8 +5367,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A3() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5389,7 +5378,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5397,8 +5386,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A4() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5408,7 +5397,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5416,8 +5405,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A5() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5427,7 +5416,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5435,8 +5424,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A6() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5446,7 +5435,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5454,8 +5443,8 @@ public class Main extends javax.swing.JFrame {
 
     String _E6() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         int s = r1 & r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5465,7 +5454,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5473,9 +5462,9 @@ public class Main extends javax.swing.JFrame {
 
     String _B7() {
         int r1, r2;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5485,7 +5474,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5493,8 +5482,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B0() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5504,7 +5493,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5512,8 +5501,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B1() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5523,7 +5512,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5531,8 +5520,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B2() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5542,7 +5531,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5550,8 +5539,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B3() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5561,7 +5550,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5569,8 +5558,8 @@ public class Main extends javax.swing.JFrame {
 
     String _B4() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5580,15 +5569,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ORA L
 
     String _B5() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5598,15 +5587,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ORA M
 
     String _B6() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5616,16 +5605,16 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //ORI
 
     String _F6() {
         int r1, r2;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         int s = r1 | r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5635,15 +5624,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 
 //XRA A
     String _AF() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getA());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getA());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5653,7 +5642,7 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -5661,8 +5650,8 @@ public class Main extends javax.swing.JFrame {
 
     String _A8() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getB());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getB());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5672,15 +5661,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA C
 
     String _A9() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getC());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getC());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5690,15 +5679,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA D
 
     String _AA() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getD());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getD());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5708,15 +5697,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA E
 
     String _AB() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getE());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getE());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5726,15 +5715,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA H
 
     String _AC() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getH());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getH());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5744,15 +5733,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA L
 
     String _AD() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getL());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getL());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5762,15 +5751,15 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRA M
 
     String _AE() {
         int r1, r2;
-        r1 = hex2int(getA());
-        r2 = hex2int(getM());
+        r1 = Util.hex2int(getA());
+        r2 = Util.hex2int(getM());
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5780,16 +5769,16 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //XRI data
 
     String _EE() {
         int r1, r2;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         int s = r1 ^ r2;
         String temp = Integer.toHexString(s);
         SetA(temp);
@@ -5799,24 +5788,24 @@ public class Main extends javax.swing.JFrame {
         if (s == 0) {
             SetZ(1);
         }
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //STC 
 
     String _37() {
         SetCy(1);
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //CALL LABEL
 
     void _CD() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s3 = getIP();
         String t1 = getMSB(s3);
         String t2 = getLSB(s3);
@@ -5838,9 +5827,9 @@ public class Main extends javax.swing.JFrame {
 //JMP
 
     void _C3() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
         SetIP(s2 + s1);
     }
@@ -5854,9 +5843,9 @@ public class Main extends javax.swing.JFrame {
         if (getCy() == 1) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JNC Cy=0 _D2()
@@ -5865,9 +5854,9 @@ public class Main extends javax.swing.JFrame {
         if (getCy() == 0) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JP S=0 _F2()
@@ -5876,9 +5865,9 @@ public class Main extends javax.swing.JFrame {
         if (getS() == 0) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JM S=1 _FA()
@@ -5887,9 +5876,9 @@ public class Main extends javax.swing.JFrame {
         if (getS() == 1) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JZ Z=1 _CA()
@@ -5898,9 +5887,9 @@ public class Main extends javax.swing.JFrame {
         if (getZ() == 1) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JNZ Z=0 _C2()
@@ -5909,9 +5898,9 @@ public class Main extends javax.swing.JFrame {
         if (getZ() == 0) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JPE P=1 _EA()
@@ -5920,9 +5909,9 @@ public class Main extends javax.swing.JFrame {
         if (getP() == 1) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 //JPO P=0 _E2()
@@ -5931,9 +5920,9 @@ public class Main extends javax.swing.JFrame {
         if (getP() == 0) {
             _C3();
         } else {
-            IncIP();
-            IncIP();
-            IncIP();
+            nextInstructionPointer();
+            nextInstructionPointer();
+            nextInstructionPointer();
         }
     }
 
@@ -6061,16 +6050,16 @@ public class Main extends javax.swing.JFrame {
 
 //NOP
     void _00() {
-        IncIP();
+        nextInstructionPointer();
     }
 //LDA
 
     void _3A() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         SetA(getData(s2 + s1));
     }
 
@@ -6078,73 +6067,73 @@ public class Main extends javax.swing.JFrame {
     void _0A() {
         String s1 = getData(getB() + getC());
         SetA(getData(s1));
-        IncIP();
+        nextInstructionPointer();
     }
 //LDAX D
 
     void _1A() {
         String s1 = getData(getD() + getE());
         SetA(getData(s1));
-        IncIP();
+        nextInstructionPointer();
     }
 //LXI B _01()
 
     void _01() {
-        IncIP();
+        nextInstructionPointer();
         SetC(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
         SetB(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
     }
 //LXI D _11()
 
     void _11() {
-        IncIP();
+        nextInstructionPointer();
         SetE(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
         SetD(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
     }
 //LXI H _21()
 
     void _21() {
-        IncIP();
+        nextInstructionPointer();
         SetL(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
         SetH(getData(getIP()));
-        IncIP();
+        nextInstructionPointer();
     }
 //LXI SP _31()
 
     void _31() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
         SetSP(s2 + s1);
-        IncIP();
+        nextInstructionPointer();
     }
 //LHLD
 
     void _2A() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
-        int x = hex2int(s2 + s1);
+        int x = Util.hex2int(s2 + s1);
         SetL(getData(int2addr(x)));
         SetH(getData(int2addr(x + 1)));
-        IncIP();
+        nextInstructionPointer();
     }
 //STA 
 
     void _32() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
         setData(s2 + s1, getA());
-        IncIP();
+        nextInstructionPointer();
     }
 //STAX B
 
@@ -6152,7 +6141,7 @@ public class Main extends javax.swing.JFrame {
         String s1 = getB();
         String s2 = getC();
         setData(s1 + s2, getA());
-        IncIP();
+        nextInstructionPointer();
     }
 //STAX D
 
@@ -6160,29 +6149,29 @@ public class Main extends javax.swing.JFrame {
         String s1 = getD();
         String s2 = getE();
         setData(s1 + s2, getA());
-        IncIP();
+        nextInstructionPointer();
     }
 //SHLD
 
     void _22() {
-        IncIP();
+        nextInstructionPointer();
         String s1 = getData(getIP());
-        IncIP();
+        nextInstructionPointer();
         String s2 = getData(getIP());
-        int x = hex2int(s2 + s1);
+        int x = Util.hex2int(s2 + s1);
         setData(int2addr(x), getL());
         setData(int2addr(x + 1), getH());
-        IncIP();
+        nextInstructionPointer();
     }
 
     void DecSP() {
-        int x = hex2int(getSP());
+        int x = Util.hex2int(getSP());
         x--;
         SetSP(int2addr(x));
     }
 
     void IncSP() {
-        int x = hex2int(getSP());
+        int x = Util.hex2int(getSP());
         x++;
         SetSP(int2addr(x));
     }
@@ -6237,7 +6226,7 @@ public class Main extends javax.swing.JFrame {
 //RLC 
 
     String _07() {
-        int r1 = hex2int(getA());
+        int r1 = Util.hex2int(getA());
         int x = r1 << 1;
         int y = x / 255;
         if (y == 1) {
@@ -6254,7 +6243,7 @@ public class Main extends javax.swing.JFrame {
 //RRC
 
     String _0F() {
-        int r1 = hex2int(getA());
+        int r1 = Util.hex2int(getA());
         int z = r1 & 1;
         int x = r1 >> 1;
         if (z == 1) {
@@ -6270,7 +6259,7 @@ public class Main extends javax.swing.JFrame {
 //RAL
 
     String _17() {
-        int r1 = hex2int(getA());
+        int r1 = Util.hex2int(getA());
         int x = r1 << 1;
         int y = x / 256;
         if (getCy() == 1) {
@@ -6279,14 +6268,14 @@ public class Main extends javax.swing.JFrame {
         x = x & 255;
         SetCy(y);
         SetA(Integer.toHexString(x));
-        IncIP();
+        nextInstructionPointer();
         return "0";
     }
 //SPHL
 
     void _F9() {
         SetSP(getH() + getL());
-        IncIP();
+        nextInstructionPointer();
     }
 //XTHL
 
@@ -6295,7 +6284,7 @@ public class Main extends javax.swing.JFrame {
         DecSP();
         setData(getSP(), getH());
         DecSP();
-        IncIP();
+        nextInstructionPointer();
     }
 
 //PUSH B
@@ -6304,7 +6293,7 @@ public class Main extends javax.swing.JFrame {
         DecSP();
         setData(getSP(), getC());
         DecSP();
-        IncIP();
+        nextInstructionPointer();
     }
 //PUSH D
 
@@ -6313,7 +6302,7 @@ public class Main extends javax.swing.JFrame {
         DecSP();
         setData(getSP(), getE());
         DecSP();
-        IncIP();
+        nextInstructionPointer();
     }
 //PUSH H
 
@@ -6322,7 +6311,7 @@ public class Main extends javax.swing.JFrame {
         DecSP();
         setData(getSP(), getL());
         DecSP();
-        IncIP();
+        nextInstructionPointer();
     }
 //POP B
 
@@ -6331,7 +6320,7 @@ public class Main extends javax.swing.JFrame {
         SetC(getData(getSP()));
         IncSP();
         SetB(getData(getSP()));
-        IncIP();
+        nextInstructionPointer();
     }
 //POP D
 
@@ -6340,7 +6329,7 @@ public class Main extends javax.swing.JFrame {
         SetE(getData(getSP()));
         IncSP();
         SetD(getData(getSP()));
-        IncIP();
+        nextInstructionPointer();
 
     }
 //POP H
@@ -6350,14 +6339,14 @@ public class Main extends javax.swing.JFrame {
         SetL(getData(getSP()));
         IncSP();
         SetH(getData(getSP()));
-        IncIP();
+        nextInstructionPointer();
     }
 //POP PSW
 
     void _F1() {
         IncSP();
         String x = getData(getSP());
-        int y = hex2int(x);
+        int y = Util.hex2int(x);
         if ((y & 128) == 128) {
             SetS(1);
         }
@@ -6374,7 +6363,7 @@ public class Main extends javax.swing.JFrame {
             SetCy(1);
         }
 
-        IncIP();
+        nextInstructionPointer();
         //JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] POP PSW");
     }
 //PUSH PSW
@@ -6403,7 +6392,7 @@ public class Main extends javax.swing.JFrame {
         SetAc(0);
         SetP(0);
         SetCy(0);
-        IncIP();
+        nextInstructionPointer();
         //JOptionPane.showMessageDialog(this, "[WIP - Work In Progress] PUSH PSW");
     }
 //INX B
@@ -6411,12 +6400,12 @@ public class Main extends javax.swing.JFrame {
     void _03() {
         String s1 = getB();
         String s2 = getC();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x++;
         String s3 = int2addr(x);
         SetB(getMSB(s3));
         SetC(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //INX D
 
@@ -6424,12 +6413,12 @@ public class Main extends javax.swing.JFrame {
 
         String s1 = getD();
         String s2 = getE();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x++;
         String s3 = int2addr(x);
         SetD(getMSB(s3));
         SetE(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //INX H
 
@@ -6437,25 +6426,25 @@ public class Main extends javax.swing.JFrame {
 
         String s1 = getH();
         String s2 = getL();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x++;
         String s3 = int2addr(x);
         SetH(getMSB(s3));
         SetL(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //INX SP
 
     void _33() {
         IncSP();
-        IncIP();
+        nextInstructionPointer();
     }
 //DCX B
 
     void _0B() {
         String s1 = getB();
         String s2 = getC();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x--;
         if (x < 0) {
             x = x * (-1);
@@ -6463,14 +6452,14 @@ public class Main extends javax.swing.JFrame {
         String s3 = int2addr(x);
         SetB(getMSB(s3));
         SetC(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //DCX D
 
     void _1B() {
         String s1 = getD();
         String s2 = getE();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x--;
         if (x < 0) {
             x = x * (-1);
@@ -6478,14 +6467,14 @@ public class Main extends javax.swing.JFrame {
         String s3 = int2addr(x);
         SetD(getMSB(s3));
         SetE(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //DCX H
 
     void _2B() {
         String s1 = getH();
         String s2 = getL();
-        int x = hex2int(s1 + s2);
+        int x = Util.hex2int(s1 + s2);
         x--;
         if (x < 0) {
             x = x * (-1);
@@ -6493,24 +6482,24 @@ public class Main extends javax.swing.JFrame {
         String s3 = int2addr(x);
         SetH(getMSB(s3));
         SetL(getLSB(s3));
-        IncIP();
+        nextInstructionPointer();
     }
 //DCX SP
 
     void _3B() {
         DecSP();
-        IncIP();
+        nextInstructionPointer();
     }
 //CMA
 
     String _2F() {
         int r1;
-        r1 = hex2int(getA());
+        r1 = Util.hex2int(getA());
         r1 = ~r1;
         String temp = Integer.toHexString(r1);
 
         SetA(temp.substring((temp.length() - 2), temp.length()));
-        IncIP();
+        nextInstructionPointer();
         return "0";
 
     }
@@ -6522,12 +6511,12 @@ public class Main extends javax.swing.JFrame {
         } else {
             SetCy(1);
         }
-        IncIP();
+        nextInstructionPointer();
     }
 //DAA
 
     void _27() {
-        int s = hex2int(getA());
+        int s = Util.hex2int(getA());
         String temp = Integer.toString(s);
         SetA(temp.substring((temp.length() - 2), temp.length()));
         if (s == 0) {
@@ -6544,7 +6533,7 @@ public class Main extends javax.swing.JFrame {
         }
 
         PARITY("A");
-        IncIP();
+        nextInstructionPointer();
     }
 //PCHL
 
@@ -6553,15 +6542,15 @@ public class Main extends javax.swing.JFrame {
         String r2 = getL();
         r1 = r1 + r2;
         SetIP(r1);
-        IncIP();
+        nextInstructionPointer();
     }
 //CPI data
 
     void _FE() {
         int r1, r2;
-        r1 = hex2int(getA());
-        IncIP();
-        r2 = hex2int(getData(IP));
+        r1 = Util.hex2int(getA());
+        nextInstructionPointer();
+        r2 = Util.hex2int(getData(IP));
         if (r1 < r2) {
             SetCy(1);
         }
@@ -6572,13 +6561,13 @@ public class Main extends javax.swing.JFrame {
             SetZ(0);
             SetCy(0);
         }
-        IncIP();
+        nextInstructionPointer();
     }
 //RAR _1F
 
     void _1F() {
         int x, y;
-        x = hex2int(getA());
+        x = Util.hex2int(getA());
         y = x % 2;
         x = x >> 1;
         if (getCy() == 1) {
@@ -6586,7 +6575,7 @@ public class Main extends javax.swing.JFrame {
         }
         SetCy(y);
         SetA(Integer.toHexString(x));
-        IncIP();
+        nextInstructionPointer();
     }
 //PARITY
 
@@ -6594,28 +6583,28 @@ public class Main extends javax.swing.JFrame {
         int x, counter = 0;
         switch (z) {
             case "A":
-                x = hex2int(A);
+                x = Util.hex2int(A);
                 break;
             case "B":
-                x = hex2int(B);
+                x = Util.hex2int(B);
                 break;
             case "C":
-                x = hex2int(C);
+                x = Util.hex2int(C);
                 break;
             case "D":
-                x = hex2int(D);
+                x = Util.hex2int(D);
                 break;
             case "E":
-                x = hex2int(E);
+                x = Util.hex2int(E);
                 break;
             case "H":
-                x = hex2int(H);
+                x = Util.hex2int(H);
                 break;
             case "L":
-                x = hex2int(L);
+                x = Util.hex2int(L);
                 break;
             case "M":
-                x = hex2int(getM());
+                x = Util.hex2int(getM());
                 break;
             default:
                 x = 0;
