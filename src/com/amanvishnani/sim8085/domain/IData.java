@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.amanvishnani.sim8085.domain;
 
 /**
  *
- * @author aman6
+ * @author Aman Vishnani
  */
-public class Util {
-   public static int hex2int(String S) {
-        return Integer.parseInt(S, 16);
-    } 
+public interface IData {
+    String hexValue();
+    Integer intValue();
+    Integer add();
+    Integer minus();
 }
