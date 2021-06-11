@@ -17,8 +17,7 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public static IMemory memory = Memory.makeMemory();
     public IRegister A, B, C, D, E, H, L;
-    public IAddress IP;
-    public static String SP;
+    public IAddress IP, SP;
     static Flags flags = Flags.newInstance();
     public static int LABEL = 0, OPCODE = 1, MEM = 1, SYMPTR, SYMPTR1, oldIP;
     public static String[][] ST = new String[100][2];
@@ -54,9 +53,16 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
     @Override
+    public void updateViewPointers() {
+        jIP.setText(getIP().hexValue());
+        jSP.setText(getSP().hexValue());
+    }
+
+    @Override
     public void updateView() {
         updateViewFlags();
         updateViewRegisters();
+        updateViewPointers();
     }
 
     void nextInstructionPointer() {
@@ -66,7 +72,7 @@ public class Main extends javax.swing.JFrame implements IView {
 
             if (x >= (ch + 20)) {
                 CodeHead.setText(int2addr(ch + 1));
-                refreshCode();
+                updateCodeTable();
             }
             x++;
             SetIP(Address.from(x));
@@ -141,10 +147,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setZ(0);
         setP(0);
         SetIP(IAddress.ZERO);
-        SetSP("FFFF");
+        SetSP(IAddress.FFFF);
     }
 
-    void refreshCode() {
+    void updateCodeTable() {
         String S1 = CodeHead.getText();
         int codehead;
         try {
@@ -1182,17 +1188,14 @@ public class Main extends javax.swing.JFrame implements IView {
         return hexData;
     }
 
-    public int SetSP(String x) {
-        x = padThreeZeros(x);
+    public int SetSP(IAddress x) {
         SP = x;
-        jSP.setText(x);
         return 1;
     }
 
     public void SetIP(IAddress x) {
         IP = x;
-        jIP.setText(x.hexValue());
-        refreshCode();
+        updateCodeTable();
     }
 
     public IRegister getA() {
@@ -1223,7 +1226,7 @@ public class Main extends javax.swing.JFrame implements IView {
         return L;
     }
 
-    public String getSP() {
+    public IAddress getSP() {
         return SP;
     }
 
@@ -3591,7 +3594,7 @@ public class Main extends javax.swing.JFrame implements IView {
             System.out.println(ST1[e][LABEL] + "\t" + ST1[e][MEM]);
         }
 
-        refreshCode();
+        updateCodeTable();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -3663,7 +3666,7 @@ public class Main extends javax.swing.JFrame implements IView {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        refreshCode();
+        updateCodeTable();
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void DataTableKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DataTableKeyPressed
@@ -3709,14 +3712,14 @@ public class Main extends javax.swing.JFrame implements IView {
     private void jButton5KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton5KeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == evt.VK_ENTER) {
-            refreshCode();
+            updateCodeTable();
         }
     }//GEN-LAST:event_jButton5KeyPressed
 
     private void CodeHeadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_CodeHeadKeyPressed
         // TODO add your handling code here:
         if (evt.getKeyCode() == evt.VK_ENTER) {
-            refreshCode();
+            updateCodeTable();
         }
     }//GEN-LAST:event_CodeHeadKeyPressed
 
@@ -5258,19 +5261,19 @@ public class Main extends javax.swing.JFrame implements IView {
         String s3 = getIP().hexValue();
         String t1 = getMSB(s3);
         String t2 = getLSB(s3);
-        setData(getSP(), t2);
-        DecSP();
-        setData(getSP(), t1);
-        DecSP();
+        setData(getSP().hexValue(), t2);
+        decrementSP();
+        setData(getSP().hexValue(), t1);
+        decrementSP();
         SetIP(Address.from(s2 + s1));
     }
 //RET
 
     void _C9() {
-        IncSP();
-        String s1 = getData(getSP()).hexValue();
-        IncSP();
-        String s2 = getData(getSP()).hexValue();
+        incrementSP();
+        String s1 = getData(getSP().hexValue()).hexValue();
+        incrementSP();
+        String s2 = getData(getSP().hexValue()).hexValue();
         SetIP(Address.from(s1 + s2));
     }
 //JMP
@@ -5561,7 +5564,7 @@ public class Main extends javax.swing.JFrame implements IView {
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
         String s2 = getDataAtIP().hexValue();
-        SetSP(s2 + s1);
+        SetSP(Address.from(s2 + s1));
         nextInstructionPointer();
     }
 //LHLD
@@ -5615,16 +5618,16 @@ public class Main extends javax.swing.JFrame implements IView {
         nextInstructionPointer();
     }
 
-    void DecSP() {
-        int x = Util.hex2int(getSP());
+    void decrementSP() {
+        int x = getSP().intValue();
         x--;
-        SetSP(int2addr(x));
+        SetSP(Address.from(x));
     }
 
-    void IncSP() {
-        int x = Util.hex2int(getSP());
+    void incrementSP() {
+        int x = getSP().intValue();
         x++;
-        SetSP(int2addr(x));
+        SetSP(Address.from(x));
     }
 //RST 0
 
@@ -5725,78 +5728,78 @@ public class Main extends javax.swing.JFrame implements IView {
 //SPHL
 
     void _F9() {
-        SetSP(getH().hexValue() + getL().hexValue());
+        SetSP(Address.from(getH(), getL()));
         nextInstructionPointer();
     }
 //XTHL
 
     void _E3() {
-        setData(getSP(), getL().hexValue());
-        DecSP();
-        setData(getSP(), getH().hexValue());
-        DecSP();
+        setData(getSP().hexValue(), getL().hexValue());
+        decrementSP();
+        setData(getSP().hexValue(), getH().hexValue());
+        decrementSP();
         nextInstructionPointer();
     }
 
 //PUSH B
     void _C5() {
-        setData(getSP(), getB().hexValue());
-        DecSP();
-        setData(getSP(), getC().hexValue());
-        DecSP();
+        setData(getSP().hexValue(), getB().hexValue());
+        decrementSP();
+        setData(getSP().hexValue(), getC().hexValue());
+        decrementSP();
         nextInstructionPointer();
     }
 //PUSH D
 
     void _D5() {
-        setData(getSP(), getD().hexValue());
-        DecSP();
-        setData(getSP(), getE().hexValue());
-        DecSP();
+        setData(getSP().hexValue(), getD().hexValue());
+        decrementSP();
+        setData(getSP().hexValue(), getE().hexValue());
+        decrementSP();
         nextInstructionPointer();
     }
 //PUSH H
 
     void _E5() {
-        setData(getSP(), getH().hexValue());
-        DecSP();
-        setData(getSP(), getL().hexValue());
-        DecSP();
+        setData(getSP().hexValue(), getH().hexValue());
+        decrementSP();
+        setData(getSP().hexValue(), getL().hexValue());
+        decrementSP();
         nextInstructionPointer();
     }
 //POP B
 
     void _C1() {
-        IncSP();
-        setC(getData(getSP()));
-        IncSP();
-        setB(getData(getSP()));
+        incrementSP();
+        setC(getData(getSP().hexValue()));
+        incrementSP();
+        setB(getData(getSP().hexValue()));
         nextInstructionPointer();
     }
 //POP D
 
     void _D1() {
-        IncSP();
-        setE(getData(getSP()));
-        IncSP();
-        setD(getData(getSP()));
+        incrementSP();
+        setE(getData(getSP().hexValue()));
+        incrementSP();
+        setD(getData(getSP().hexValue()));
         nextInstructionPointer();
 
     }
 //POP H
 
     void _E1() {
-        IncSP();
-        setL(getData(getSP()));
-        IncSP();
-        setH(getData(getSP()));
+        incrementSP();
+        setL(getData(getSP().hexValue()));
+        incrementSP();
+        setH(getData(getSP().hexValue()));
         nextInstructionPointer();
     }
 //POP PSW
 
     void _F1() {
-        IncSP();
-        String x = getData(getSP()).hexValue();
+        incrementSP();
+        String x = getData(getSP().hexValue()).hexValue();
         int y = Util.hex2int(x);
         if ((y & 128) == 128) {
             setS(1);
@@ -5836,8 +5839,8 @@ public class Main extends javax.swing.JFrame implements IView {
         if (getCy() == 1) {
             x = x | 1;
         }
-        setData(getSP(), Integer.toHexString(x));
-        DecSP();
+        setData(getSP().hexValue(), Integer.toHexString(x));
+        decrementSP();
         setS(0);
         setZ(0);
         setAc(0);
@@ -5887,7 +5890,7 @@ public class Main extends javax.swing.JFrame implements IView {
 //INX SP
 
     void _33() {
-        IncSP();
+        incrementSP();
         nextInstructionPointer();
     }
 //DCX B
@@ -5938,7 +5941,7 @@ public class Main extends javax.swing.JFrame implements IView {
 //DCX SP
 
     void _3B() {
-        DecSP();
+        decrementSP();
         nextInstructionPointer();
     }
 //CMA

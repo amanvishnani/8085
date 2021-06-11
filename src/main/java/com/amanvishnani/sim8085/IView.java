@@ -4,4 +4,5 @@ public interface IView {
     void updateViewFlags();
     void updateViewRegisters();
     void updateView();
+    void updateViewPointers();
 }

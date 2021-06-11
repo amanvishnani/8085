@@ -19,4 +19,5 @@ public interface IAddress {
     IData getData();
     void setData(IData data);
     static IAddress ZERO = Address.from(0);
+    static IAddress FFFF = Address.from("FFFF");
 }
