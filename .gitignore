@@ -1,2 +1,6 @@
 /nbproject/private/
 /build/
+*.class
+.idea
+target
+8085.iml

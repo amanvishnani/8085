@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 @SpringBootApplication
-public class Main extends javax.swing.JFrame {
+public class Main extends javax.swing.JFrame implements IView {
 
     public static IMemory memory = Memory.makeMemory();
     public IRegister A, B, C, D, E, H, L;
@@ -31,6 +31,34 @@ public class Main extends javax.swing.JFrame {
     public final String space = "( )*";
     public final String space1 = "( )+";
 
+
+    @Override
+    public void updateViewFlags() {
+        jS.setText(flags.getFlag(Flag.S).toString());
+        jCy.setText(flags.getFlag(Flag.Cy).toString());
+        jZ.setText(flags.getFlag(Flag.Z).toString());
+        jAc.setText(flags.getFlag(Flag.Ac).toString());
+        jP.setText(flags.getFlag(Flag.P).toString());
+
+    }
+
+    @Override
+    public void updateViewRegisters() {
+        jA.setText(getA().hexValue());
+        jB.setText(getB().hexValue());
+        jC.setText(getC().hexValue());
+        jD.setText(getD().hexValue());
+        jE.setText(getE().hexValue());
+        jH.setText(getH().hexValue());
+        jL.setText(getL().hexValue());
+    }
+
+    @Override
+    public void updateView() {
+        updateViewFlags();
+        updateViewRegisters();
+    }
+
     void nextInstructionPointer() {
         int x = Util.hex2int(getIP());
         if (x < 16383) {
@@ -45,6 +73,7 @@ public class Main extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "IP exceeding 3FFF (16383)");
         }
+        this.updateView();
     }
 
     String getLSB(String S) {
@@ -1081,72 +1110,59 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    public int setA(IData x) {
+    public void setA(IData x) {
         IRegister a = getA();
         if(a == null) {
             this.A = Register.makeRegister();
         }
         getA().update(x);
-        jA.setText(x.hexValue());
-        return 1;
     }
 
-    public int setB(IData x) {
+    public void setB(IData x) {
         IRegister r = getB();
         if(r == null) {
             this.B = Register.makeRegister();
         }
-        jB.setText(x.hexValue());
-        return 1;
     }
 
-    public int setC(IData x) {
+    public void setC(IData x) {
         IRegister r = getC();
         if(r == null) {
             this.C = Register.makeRegister();
         }
         getC().update(x);
-        jC.setText(x.hexValue());
-        return 1;
     }
 
-    public int setD(IData x) {
+    public void setD(IData x) {
         IRegister r = getD();
         if(r == null) {
             this.D = Register.makeRegister();
         }
-        jD.setText(x.hexValue());
-        return 1;
+        getD().update(x);
     }
 
-    public int setE(IData x) {
+    public void setE(IData x) {
         IRegister r = getE();
         if(r == null) {
             this.E = Register.makeRegister();
         }
         getE().update(x);
-        jE.setText(x.hexValue());
-        return 1;
     }
 
-    public int setH(IData x) {
+    public void setH(IData x) {
         IRegister r = getH();
         if(r == null) {
             this.H = Register.makeRegister();
         }
         getH().update(x);
-        jH.setText(x.hexValue());
-        return 1;
     }
 
-    public int setL(IData x) {
+    public void setL(IData x) {
         IRegister r = getL();
         if(r == null) {
             this.L = Register.makeRegister();
         }
         getL().update(x);
-        jL.setText(x.hexValue());
-        return 1;
     }
     
     private String padThreeZeros(String hexData) {
@@ -1220,7 +1236,6 @@ public class Main extends javax.swing.JFrame {
     public int setS(int x) {
         if (x < 2 || x > -1) {
             flags.setFlag(Flag.S, x);
-            jS.setText(Integer.toString(x));
             return 1;
         }
         return -1;
@@ -1229,7 +1244,6 @@ public class Main extends javax.swing.JFrame {
     public int setZ(int x) {
         if (x < 2 || x > -1) {
             flags.setFlag(Flag.Z, x);
-            jZ.setText(Integer.toString(x));
             return 1;
         }
         return -1;
@@ -1238,7 +1252,6 @@ public class Main extends javax.swing.JFrame {
     public int setAc(int x) {
         if (x < 2 || x > -1) {
             flags.setFlag(Flag.Ac, x);
-            jAc.setText(Integer.toString(x));
             return 1;
         }
         return -1;
@@ -1247,7 +1260,6 @@ public class Main extends javax.swing.JFrame {
     public int setP(int x) {
         if (x < 2 || x > -1) {
             flags.setFlag(Flag.P, x);
-            jP.setText(Integer.toString(x));
             return 1;
         }
         return -1;
@@ -1256,7 +1268,6 @@ public class Main extends javax.swing.JFrame {
     public int setCy(int x) {
         if (x < 2 || x > -1) {
             flags.setFlag(Flag.Cy, x);
-            jCy.setText(Integer.toString(x));
             return 1;
         }
         return -1;

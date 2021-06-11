@@ -19,12 +19,12 @@ public class Flags implements IFlags {
     }
 
     @Override
-    public void setFlag(Flag flagName, int value) {
+    public void setFlag(Flag flagName, Integer value) {
         store.put(flagName, value);
     }
 
     @Override
-    public int getFlag(Flag flagName) {
+    public Integer getFlag(Flag flagName) {
         return store.get(flagName);
     }
 
