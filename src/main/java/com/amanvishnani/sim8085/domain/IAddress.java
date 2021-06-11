@@ -5,6 +5,8 @@
  */
 package com.amanvishnani.sim8085.domain;
 
+import com.amanvishnani.sim8085.domain.Impl.Address;
+
 /**
  *
  * @author Aman Vishnani
@@ -16,4 +18,5 @@ public interface IAddress {
     IData getMSB();
     IData getData();
     void setData(IData data);
+    static IAddress ZERO = Address.from(0);
 }
