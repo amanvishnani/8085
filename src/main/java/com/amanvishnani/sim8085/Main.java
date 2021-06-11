@@ -3,6 +3,8 @@ package com.amanvishnani.sim8085;
 
 import com.amanvishnani.sim8085.domain.*;
 import com.amanvishnani.sim8085.domain.Impl.*;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -10,6 +12,7 @@ import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+@SpringBootApplication
 public class Main extends javax.swing.JFrame {
 
     public static IMemory memory = Memory.makeMemory();
@@ -3722,6 +3725,7 @@ public class Main extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        SpringApplication.run(Main.class, args);
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
