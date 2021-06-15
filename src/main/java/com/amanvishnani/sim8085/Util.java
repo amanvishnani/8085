@@ -15,19 +15,6 @@ import com.amanvishnani.sim8085.domain.Impl.Address;
  * @author Aman Vishnani
  */
 public class Util {
-
-    public static int hex2int(String S) {
-        return Integer.parseInt(S, 16);
-    }
-    
-    public static IAddress int2addr(int x) {
-        String hexAddress = Integer.toHexString(x);
-        hexAddress = hexAddress.toUpperCase();
-        hexAddress = padThreeZeros(hexAddress);
-        IData MSB = Data.from(hexAddress.substring(0, 2));
-        IData LSB = Data.from(hexAddress.substring(2, 4));
-        return Address.from(MSB, LSB);
-    }
     
     public static String padThreeZeros(String hexData) {
         switch (hexData.length()) {
