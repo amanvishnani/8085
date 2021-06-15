@@ -24,7 +24,7 @@ public class Main extends javax.swing.JFrame implements IView {
     public static String[][] ST1 = new String[100][2];
     public static String[][] map = new String[16384][2];
     public Matcher m;
-    public Pattern px[] = new Pattern[246];
+    public Pattern[] patterns = new Pattern[246];
     public final String data = "[0-9A-F]{2}(H)?";
     public final String label = "[A-Za-z]{3}[A-Za-z]*";
     public final String addr = "[0-9A-F]{4}(H)?";
@@ -89,7 +89,7 @@ public class Main extends javax.swing.JFrame implements IView {
         } else if (S.length() == 2) {
             return S.substring(1, 2);
         } else {
-            return S.substring(S.length() - 2, S.length());
+            return S.substring(S.length() - 2);
         }
     }
 
@@ -109,7 +109,7 @@ public class Main extends javax.swing.JFrame implements IView {
     
 
     String[] getMyCode() {
-        int i = 0, k = 0, j = 0;
+        int i = 0, k = 0, j;
         String code = code_av.getText().toUpperCase();
         code_token = code.split("\\n");
         String[] temp = new String[code_token.length];
@@ -165,15 +165,10 @@ public class Main extends javax.swing.JFrame implements IView {
             } else {
                 DefaultTableModel x = (DefaultTableModel) CodeTable.getModel();
                 x.setRowCount(0);
-                String obj[] = new String[4];
+                String[] obj = new String[4];
                 int START, END;
-                if (codehead <= 16383 && codehead > 16363) {
-                    START = 16364;
-                    END = 16384;
-                } else {
-                    START = codehead;
-                    END = codehead + 20;
-                }
+                START = codehead;
+                END = codehead + 20;
                 for (int i = START; i < END; i++) {
                     obj[0] = Address.from(i).hexValue();
                     obj[1] = map[i][LABEL];
@@ -201,15 +196,10 @@ public class Main extends javax.swing.JFrame implements IView {
             } else {
                 DefaultTableModel x = (DefaultTableModel) DataTable.getModel();
                 x.setRowCount(0);
-                Object obj[] = new Object[4];
-                int START = 57323, END = 57343;
-                if (datahead <= 57343 && datahead > 57323) {
-                    START = 57324;
-                    END = 57344;
-                } else {
-                    START = datahead;
-                    END = datahead + 20;
-                }
+                Object[] obj = new Object[4];
+                int START, END;
+                START = datahead;
+                END = datahead + 20;
                 for (int i = START; i < END; i++) {
                     obj[0] = Address.from(i).hexValue();
                     obj[1] = memory.getHexData(i);
@@ -235,16 +225,9 @@ public class Main extends javax.swing.JFrame implements IView {
             } else {
                 DefaultTableModel x = (DefaultTableModel) StackTable.getModel();
                 x.setRowCount(0);
-                Object obj[] = new Object[4];
-                int START = 57344, END = 57364;
-                if (stackhead <= 65535 && stackhead > 65515) {
-                    START = 65516;
-                    END = 65536;
-                } else {
-                    START = stackhead;
-                    END = stackhead + 20;
-                }
-                for (int i = START; i < END; i++) {
+                Object[] obj = new Object[4];
+                int END = stackhead + 20;
+                for (int i = stackhead; i < END; i++) {
                     obj[0] = Address.from(i).hexValue();
                     obj[1] = memory.getHexData(i);
                     x.addRow(obj);
@@ -255,7 +238,7 @@ public class Main extends javax.swing.JFrame implements IView {
         }
     }
 
-    int execute(String op) {
+    public void execute(String op) {
         switch (op) {
             case "8F":
                 _8F();
@@ -683,6 +666,9 @@ public class Main extends javax.swing.JFrame implements IView {
             case "C1":
                 _C1();
                 break;
+            case "C0":
+                _C0();
+                break;
             case "D1":
                 _D1();
                 break;
@@ -994,7 +980,6 @@ public class Main extends javax.swing.JFrame implements IView {
                 break;
 
         }
-        return 1;
     }
 
     public void PassTwo() {
@@ -1010,7 +995,7 @@ public class Main extends javax.swing.JFrame implements IView {
                     System.out.println(localval.substring(2, 4) + " is set at " + localmem);
                     int x = Integer.parseInt(localmem, 16);
                     x++;
-                    localmem = Address.from(i).hexValue();
+                    localmem = Address.from(x).hexValue();
                     setData(localmem, localval.substring(0, 2));
                     System.out.println(localval.substring(0, 2) + " is set at " + localmem);
                 }
@@ -1019,11 +1004,7 @@ public class Main extends javax.swing.JFrame implements IView {
         }
     }
 
-    public String extractOpcode(String S) {
-        return S.substring(S.indexOf(":") + 1, S.length());
-    }
-
-    public int PassOne(String[] x) {
+    public void PassOne(String[] x) {
         int LP = 0;
         ST = null;
         ST = new String[100][2];
@@ -1031,14 +1012,14 @@ public class Main extends javax.swing.JFrame implements IView {
         ST1 = null;
         ST1 = new String[100][2];
         SYMPTR1 = 0;
-        for (int i = 0; i < x.length; i++) {
-            int a1 = findI(x[i]);
+        for (String s : x) {
+            int a1 = findI(s);
             if (a1 >= 0) {
                 int flag = 0;
                 String a2 = findOpcode(a1);
                 int a3 = OpcodeLength(a2);
                 memory.setData(LP, a2);
-                String l = ExtractLabel(x[i]);
+                String l = ExtractLabel(s);
                 map[LP][LABEL] = l;
                 map[LP][OPCODE] = m.group();
 //                System.out.println(map[LP][OPCODE]+" for "+i);
@@ -1060,12 +1041,12 @@ public class Main extends javax.swing.JFrame implements IView {
                     LP = LP + 1;
                 } else if (a3 == 2) {
                     LP = LP + 1;
-                    memory.setData(LP, ExtractData(x[i]));
+                    memory.setData(LP, ExtractData(s));
                     map[LP][OPCODE] = "";
                     map[LP][LABEL] = "";
                     LP = LP + 1;
                 } else if (a3 == 3) {
-                    l = ExtractAddress(x[i]);
+                    l = extractAddress(s);
 
                     if (l.length() != 0) {
                         LP = LP + 1;
@@ -1078,7 +1059,7 @@ public class Main extends javax.swing.JFrame implements IView {
                         memory.setData(LP, l.substring(0, 2));
                         LP = LP + 1;
                     } else {
-                        l = getLabel(x[i]);
+                        l = getLabel(s);
 
                         LP = LP + 1;
                         ST[SYMPTR][LABEL] = l;
@@ -1094,10 +1075,9 @@ public class Main extends javax.swing.JFrame implements IView {
                 }
 
             } else {
-                JOptionPane.showMessageDialog(this, "Instruction " + x[i] + " NOT Valid\n Skipping invalid Instruction");
+                JOptionPane.showMessageDialog(this, "Instruction " + s + " NOT Valid\n Skipping invalid Instruction");
             }
         }
-        return 0;
     }
 
 
@@ -1114,6 +1094,7 @@ public class Main extends javax.swing.JFrame implements IView {
         if(r == null) {
             this.B = Register.makeRegister();
         }
+        getB().update(x);
     }
 
     public void setC(IData x) {
@@ -1155,27 +1136,9 @@ public class Main extends javax.swing.JFrame implements IView {
         }
         getL().update(x);
     }
-    
-    private String padThreeZeros(String hexData) {
-        switch (hexData.length()) {
-            case 1:
-                hexData = "000" + hexData;
-                break;
-            case 2:
-                hexData = "00" + hexData;
-                break;
-            case 3:
-                hexData = "0" + hexData;
-                break;
-            default:
-                break;
-        }
-        return hexData;
-    }
 
-    public int setSP(IAddress x) {
+    public void setSP(IAddress x) {
         SP = x;
-        return 1;
     }
 
     public void setIP(IAddress x) {
@@ -1219,44 +1182,39 @@ public class Main extends javax.swing.JFrame implements IView {
         return IP;
     }
 
-    public int setS(int x) {
-        if (x < 2 || x > -1) {
+    public void setS(int x) {
+        if (x < 2 && x > -1) {
             flags.setFlag(Flag.S, x);
-            return 1;
         }
-        return -1;
+        // @TODO: Handel if not the case
     }
 
-    public int setZ(int x) {
-        if (x < 2 || x > -1) {
+    public void setZ(int x) {
+        if (x < 2 && x > -1) {
             flags.setFlag(Flag.Z, x);
-            return 1;
         }
-        return -1;
+        // @TODO: Handel if not the case
     }
 
-    public int setAc(int x) {
-        if (x < 2 || x > -1) {
+    public void setAc(int x) {
+        if (x < 2 && x > -1) {
             flags.setFlag(Flag.Ac, x);
-            return 1;
         }
-        return -1;
+        // @TODO: Handel if not the case
     }
 
-    public int setP(int x) {
-        if (x < 2 || x > -1) {
+    public void setP(int x) {
+        if (x < 2 && x > -1) {
             flags.setFlag(Flag.P, x);
-            return 1;
         }
-        return -1;
+        // @TODO: Handel if not the case
     }
 
-    public int setCy(int x) {
-        if (x < 2 || x > -1) {
+    public void setCy(int x) {
+        if (x < 2 && x > -1) {
             flags.setFlag(Flag.Cy, x);
-            return 1;
         }
-        return -1;
+        // @TODO: Handel if not the case
     }
 
     public int getS() {
@@ -1294,35 +1252,32 @@ public class Main extends javax.swing.JFrame implements IView {
         return IData.ZERO;
     }
 
-    public int setData(String address, String data) {
+    public void setData(String address, String data) {
         try {
             if (data.length() != 2) {
                 System.out.println("Length != 2");
-                return -1;
+                // @TODO: Handel if not the case
             }
             memory.setData(address, data);
-
         } catch (Exception e) {
             System.out.println(e + "\n String not a Hex Number");
         }
-        return 1;
     }
 
     public IData getM() {
         return getData(getHlAddress().hexValue());
     }
 
-    public int setM(IData x) {
+    public void setM(IData x) {
         setData(getHlAddress().hexValue(), x.hexValue());
-        return 1;
     }
 
     public String ExtractData(String x) {
-        x = x.substring(x.indexOf(":") + 1, x.length());
+        x = x.substring(x.indexOf(":") + 1);
         x = x.trim();
-        x = x.substring(x.indexOf(",") + 1, x.length());
+        x = x.substring(x.indexOf(",") + 1);
         x = x.trim();
-        x = x.substring(x.indexOf(" ") + 1, x.length());
+        x = x.substring(x.indexOf(" ") + 1);
         x = x.trim();
         Pattern p = Pattern.compile("[0-9A-F]{2}");
         Matcher m1 = p.matcher(x);
@@ -1334,12 +1289,11 @@ public class Main extends javax.swing.JFrame implements IView {
         return "";
     }
 
-    public String ExtractAddress(String x) {
+    public String extractAddress(String x) {
         Pattern p = Pattern.compile("[0-9A-F]{4}");
         Matcher m1 = p.matcher(x);
         if (m1.find()) {
-            String temp = m1.group();
-            return temp;
+            return m1.group();
         }
         return "";
     }
@@ -1740,10 +1694,10 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public String getLabel(String x) {
         int d = x.indexOf(":");
-        x = Trimmer(x.substring(d + 1, x.length()));
+        x = Trimmer(x.substring(d + 1));
         d = x.indexOf(" ");
-        x = x.substring(d + 1, x.length()).trim();
-        if (x.length() == 0 || x == null) {
+        x = x.substring(d + 1).trim();
+        if (x.length() == 0) {
             JOptionPane.showMessageDialog(this, "Label Not found");
             return "";
         } else {
@@ -1752,259 +1706,259 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
     void initializePatt() {
-        px[0] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "C");
-        px[1] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "D");
-        px[2] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "E");
-        px[3] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "H");
-        px[4] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "L");
-        px[5] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "B");
-        px[6] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "B");
-        px[7] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "C");
-        px[8] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "D");
-        px[9] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "E");
-        px[10] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "H");
-        px[11] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "L");
-        px[12] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "B");
-        px[13] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "C");
-        px[14] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "D");
-        px[15] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "E");
-        px[16] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "H");
-        px[17] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "L");
-        px[18] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "B");
-        px[19] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "C");
-        px[20] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "D");
-        px[21] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "E");
-        px[22] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "H");
-        px[23] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "L");
-        px[24] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "B");
-        px[25] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "C");
-        px[26] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "D");
-        px[27] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "E");
-        px[28] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "H");
-        px[29] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "L");
-        px[30] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "B");
-        px[31] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "C");
-        px[32] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "D");
-        px[33] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "E");
-        px[34] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "H");
-        px[35] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "L");
-        px[36] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "A");
-        px[37] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "B");
-        px[38] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "C");
-        px[39] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "D");
-        px[40] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "E");
-        px[41] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "H");
-        px[42] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "L");
-        px[43] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "A");
-        px[44] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "A");
-        px[45] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "A");
-        px[46] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "A");
-        px[47] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "A");
-        px[48] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "A");
-        px[49] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "M");
-        px[50] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "M");
-        px[51] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "M");
-        px[52] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "M");
-        px[53] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "M");
-        px[54] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "M");
-        px[55] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "M");
-        px[56] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "A");
-        px[57] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "B");
-        px[58] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "C");
-        px[59] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "D");
-        px[60] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "E");
-        px[61] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "H");
-        px[62] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "L");
-        px[63] = Pattern.compile("MVI" + space1 + "A" + space + "," + space + data);
-        px[64] = Pattern.compile("MVI" + space1 + "B" + space + "," + space + data);
-        px[65] = Pattern.compile("MVI" + space1 + "C" + space + "," + space + data);
-        px[66] = Pattern.compile("MVI" + space1 + "D" + space + "," + space + data);
-        px[67] = Pattern.compile("MVI" + space1 + "E" + space + "," + space + data);
-        px[68] = Pattern.compile("MVI" + space1 + "H" + space + "," + space + data);
-        px[69] = Pattern.compile("MVI" + space1 + "L" + space + "," + space + data);
-        px[70] = Pattern.compile("MVI" + space1 + "M" + space + "," + space + data);
-        px[71] = Pattern.compile("ACI" + space1 + data);
-        px[72] = Pattern.compile("ADC" + space1 + "A");
-        px[73] = Pattern.compile("ADC" + space1 + "B");
-        px[74] = Pattern.compile("ADC" + space1 + "C");
-        px[75] = Pattern.compile("ADC" + space1 + "D");
-        px[76] = Pattern.compile("ADC" + space1 + "E");
-        px[77] = Pattern.compile("ADC" + space1 + "H");
-        px[78] = Pattern.compile("ADC" + space1 + "L");
-        px[79] = Pattern.compile("ADC" + space1 + "M");
-        px[80] = Pattern.compile("ADD" + space1 + "A");
-        px[81] = Pattern.compile("ADD" + space1 + "B");
-        px[82] = Pattern.compile("ADD" + space1 + "C");
-        px[83] = Pattern.compile("ADD" + space1 + "D");
-        px[84] = Pattern.compile("ADD" + space1 + "E");
-        px[85] = Pattern.compile("ADD" + space1 + "H");
-        px[86] = Pattern.compile("ADD" + space1 + "L");
-        px[87] = Pattern.compile("ADD" + space1 + "M");
-        px[88] = Pattern.compile("ADI" + space1 + data);
-        px[89] = Pattern.compile("ANA" + space1 + "A");
-        px[90] = Pattern.compile("ANA" + space1 + "B");
-        px[91] = Pattern.compile("ANA" + space1 + "C");
-        px[92] = Pattern.compile("ANA" + space1 + "D");
-        px[93] = Pattern.compile("ANA" + space1 + "E");
-        px[94] = Pattern.compile("ANA" + space1 + "H");
-        px[95] = Pattern.compile("ANA" + space1 + "L");
-        px[96] = Pattern.compile("ANA" + space1 + "M");
-        px[97] = Pattern.compile("ANI" + space1 + data);
-        px[98] = Pattern.compile("CALL" + space1 + label);
-        px[99] = Pattern.compile("CC" + space1 + label);
-        px[100] = Pattern.compile("CM" + space1 + label);
-        px[101] = Pattern.compile("CMA");
-        px[102] = Pattern.compile("CMC");
-        px[103] = Pattern.compile("CMP" + space1 + "A");
-        px[104] = Pattern.compile("CMP" + space1 + "B");
-        px[105] = Pattern.compile("CMP" + space1 + "C");
-        px[106] = Pattern.compile("CMP" + space1 + "D");
-        px[107] = Pattern.compile("CMP" + space1 + "E");
-        px[108] = Pattern.compile("CMP" + space1 + "H");
-        px[109] = Pattern.compile("CMP" + space1 + "L");
-        px[110] = Pattern.compile("CMP" + space1 + "M");
-        px[111] = Pattern.compile("CNC" + space1 + label);
-        px[112] = Pattern.compile("CNZ" + space1 + label);
-        px[113] = Pattern.compile("CPE" + space1 + label);
-        px[114] = Pattern.compile("CPO" + space1 + label);
-        px[115] = Pattern.compile("CPI" + space1 + data);
-        px[116] = Pattern.compile("CP" + space1 + label);
-        px[117] = Pattern.compile("CZ" + space1 + label);
-        px[118] = Pattern.compile("DAA");
-        px[119] = Pattern.compile("DAD" + space1 + "B");
-        px[120] = Pattern.compile("DAD" + space1 + "D");
-        px[121] = Pattern.compile("DAD" + space1 + "H");
-        px[122] = Pattern.compile("DAD" + space1 + "SP");
-        px[123] = Pattern.compile("DCR" + space1 + "A");
-        px[124] = Pattern.compile("DCR" + space1 + "B");
-        px[125] = Pattern.compile("DCR" + space1 + "C");
-        px[126] = Pattern.compile("DCR" + space1 + "D");
-        px[127] = Pattern.compile("DCR" + space1 + "E");
-        px[128] = Pattern.compile("DCR" + space1 + "H");
-        px[129] = Pattern.compile("DCR" + space1 + "L");
-        px[130] = Pattern.compile("DCR" + space1 + "M");
-        px[131] = Pattern.compile("DCX" + space1 + "B");
-        px[132] = Pattern.compile("DCX" + space1 + "D");
-        px[133] = Pattern.compile("DCX" + space1 + "H");
-        px[134] = Pattern.compile("DCX" + space1 + "SP");
-        px[135] = Pattern.compile("DI");
-        px[136] = Pattern.compile("EI");
-        px[137] = Pattern.compile("HLT");
-        px[138] = Pattern.compile("IN" + space1 + data);
-        px[139] = Pattern.compile("INR" + space1 + "A");
-        px[140] = Pattern.compile("INR" + space1 + "B");
-        px[141] = Pattern.compile("INR" + space1 + "C");
-        px[142] = Pattern.compile("INR" + space1 + "D");
-        px[143] = Pattern.compile("INR" + space1 + "E");
-        px[144] = Pattern.compile("INR" + space1 + "H");
-        px[145] = Pattern.compile("INR" + space1 + "L");
-        px[146] = Pattern.compile("INR" + space1 + "M");
-        px[147] = Pattern.compile("INX" + space1 + "B");
-        px[148] = Pattern.compile("INX" + space1 + "D");
-        px[149] = Pattern.compile("INX" + space1 + "H");
-        px[150] = Pattern.compile("INX" + space1 + "SP");
-        px[151] = Pattern.compile("JC" + space1 + label);
-        px[152] = Pattern.compile("JMP" + space1 + label);
-        px[153] = Pattern.compile("JM" + space1 + label);
-        px[154] = Pattern.compile("JNC" + space1 + label);
-        px[155] = Pattern.compile("JNZ" + space1 + label);
-        px[156] = Pattern.compile("JPO" + space1 + label);
-        px[157] = Pattern.compile("JPE" + space1 + label);
-        px[158] = Pattern.compile("JP" + space1 + label);
-        px[159] = Pattern.compile("JZ" + space1 + label);
-        px[160] = Pattern.compile("LDA" + space1 + addr);
-        px[161] = Pattern.compile("LDAX" + space1 + "B");
-        px[162] = Pattern.compile("LDAX" + space1 + "D");
-        px[163] = Pattern.compile("LHLD" + space1 + addr);
-        px[164] = Pattern.compile("LXI" + space1 + "B" + space + "," + space + addr);
-        px[165] = Pattern.compile("LXI" + space1 + "D" + space + "," + space + addr);
-        px[166] = Pattern.compile("LXI" + space1 + "H" + space + "," + space + addr);
-        px[167] = Pattern.compile("LXI" + space1 + "SP" + space + "," + space + addr);
-        px[168] = Pattern.compile("NOP");
-        px[169] = Pattern.compile("ORA" + space1 + "A");
-        px[170] = Pattern.compile("ORA" + space1 + "B");
-        px[171] = Pattern.compile("ORA" + space1 + "C");
-        px[172] = Pattern.compile("ORA" + space1 + "D");
-        px[173] = Pattern.compile("ORA" + space1 + "E");
-        px[174] = Pattern.compile("ORA" + space1 + "H");
-        px[175] = Pattern.compile("ORA" + space1 + "L");
-        px[176] = Pattern.compile("ORA" + space1 + "M");
-        px[177] = Pattern.compile("ORI" + space1 + data);
-        px[178] = Pattern.compile("OUT" + space1 + data);
-        px[179] = Pattern.compile("PCHL");
-        px[180] = Pattern.compile("POP" + space1 + "B");
-        px[181] = Pattern.compile("POP" + space1 + "D");
-        px[182] = Pattern.compile("POP" + space1 + "H");
-        px[183] = Pattern.compile("POP" + space1 + "PSW");
-        px[184] = Pattern.compile("PUSH" + space1 + "B");
-        px[185] = Pattern.compile("PUSH" + space1 + "D");
-        px[186] = Pattern.compile("PUSH" + space1 + "H");
-        px[187] = Pattern.compile("PUSH" + space1 + "PSW");
-        px[188] = Pattern.compile("RAL");
-        px[189] = Pattern.compile("RAR");
-        px[190] = Pattern.compile("RC");
-        px[191] = Pattern.compile("RET");
-        px[192] = Pattern.compile("RIM");
-        px[193] = Pattern.compile("RLC");
-        px[194] = Pattern.compile("RM");
-        px[195] = Pattern.compile("RNC");
-        px[196] = Pattern.compile("RNZ");
-        px[197] = Pattern.compile("RP");
-        px[198] = Pattern.compile("RPE");
-        px[199] = Pattern.compile("RPO");
-        px[200] = Pattern.compile("RRC");
-        px[201] = Pattern.compile("RST" + space1 + "0");
-        px[202] = Pattern.compile("RST" + space1 + "1");
-        px[203] = Pattern.compile("RST" + space1 + "2");
-        px[204] = Pattern.compile("RST" + space1 + "3");
-        px[205] = Pattern.compile("RST" + space1 + "4");
-        px[206] = Pattern.compile("RST" + space1 + "5");
-        px[207] = Pattern.compile("RST" + space1 + "6");
-        px[208] = Pattern.compile("RST" + space1 + "7");
-        px[209] = Pattern.compile("RZ");
-        px[210] = Pattern.compile("SBB" + space1 + "A");
-        px[211] = Pattern.compile("SBB" + space1 + "B");
-        px[212] = Pattern.compile("SBB" + space1 + "C");
-        px[213] = Pattern.compile("SBB" + space1 + "D");
-        px[214] = Pattern.compile("SBB" + space1 + "E");
-        px[215] = Pattern.compile("SBB" + space1 + "H");
-        px[216] = Pattern.compile("SBB" + space1 + "L");
-        px[217] = Pattern.compile("SBB" + space1 + "M");
-        px[218] = Pattern.compile("SBI" + space1 + data);
-        px[219] = Pattern.compile("SHLD" + space1 + addr);
-        px[220] = Pattern.compile("SIM");
-        px[221] = Pattern.compile("SPHL");
-        px[222] = Pattern.compile("STA" + space1 + addr);
-        px[223] = Pattern.compile("STAX" + space1 + "B");
-        px[224] = Pattern.compile("STAX" + space1 + "D");
-        px[225] = Pattern.compile("STC");
-        px[226] = Pattern.compile("SUB" + space1 + "A");
-        px[227] = Pattern.compile("SUB" + space1 + "B");
-        px[228] = Pattern.compile("SUB" + space1 + "C");
-        px[229] = Pattern.compile("SUB" + space1 + "D");
-        px[230] = Pattern.compile("SUB" + space1 + "E");
-        px[231] = Pattern.compile("SUB" + space1 + "H");
-        px[232] = Pattern.compile("SUB" + space1 + "L");
-        px[233] = Pattern.compile("SUB" + space1 + "M");
-        px[234] = Pattern.compile("SUI" + space1 + data);
-        px[235] = Pattern.compile("XCHD");
-        px[236] = Pattern.compile("XRA" + space1 + "A");
-        px[237] = Pattern.compile("XRA" + space1 + "B");
-        px[238] = Pattern.compile("XRA" + space1 + "C");
-        px[239] = Pattern.compile("XRA" + space1 + "D");
-        px[240] = Pattern.compile("XRA" + space1 + "E");
-        px[241] = Pattern.compile("XRA" + space1 + "H");
-        px[242] = Pattern.compile("XRA" + space1 + "L");
-        px[243] = Pattern.compile("XRA" + space1 + "M");
-        px[244] = Pattern.compile("XRI" + space1 + data);
-        px[245] = Pattern.compile("XTHL");
+        patterns[0] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "C");
+        patterns[1] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "D");
+        patterns[2] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "E");
+        patterns[3] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "H");
+        patterns[4] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "L");
+        patterns[5] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "B");
+        patterns[6] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "B");
+        patterns[7] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "C");
+        patterns[8] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "D");
+        patterns[9] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "E");
+        patterns[10] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "H");
+        patterns[11] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "L");
+        patterns[12] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "B");
+        patterns[13] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "C");
+        patterns[14] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "D");
+        patterns[15] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "E");
+        patterns[16] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "H");
+        patterns[17] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "L");
+        patterns[18] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "B");
+        patterns[19] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "C");
+        patterns[20] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "D");
+        patterns[21] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "E");
+        patterns[22] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "H");
+        patterns[23] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "L");
+        patterns[24] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "B");
+        patterns[25] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "C");
+        patterns[26] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "D");
+        patterns[27] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "E");
+        patterns[28] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "H");
+        patterns[29] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "L");
+        patterns[30] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "B");
+        patterns[31] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "C");
+        patterns[32] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "D");
+        patterns[33] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "E");
+        patterns[34] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "H");
+        patterns[35] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "L");
+        patterns[36] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "A");
+        patterns[37] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "B");
+        patterns[38] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "C");
+        patterns[39] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "D");
+        patterns[40] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "E");
+        patterns[41] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "H");
+        patterns[42] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "L");
+        patterns[43] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "A");
+        patterns[44] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "A");
+        patterns[45] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "A");
+        patterns[46] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "A");
+        patterns[47] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "A");
+        patterns[48] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "A");
+        patterns[49] = Pattern.compile("MOV" + space1 + "A" + space + "," + space + "M");
+        patterns[50] = Pattern.compile("MOV" + space1 + "B" + space + "," + space + "M");
+        patterns[51] = Pattern.compile("MOV" + space1 + "C" + space + "," + space + "M");
+        patterns[52] = Pattern.compile("MOV" + space1 + "D" + space + "," + space + "M");
+        patterns[53] = Pattern.compile("MOV" + space1 + "E" + space + "," + space + "M");
+        patterns[54] = Pattern.compile("MOV" + space1 + "H" + space + "," + space + "M");
+        patterns[55] = Pattern.compile("MOV" + space1 + "L" + space + "," + space + "M");
+        patterns[56] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "A");
+        patterns[57] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "B");
+        patterns[58] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "C");
+        patterns[59] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "D");
+        patterns[60] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "E");
+        patterns[61] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "H");
+        patterns[62] = Pattern.compile("MOV" + space1 + "M" + space + "," + space + "L");
+        patterns[63] = Pattern.compile("MVI" + space1 + "A" + space + "," + space + data);
+        patterns[64] = Pattern.compile("MVI" + space1 + "B" + space + "," + space + data);
+        patterns[65] = Pattern.compile("MVI" + space1 + "C" + space + "," + space + data);
+        patterns[66] = Pattern.compile("MVI" + space1 + "D" + space + "," + space + data);
+        patterns[67] = Pattern.compile("MVI" + space1 + "E" + space + "," + space + data);
+        patterns[68] = Pattern.compile("MVI" + space1 + "H" + space + "," + space + data);
+        patterns[69] = Pattern.compile("MVI" + space1 + "L" + space + "," + space + data);
+        patterns[70] = Pattern.compile("MVI" + space1 + "M" + space + "," + space + data);
+        patterns[71] = Pattern.compile("ACI" + space1 + data);
+        patterns[72] = Pattern.compile("ADC" + space1 + "A");
+        patterns[73] = Pattern.compile("ADC" + space1 + "B");
+        patterns[74] = Pattern.compile("ADC" + space1 + "C");
+        patterns[75] = Pattern.compile("ADC" + space1 + "D");
+        patterns[76] = Pattern.compile("ADC" + space1 + "E");
+        patterns[77] = Pattern.compile("ADC" + space1 + "H");
+        patterns[78] = Pattern.compile("ADC" + space1 + "L");
+        patterns[79] = Pattern.compile("ADC" + space1 + "M");
+        patterns[80] = Pattern.compile("ADD" + space1 + "A");
+        patterns[81] = Pattern.compile("ADD" + space1 + "B");
+        patterns[82] = Pattern.compile("ADD" + space1 + "C");
+        patterns[83] = Pattern.compile("ADD" + space1 + "D");
+        patterns[84] = Pattern.compile("ADD" + space1 + "E");
+        patterns[85] = Pattern.compile("ADD" + space1 + "H");
+        patterns[86] = Pattern.compile("ADD" + space1 + "L");
+        patterns[87] = Pattern.compile("ADD" + space1 + "M");
+        patterns[88] = Pattern.compile("ADI" + space1 + data);
+        patterns[89] = Pattern.compile("ANA" + space1 + "A");
+        patterns[90] = Pattern.compile("ANA" + space1 + "B");
+        patterns[91] = Pattern.compile("ANA" + space1 + "C");
+        patterns[92] = Pattern.compile("ANA" + space1 + "D");
+        patterns[93] = Pattern.compile("ANA" + space1 + "E");
+        patterns[94] = Pattern.compile("ANA" + space1 + "H");
+        patterns[95] = Pattern.compile("ANA" + space1 + "L");
+        patterns[96] = Pattern.compile("ANA" + space1 + "M");
+        patterns[97] = Pattern.compile("ANI" + space1 + data);
+        patterns[98] = Pattern.compile("CALL" + space1 + label);
+        patterns[99] = Pattern.compile("CC" + space1 + label);
+        patterns[100] = Pattern.compile("CM" + space1 + label);
+        patterns[101] = Pattern.compile("CMA");
+        patterns[102] = Pattern.compile("CMC");
+        patterns[103] = Pattern.compile("CMP" + space1 + "A");
+        patterns[104] = Pattern.compile("CMP" + space1 + "B");
+        patterns[105] = Pattern.compile("CMP" + space1 + "C");
+        patterns[106] = Pattern.compile("CMP" + space1 + "D");
+        patterns[107] = Pattern.compile("CMP" + space1 + "E");
+        patterns[108] = Pattern.compile("CMP" + space1 + "H");
+        patterns[109] = Pattern.compile("CMP" + space1 + "L");
+        patterns[110] = Pattern.compile("CMP" + space1 + "M");
+        patterns[111] = Pattern.compile("CNC" + space1 + label);
+        patterns[112] = Pattern.compile("CNZ" + space1 + label);
+        patterns[113] = Pattern.compile("CPE" + space1 + label);
+        patterns[114] = Pattern.compile("CPO" + space1 + label);
+        patterns[115] = Pattern.compile("CPI" + space1 + data);
+        patterns[116] = Pattern.compile("CP" + space1 + label);
+        patterns[117] = Pattern.compile("CZ" + space1 + label);
+        patterns[118] = Pattern.compile("DAA");
+        patterns[119] = Pattern.compile("DAD" + space1 + "B");
+        patterns[120] = Pattern.compile("DAD" + space1 + "D");
+        patterns[121] = Pattern.compile("DAD" + space1 + "H");
+        patterns[122] = Pattern.compile("DAD" + space1 + "SP");
+        patterns[123] = Pattern.compile("DCR" + space1 + "A");
+        patterns[124] = Pattern.compile("DCR" + space1 + "B");
+        patterns[125] = Pattern.compile("DCR" + space1 + "C");
+        patterns[126] = Pattern.compile("DCR" + space1 + "D");
+        patterns[127] = Pattern.compile("DCR" + space1 + "E");
+        patterns[128] = Pattern.compile("DCR" + space1 + "H");
+        patterns[129] = Pattern.compile("DCR" + space1 + "L");
+        patterns[130] = Pattern.compile("DCR" + space1 + "M");
+        patterns[131] = Pattern.compile("DCX" + space1 + "B");
+        patterns[132] = Pattern.compile("DCX" + space1 + "D");
+        patterns[133] = Pattern.compile("DCX" + space1 + "H");
+        patterns[134] = Pattern.compile("DCX" + space1 + "SP");
+        patterns[135] = Pattern.compile("DI");
+        patterns[136] = Pattern.compile("EI");
+        patterns[137] = Pattern.compile("HLT");
+        patterns[138] = Pattern.compile("IN" + space1 + data);
+        patterns[139] = Pattern.compile("INR" + space1 + "A");
+        patterns[140] = Pattern.compile("INR" + space1 + "B");
+        patterns[141] = Pattern.compile("INR" + space1 + "C");
+        patterns[142] = Pattern.compile("INR" + space1 + "D");
+        patterns[143] = Pattern.compile("INR" + space1 + "E");
+        patterns[144] = Pattern.compile("INR" + space1 + "H");
+        patterns[145] = Pattern.compile("INR" + space1 + "L");
+        patterns[146] = Pattern.compile("INR" + space1 + "M");
+        patterns[147] = Pattern.compile("INX" + space1 + "B");
+        patterns[148] = Pattern.compile("INX" + space1 + "D");
+        patterns[149] = Pattern.compile("INX" + space1 + "H");
+        patterns[150] = Pattern.compile("INX" + space1 + "SP");
+        patterns[151] = Pattern.compile("JC" + space1 + label);
+        patterns[152] = Pattern.compile("JMP" + space1 + label);
+        patterns[153] = Pattern.compile("JM" + space1 + label);
+        patterns[154] = Pattern.compile("JNC" + space1 + label);
+        patterns[155] = Pattern.compile("JNZ" + space1 + label);
+        patterns[156] = Pattern.compile("JPO" + space1 + label);
+        patterns[157] = Pattern.compile("JPE" + space1 + label);
+        patterns[158] = Pattern.compile("JP" + space1 + label);
+        patterns[159] = Pattern.compile("JZ" + space1 + label);
+        patterns[160] = Pattern.compile("LDA" + space1 + addr);
+        patterns[161] = Pattern.compile("LDAX" + space1 + "B");
+        patterns[162] = Pattern.compile("LDAX" + space1 + "D");
+        patterns[163] = Pattern.compile("LHLD" + space1 + addr);
+        patterns[164] = Pattern.compile("LXI" + space1 + "B" + space + "," + space + addr);
+        patterns[165] = Pattern.compile("LXI" + space1 + "D" + space + "," + space + addr);
+        patterns[166] = Pattern.compile("LXI" + space1 + "H" + space + "," + space + addr);
+        patterns[167] = Pattern.compile("LXI" + space1 + "SP" + space + "," + space + addr);
+        patterns[168] = Pattern.compile("NOP");
+        patterns[169] = Pattern.compile("ORA" + space1 + "A");
+        patterns[170] = Pattern.compile("ORA" + space1 + "B");
+        patterns[171] = Pattern.compile("ORA" + space1 + "C");
+        patterns[172] = Pattern.compile("ORA" + space1 + "D");
+        patterns[173] = Pattern.compile("ORA" + space1 + "E");
+        patterns[174] = Pattern.compile("ORA" + space1 + "H");
+        patterns[175] = Pattern.compile("ORA" + space1 + "L");
+        patterns[176] = Pattern.compile("ORA" + space1 + "M");
+        patterns[177] = Pattern.compile("ORI" + space1 + data);
+        patterns[178] = Pattern.compile("OUT" + space1 + data);
+        patterns[179] = Pattern.compile("PCHL");
+        patterns[180] = Pattern.compile("POP" + space1 + "B");
+        patterns[181] = Pattern.compile("POP" + space1 + "D");
+        patterns[182] = Pattern.compile("POP" + space1 + "H");
+        patterns[183] = Pattern.compile("POP" + space1 + "PSW");
+        patterns[184] = Pattern.compile("PUSH" + space1 + "B");
+        patterns[185] = Pattern.compile("PUSH" + space1 + "D");
+        patterns[186] = Pattern.compile("PUSH" + space1 + "H");
+        patterns[187] = Pattern.compile("PUSH" + space1 + "PSW");
+        patterns[188] = Pattern.compile("RAL");
+        patterns[189] = Pattern.compile("RAR");
+        patterns[190] = Pattern.compile("RC");
+        patterns[191] = Pattern.compile("RET");
+        patterns[192] = Pattern.compile("RIM");
+        patterns[193] = Pattern.compile("RLC");
+        patterns[194] = Pattern.compile("RM");
+        patterns[195] = Pattern.compile("RNC");
+        patterns[196] = Pattern.compile("RNZ");
+        patterns[197] = Pattern.compile("RP");
+        patterns[198] = Pattern.compile("RPE");
+        patterns[199] = Pattern.compile("RPO");
+        patterns[200] = Pattern.compile("RRC");
+        patterns[201] = Pattern.compile("RST" + space1 + "0");
+        patterns[202] = Pattern.compile("RST" + space1 + "1");
+        patterns[203] = Pattern.compile("RST" + space1 + "2");
+        patterns[204] = Pattern.compile("RST" + space1 + "3");
+        patterns[205] = Pattern.compile("RST" + space1 + "4");
+        patterns[206] = Pattern.compile("RST" + space1 + "5");
+        patterns[207] = Pattern.compile("RST" + space1 + "6");
+        patterns[208] = Pattern.compile("RST" + space1 + "7");
+        patterns[209] = Pattern.compile("RZ");
+        patterns[210] = Pattern.compile("SBB" + space1 + "A");
+        patterns[211] = Pattern.compile("SBB" + space1 + "B");
+        patterns[212] = Pattern.compile("SBB" + space1 + "C");
+        patterns[213] = Pattern.compile("SBB" + space1 + "D");
+        patterns[214] = Pattern.compile("SBB" + space1 + "E");
+        patterns[215] = Pattern.compile("SBB" + space1 + "H");
+        patterns[216] = Pattern.compile("SBB" + space1 + "L");
+        patterns[217] = Pattern.compile("SBB" + space1 + "M");
+        patterns[218] = Pattern.compile("SBI" + space1 + data);
+        patterns[219] = Pattern.compile("SHLD" + space1 + addr);
+        patterns[220] = Pattern.compile("SIM");
+        patterns[221] = Pattern.compile("SPHL");
+        patterns[222] = Pattern.compile("STA" + space1 + addr);
+        patterns[223] = Pattern.compile("STAX" + space1 + "B");
+        patterns[224] = Pattern.compile("STAX" + space1 + "D");
+        patterns[225] = Pattern.compile("STC");
+        patterns[226] = Pattern.compile("SUB" + space1 + "A");
+        patterns[227] = Pattern.compile("SUB" + space1 + "B");
+        patterns[228] = Pattern.compile("SUB" + space1 + "C");
+        patterns[229] = Pattern.compile("SUB" + space1 + "D");
+        patterns[230] = Pattern.compile("SUB" + space1 + "E");
+        patterns[231] = Pattern.compile("SUB" + space1 + "H");
+        patterns[232] = Pattern.compile("SUB" + space1 + "L");
+        patterns[233] = Pattern.compile("SUB" + space1 + "M");
+        patterns[234] = Pattern.compile("SUI" + space1 + data);
+        patterns[235] = Pattern.compile("XCHD");
+        patterns[236] = Pattern.compile("XRA" + space1 + "A");
+        patterns[237] = Pattern.compile("XRA" + space1 + "B");
+        patterns[238] = Pattern.compile("XRA" + space1 + "C");
+        patterns[239] = Pattern.compile("XRA" + space1 + "D");
+        patterns[240] = Pattern.compile("XRA" + space1 + "E");
+        patterns[241] = Pattern.compile("XRA" + space1 + "H");
+        patterns[242] = Pattern.compile("XRA" + space1 + "L");
+        patterns[243] = Pattern.compile("XRA" + space1 + "M");
+        patterns[244] = Pattern.compile("XRI" + space1 + data);
+        patterns[245] = Pattern.compile("XTHL");
 
     }
 
     int findI(String str) {
 
-        for (int i = 0; i < px.length; i++) {
-            m = px[i].matcher(str);
+        for (int i = 0; i < patterns.length; i++) {
+            m = patterns[i].matcher(str);
             if (m.find()) {
                 return i;
             }
@@ -2510,7 +2464,7 @@ public class Main extends javax.swing.JFrame implements IView {
                 return "E3";
 
             default:
-                return "Not Found at " + Integer.toString(x);
+                return "Not Found at " + x;
 
         }
     }
@@ -3042,10 +2996,10 @@ public class Main extends javax.swing.JFrame implements IView {
                 "Memory", "Label", "Operand", "HEX"
             }
         ) {
-            Class[] types = new Class [] {
+            final Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
+            final boolean[] canEdit = new boolean [] {
                 false, false, false, false
             };
 
@@ -3159,7 +3113,7 @@ public class Main extends javax.swing.JFrame implements IView {
                 "Memory", "HEX"
             }
         ) {
-            Class[] types = new Class [] {
+            final Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
@@ -3762,12 +3716,11 @@ public class Main extends javax.swing.JFrame implements IView {
     }
     //ADD A
 
-    String _87() {
+    public void _87() {
         IOperationResult r = getA().add(getA());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 
     private void updateFlags(IFlags flags) {
@@ -3799,161 +3752,141 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //ADD B
 
-    String _80() {
+    public void _80() {
         IOperationResult r = getA().add(getB());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
-
     }
 //ADD C
 
-    String _81() {
+    public void _81() {
         IOperationResult r = getA().add(getC());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADD D
 
-    String _82() {
+    public void _82() {
         IOperationResult r = getA().add(getD());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADD E
 
-    String _83() {
+    public void _83() {
         IOperationResult r = getA().add(getE());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADD H
 
-    String _84() {
+    public void _84() {
         IOperationResult r = getA().add(getH());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADD L
 
-    String _85() {
+    public void _85() {
         IOperationResult r = getA().add(getL());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADD M
 
-    String _86() {
+    public void _86() {
         IOperationResult r = getA().add(getM());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADI data
 
-    String _C6() {
+    public void _C6() {
         nextInstructionPointer();
         IAddress InstPtr = getIP();
         IOperationResult r = getA().add(memory.getData(InstPtr.intValue()));
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 
 //ADC A
-    String _8F() {
+    public void _8F() {
         IOperationResult r = getA().add(getA(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
-
     }
 //ADC B
 
-    String _88() {
+    public void _88() {
         IOperationResult r = getA().add(getB(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADC C
 
-    String _89() {
+    public void _89() {
         IOperationResult r = getA().add(getC(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
-
     }
 //ADC D
 
-    String _8A() {
+    public void _8A() {
         IOperationResult r = getA().add(getD(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADC E
 
-    String _8B() {
+    public void _8B() {
         IOperationResult r = getA().add(getD(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADC H
 
-    String _8C() {
+    public void _8C() {
         IOperationResult r = getA().add(getH(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADC L
 
-    String _8D() {
+    public void _8D() {
         IOperationResult r = getA().add(getL(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ADC M
 
-    String _8E() {
+    public void _8E() {
         IOperationResult r = getA().add(getM(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 //ACI
 
-    String _CE() {
+    public void _CE() {
         IOperationResult r = getA().add(getDataAtIP(), getCy());
         updateFlags(r.getFlags());
         setA(r.getData());
         nextInstructionPointer();
-        return "0";
     }
 
     void sub(IData r) {
@@ -4012,7 +3945,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //SBB A
 
-    String _9F() {
+    public void _9F() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getA().intValue();
@@ -4039,11 +3972,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB B
 
-    String _98() {
+    public void _98() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getB().intValue();
@@ -4070,11 +4002,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB C
 
-    String _99() {
+    public void _99() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getC().intValue();
@@ -4101,11 +4032,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB D
 
-    String _9A() {
+    public void _9A() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getD().intValue();
@@ -4132,11 +4062,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB E
 
-    String _9B() {
+    public void _9B() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getE().intValue();
@@ -4163,11 +4092,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB H
 
-    String _9C() {
+    public void _9C() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getH().intValue();
@@ -4194,11 +4122,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB L
 
-    String _9D() {
+    public void _9D() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getL().intValue();
@@ -4225,11 +4152,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBB M
 
-    String _9E() {
+    public void _9E() {
         int r1, r2, r3;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -4256,11 +4182,10 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 //SBI
 
-    String _DE() {
+    public void _DE() {
         int r1, r2, r3;
         r1 = getA().intValue();
         nextInstructionPointer();
@@ -4288,106 +4213,90 @@ public class Main extends javax.swing.JFrame implements IView {
         setA(Data.from(temp));
         PARITY();
         nextInstructionPointer();
-        return "0";
     }
 
 //INR A
-    String _3C() {
+    public void _3C() {
         int r;
         r = getA().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setA(Data.from(temp));
         nextInstructionPointer();
-        return "0";
     }
 //INR B
 
-    String _04() {
+    public void _04() {
         int r;
         r = getB().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setB(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR C
 
-    String _0C() {
+    public void _0C() {
         int r;
         r = getC().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setC(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR D
 
-    String _14() {
+    public void _14() {
         int r;
         r = getD().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setD(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR E
 
-    String _1C() {
+    public void _1C() {
         int r;
         r = getE().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setE(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR H
 
-    String _24() {
+    public void _24() {
         int r;
         r = getH().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setH(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR L
 
-    String _2C() {
+    public void _2C() {
         int r;
         r = getL().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setL(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //INR M
 
-    String _34() {
+    public void _34() {
         int r;
         r = getM().intValue();
         r++;
         String temp = Integer.toHexString(r);
         setM(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP A
 
-    String _BF() {
+    public void _BF() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getA().intValue();
@@ -4402,11 +4311,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
     }
 
 //CMP B
-    String _B8() {
+    public void _B8() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getB().intValue();
@@ -4421,12 +4329,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP C
 
-    String _B9() {
+    public void _B9() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getC().intValue();
@@ -4441,12 +4347,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP D
 
-    String _BA() {
+    public void _BA() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getD().intValue();
@@ -4461,12 +4365,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP E
 
-    String _BB() {
+    public void _BB() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getE().intValue();
@@ -4481,12 +4383,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP H
 
-    String _BC() {
+    public void _BC() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getH().intValue();
@@ -4501,12 +4401,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //CMP L
 
-    String _BD() {
+    public void _BD() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getL().intValue();
@@ -4521,11 +4419,9 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 
-    String _BE() {
+    public void _BE() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -4540,12 +4436,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //DCR A
 
-    String _3D() {
+    public void _3D() {
         int r;
         r = getA().intValue();
         r--;
@@ -4555,11 +4449,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setA(Data.from(temp));
         nextInstructionPointer();
-        return "0";
     }
 //DCR B
 
-    String _05() {
+    public void _05() {
         int r;
         r = getB().intValue();
         r--;
@@ -4569,12 +4462,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setB(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //DCR C
 
-    String _0D() {
+    public void _0D() {
         int r;
         r = getC().intValue();
         r--;
@@ -4584,12 +4475,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setC(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //DCR D
 
-    String _15() {
+    public void _15() {
         int r;
         r = getD().intValue();
         r--;
@@ -4599,12 +4488,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setD(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //DCR E
 
-    String _1D() {
+    public void _1D() {
         int r;
         r = getE().intValue();
         r--;
@@ -4614,11 +4501,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setE(Data.from(temp));
         nextInstructionPointer();
-        return "0";
     }
 //DCR H
 
-    String _25() {
+    public void _25() {
         int r;
         r = getH().intValue();
         r--;
@@ -4628,11 +4514,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setH(Data.from(temp));
         nextInstructionPointer();
-        return "0";
     }
 //DCR L
 
-    String _2D() {
+    public void _2D() {
         int r;
         r = getL().intValue();
         r--;
@@ -4642,12 +4527,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setL(Data.from(temp));
         nextInstructionPointer();
-        return "0";
-
     }
 //DCR M
 
-    String _35() {
+    public void _35() {
         int r;
         r = getM().intValue();
         r--;
@@ -4657,11 +4540,10 @@ public class Main extends javax.swing.JFrame implements IView {
         String temp = Integer.toHexString(r);
         setM(Data.from(temp));
         nextInstructionPointer();
-        return "0";
     }
 //XCHG
 
-    String _EB() {
+    public void _EB() {
         IData r1, r2;
         r1 = getD();
         r2 = getE();
@@ -4670,7 +4552,6 @@ public class Main extends javax.swing.JFrame implements IView {
         setH(r1);
         setL(r2);
         nextInstructionPointer();
-        return "0";
     }
 
     private void dadOperation(IData leftRegister, IData rightRegister) {
@@ -4707,7 +4588,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //ANA A
 
-    String _A7() {
+    public void _A7() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getA().intValue();
@@ -4721,11 +4602,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //ANA B
 
-    String _A0() {
+    public void _A0() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getB().intValue();
@@ -4739,12 +4619,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA C
 
-    String _A1() {
+    public void _A1() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getC().intValue();
@@ -4758,12 +4636,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA D
 
-    String _A2() {
+    public void _A2() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getD().intValue();
@@ -4777,12 +4653,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA E
 
-    String _A3() {
+    public void _A3() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getE().intValue();
@@ -4796,12 +4670,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA H
 
-    String _A4() {
+    public void _A4() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getH().intValue();
@@ -4815,12 +4687,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA L
 
-    String _A5() {
+    public void _A5() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getL().intValue();
@@ -4834,12 +4704,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANA M
 
-    String _A6() {
+    public void _A6() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -4853,12 +4721,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ANI data
 
-    String _E6() {
+    public void _E6() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -4872,12 +4738,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA A
 
-    String _B7() {
+    public void _B7() {
         int r1, r2;
         r1 = getA().intValue();
         nextInstructionPointer();
@@ -4892,12 +4756,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA B
 
-    String _B0() {
+    public void _B0() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getB().intValue();
@@ -4911,12 +4773,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA C
 
-    String _B1() {
+    public void _B1() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getC().intValue();
@@ -4930,12 +4790,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA D
 
-    String _B2() {
+    public void _B2() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getD().intValue();
@@ -4949,12 +4807,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA E
 
-    String _B3() {
+    public void _B3() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getE().intValue();
@@ -4968,12 +4824,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //ORA H
 
-    String _B4() {
+    public void _B4() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getH().intValue();
@@ -4987,11 +4841,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //ORA L
 
-    String _B5() {
+    public void _B5() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getL().intValue();
@@ -5005,11 +4858,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //ORA M
 
-    String _B6() {
+    public void _B6() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -5023,11 +4875,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //ORI
 
-    String _F6() {
+    public void _F6() {
         int r1, r2;
         r1 = getA().intValue();
         nextInstructionPointer();
@@ -5042,11 +4893,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 
 //XRA A
-    String _AF() {
+    public void _AF() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getA().intValue();
@@ -5060,12 +4910,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
-
     }
 //XRA B
 
-    String _A8() {
+    public void _A8() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getB().intValue();
@@ -5079,11 +4927,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA C
 
-    String _A9() {
+    public void _A9() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getC().intValue();
@@ -5097,11 +4944,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA D
 
-    String _AA() {
+    public void _AA() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getD().intValue();
@@ -5115,11 +4961,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA E
 
-    String _AB() {
+    public void _AB() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getE().intValue();
@@ -5133,11 +4978,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA H
 
-    String _AC() {
+    public void _AC() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getH().intValue();
@@ -5151,11 +4995,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA L
 
-    String _AD() {
+    public void _AD() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getL().intValue();
@@ -5169,11 +5012,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRA M
 
-    String _AE() {
+    public void _AE() {
         int r1, r2;
         r1 = getA().intValue();
         r2 = getM().intValue();
@@ -5187,11 +5029,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //XRI data
 
-    String _EE() {
+    public void _EE() {
         int r1, r2;
         r1 = getA().intValue();
         nextInstructionPointer();
@@ -5206,18 +5047,16 @@ public class Main extends javax.swing.JFrame implements IView {
             setZ(1);
         }
         nextInstructionPointer();
-        return "0";
     }
 //STC 
 
-    String _37() {
+    public void _37() {
         setCy(1);
         nextInstructionPointer();
-        return "0";
     }
 //CALL LABEL
 
-    void _CD() {
+    public void _CD() {
         nextInstructionPointer();
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
@@ -5234,7 +5073,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //RET
 
-    void _C9() {
+    public void _C9() {
         incrementSP();
         String s1 = getData(getSP().hexValue()).hexValue();
         incrementSP();
@@ -5243,7 +5082,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JMP
 
-    void _C3() {
+    public void _C3() {
         nextInstructionPointer();
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
@@ -5256,7 +5095,7 @@ public class Main extends javax.swing.JFrame implements IView {
      */
 
 //JC Cy=1 _DA()
-    void _DA() {
+    public void _DA() {
         if (getCy() == 1) {
             _C3();
         } else {
@@ -5267,7 +5106,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JNC Cy=0 _D2()
 
-    void _D2() {
+    public void _D2() {
         if (getCy() == 0) {
             _C3();
         } else {
@@ -5278,7 +5117,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JP S=0 _F2()
 
-    void _F2() {
+    public void _F2() {
         if (getS() == 0) {
             _C3();
         } else {
@@ -5289,7 +5128,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JM S=1 _FA()
 
-    void _FA() {
+    public void _FA() {
         if (getS() == 1) {
             _C3();
         } else {
@@ -5300,7 +5139,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JZ Z=1 _CA()
 
-    void _CA() {
+    public void _CA() {
         if (getZ() == 1) {
             _C3();
         } else {
@@ -5311,7 +5150,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JNZ Z=0 _C2()
 
-    void _C2() {
+    public void _C2() {
         if (getZ() == 0) {
             _C3();
         } else {
@@ -5322,7 +5161,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JPE P=1 _EA()
 
-    void _EA() {
+    public void _EA() {
         if (getP() == 1) {
             _C3();
         } else {
@@ -5333,7 +5172,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //JPO P=0 _E2()
 
-    void _E2() {
+    public void _E2() {
         if (getP() == 0) {
             _C3();
         } else {
@@ -5347,56 +5186,56 @@ public class Main extends javax.swing.JFrame implements IView {
      * *************** RETURN PSW ****************
      */
 //RC
-    void _D8() {
+    public void _D8() {
         if (getCy() == 1) {
             _C9();
         }
     }
 //RNC
 
-    void _D0() {
+    public void _D0() {
         if (getCy() == 0) {
             _C9();
         }
     }
 //RP
 
-    void _F0() {
+    public void _F0() {
         if (getS() == 0) {
             _C9();
         }
     }
 //RM
 
-    void _F8() {
+    public void _F8() {
         if (getS() == 1) {
             _C9();
         }
     }
 //RZ
 
-    void _C8() {
+    public void _C8() {
         if (getZ() == 1) {
             _C9();
         }
     }
 //RNZ
 
-    void _C0() {
+    public void _C0() {
         if (getZ() == 0) {
             _C9();
         }
     }
 //RPE
 
-    void _E8() {
+    public void _E8() {
         if (getP() == 1) {
             _C9();
         }
     }
 //RPO
 
-    void _E0() {
+    public void _E0() {
         if (getP() == 0) {
             _C9();
         }
@@ -5406,56 +5245,56 @@ public class Main extends javax.swing.JFrame implements IView {
      * ****************** CALL PSW  ********************
      */
 //CC Cy=1 _DC()
-    void _DC() {
+    public void _DC() {
         if (getCy() == 1) {
             _CD();
         }
     }
 //CNC Cy=0 _D4()
 
-    void _D4() {
+    public void _D4() {
         if (getCy() == 0) {
             _CD();
         }
     }
 //CP S=0 _F4()
 
-    void _F4() {
+    public void _F4() {
         if (getS() == 0) {
             _CD();
         }
     }
 //CM S=1 _FC()
 
-    void _FC() {
+    public void _FC() {
         if (getS() == 1) {
             _CD();
         }
     }
 //CZ Z=1 _CC()
 
-    void _CC() {
+    public void _CC() {
         if (getZ() == 1) {
             _CD();
         }
     }
 //CNZ Z=0 _C4()
 
-    void _C4() {
+    public void _C4() {
         if (getZ() == 0) {
             _CD();
         }
     }
 //CPE P=1 _EC()
 
-    void _EC() {
+    public void _EC() {
         if (getP() == 1) {
             _CD();
         }
     }
 //CPO P=0 _E4()
 
-    void _E4() {
+    public void _E4() {
         if (getP() == 1) {
             _CD();
         }
@@ -5466,12 +5305,12 @@ public class Main extends javax.swing.JFrame implements IView {
      */
 
 //NOP
-    void _00() {
+    public void _00() {
         nextInstructionPointer();
     }
 //LDA
 
-    void _3A() {
+    public void _3A() {
         nextInstructionPointer();
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
@@ -5481,7 +5320,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
 //LDAX B
-    void _0A() {
+    public void _0A() {
         IAddress addr = Address.from(getB(), getC());
         IData data = memory.getData(addr.intValue());
         setA(data);
@@ -5489,7 +5328,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LDAX D
 
-    void _1A() {
+    public void _1A() {
         IAddress addr = Address.from(getD(), getE());
         IData data = memory.getData(addr.intValue());
         setA(data);
@@ -5497,7 +5336,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LXI B _01()
 
-    void _01() {
+    public void _01() {
         nextInstructionPointer();
         setC(getDataAtIP());
         nextInstructionPointer();
@@ -5506,7 +5345,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LXI D _11()
 
-    void _11() {
+    public void _11() {
         nextInstructionPointer();
         setE(getDataAtIP());
         nextInstructionPointer();
@@ -5515,7 +5354,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LXI H _21()
 
-    void _21() {
+    public void _21() {
         nextInstructionPointer();
         setL(getDataAtIP());
         nextInstructionPointer();
@@ -5524,7 +5363,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LXI SP _31()
 
-    void _31() {
+    public void _31() {
         nextInstructionPointer();
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
@@ -5534,7 +5373,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //LHLD
 
-    void _2A() {
+    public void _2A() {
         nextInstructionPointer();
         IData d1 = getDataAtIP();
         nextInstructionPointer();
@@ -5547,7 +5386,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //STA 
 
-    void _32() {
+    public void _32() {
         nextInstructionPointer();
         String s1 = getDataAtIP().hexValue();
         nextInstructionPointer();
@@ -5557,7 +5396,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //STAX B
 
-    void _02() {
+    public void _02() {
         String s1 = getB().hexValue();
         String s2 = getC().hexValue();
         setData(s1 + s2, getA().hexValue());
@@ -5565,7 +5404,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //STAX D
 
-    void _12() {
+    public void _12() {
         String s1 = getD().hexValue();
         String s2 = getE().hexValue();
         setData(s1 + s2, getA().hexValue());
@@ -5573,7 +5412,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //SHLD
 
-    void _22() {
+    public void _22() {
         nextInstructionPointer();
         IData s1 = getDataAtIP();
         nextInstructionPointer();
@@ -5598,55 +5437,47 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //RST 0
 
-    String _C7() {
+    public void _C7() {
         setIP(IAddress.ZERO);
-        return "0";
     }
 //RST 1
 
-    String _CF() {
+    public void _CF() {
         setIP(Address.from("0008"));
-        return "0";
     }
 //RST 2
 
-    String _D7() {
+    public void _D7() {
         setIP(Address.from("0010"));
-        return "0";
     }
 //RST 3
 
-    String _DF() {
+    public void _DF() {
         setIP(Address.from("0018"));
-        return "0";
     }
 //RST 4
 
-    String _E7() {
+    public void _E7() {
         setIP(Address.from("0020"));
-        return "0";
     }
 //RST 5
 
-    String _EF() {
+    public void _EF() {
         setIP(Address.from("0028"));
-        return "0";
     }
 //RST 6
 
-    String _F7() {
+    public void _F7() {
         setIP(Address.from("0030"));
-        return "0";
     }
 //RST 7
 
-    String _FF() {
+    public void _FF() {
         setIP(Address.from("0030"));
-        return "0";
     }
 //RLC 
 
-    String _07() {
+    public void _07() {
         int r1 = getA().intValue();
         int x = r1 << 1;
         int y = x / 255;
@@ -5659,11 +5490,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         setA(Data.from(x));
-        return "0";
     }
 //RRC
 
-    String _0F() {
+    public void _0F() {
         int r1 = getA().intValue();
         int z = r1 & 1;
         int x = r1 >> 1;
@@ -5675,11 +5505,10 @@ public class Main extends javax.swing.JFrame implements IView {
             setCy(0);
         }
         setA(Data.from(x));
-        return "0";
     }
 //RAL
 
-    String _17() {
+    public void _17() {
         int r1 = getA().intValue();
         int x = r1 << 1;
         int y = x / 256;
@@ -5690,17 +5519,16 @@ public class Main extends javax.swing.JFrame implements IView {
         setCy(y);
         setA(Data.from(x));
         nextInstructionPointer();
-        return "0";
     }
 //SPHL
 
-    void _F9() {
+    public void _F9() {
         setSP(Address.from(getH(), getL()));
         nextInstructionPointer();
     }
 //XTHL
 
-    void _E3() {
+    public void _E3() {
         setData(getSP().hexValue(), getL().hexValue());
         decrementSP();
         setData(getSP().hexValue(), getH().hexValue());
@@ -5709,7 +5537,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
 //PUSH B
-    void _C5() {
+    public void _C5() {
         setData(getSP().hexValue(), getB().hexValue());
         decrementSP();
         setData(getSP().hexValue(), getC().hexValue());
@@ -5718,7 +5546,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //PUSH D
 
-    void _D5() {
+    public void _D5() {
         setData(getSP().hexValue(), getD().hexValue());
         decrementSP();
         setData(getSP().hexValue(), getE().hexValue());
@@ -5727,7 +5555,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //PUSH H
 
-    void _E5() {
+    public void _E5() {
         setData(getSP().hexValue(), getH().hexValue());
         decrementSP();
         setData(getSP().hexValue(), getL().hexValue());
@@ -5736,7 +5564,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //POP B
 
-    void _C1() {
+    public void _C1() {
         incrementSP();
         setC(getData(getSP().hexValue()));
         incrementSP();
@@ -5745,7 +5573,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //POP D
 
-    void _D1() {
+    public void _D1() {
         incrementSP();
         setE(getData(getSP().hexValue()));
         incrementSP();
@@ -5755,7 +5583,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //POP H
 
-    void _E1() {
+    public void _E1() {
         incrementSP();
         setL(getData(getSP().hexValue()));
         incrementSP();
@@ -5764,7 +5592,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //POP PSW
 
-    void _F1() {
+    public void _F1() {
         incrementSP();
         int y = getData(getSP().hexValue()).intValue();
         if ((y & 128) == 128) {
@@ -5788,7 +5616,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //PUSH PSW
 
-    void _F5() {
+    public void _F5() {
         int x = 0;
         if (getS() == 1) {
             x = x | 128;
@@ -5817,7 +5645,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //INX B
 
-    void _03() {
+    public void _03() {
         IData s1 = getB();
         IData s2 = getC();
         int x = Address.from(s1, s2).intValue();
@@ -5854,13 +5682,13 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //INX SP
 
-    void _33() {
+    public void _33() {
         incrementSP();
         nextInstructionPointer();
     }
 //DCX B
 
-    void _0B() {
+    public void _0B() {
         IData s1 = getB();
         IData s2 = getC();
         int x = Address.from(s1, s2).intValue();
@@ -5875,7 +5703,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //DCX D
 
-    void _1B() {
+    public void _1B() {
         IData s1 = getD();
         IData s2 = getE();
         int x = Address.from(s1, s2).intValue();
@@ -5890,7 +5718,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //DCX H
 
-    void _2B() {
+    public void _2B() {
         IData s1 = getH();
         IData s2 = getL();
         int x = Address.from(s1, s2).intValue();
@@ -5905,13 +5733,13 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //DCX SP
 
-    void _3B() {
+    public void _3B() {
         decrementSP();
         nextInstructionPointer();
     }
 //CMA
 
-    String _2F() {
+    public void _2F() {
         int r1;
         r1 = getA().intValue();
         r1 = ~r1;
@@ -5919,12 +5747,10 @@ public class Main extends javax.swing.JFrame implements IView {
 
         setA( Data.from(temp.substring((temp.length() - 2))) );
         nextInstructionPointer();
-        return "0";
-
     }
 //CMC 
 
-    void _3F() {
+    public void _3F() {
         if (getCy() == 1) {
             setCy(0);
         } else {
@@ -5934,7 +5760,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //DAA
 
-    void _27() {
+    public void _27() {
         int s = getA().intValue();
         String temp = Integer.toString(s);
         setA(Data.from(temp.substring((temp.length() - 2))));
@@ -5956,13 +5782,13 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //PCHL
 
-    void _E9() {
+    public void _E9() {
         setIP(getHlAddress());
         nextInstructionPointer();
     }
 //CPI data
 
-    void _FE() {
+    public void _FE() {
         int r1, r2;
         r1 = getA().intValue();
         nextInstructionPointer();
@@ -5981,7 +5807,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //RAR _1F
 
-    void _1F() {
+    public void _1F() {
         int x, y;
         x = getA().intValue();
         y = x % 2;
@@ -5994,7 +5820,7 @@ public class Main extends javax.swing.JFrame implements IView {
         nextInstructionPointer();
     }
 
-    void PARITY() {
+    public void PARITY() {
         int x, counter = 0;
         x = getA().intValue();
         String s = Integer.toBinaryString(x);
