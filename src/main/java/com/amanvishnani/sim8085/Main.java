@@ -3,6 +3,7 @@ package com.amanvishnani.sim8085;
 
 import com.amanvishnani.sim8085.domain.*;
 import com.amanvishnani.sim8085.domain.Impl.*;
+import io.reactivex.rxjava3.subjects.PublishSubject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -14,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 
 @SpringBootApplication
 public class Main extends javax.swing.JFrame implements IView {
+
+    private PublishSubject<IAddress> instructionPointerChanged$;
 
     public static IMemory memory = Memory.makeMemory();
     public IRegister A, B, C, D, E, H, L;
@@ -76,7 +79,9 @@ public class Main extends javax.swing.JFrame implements IView {
                 updateCodeTable();
             }
             x++;
-            setIP(Address.from(x));
+            IAddress nextAddress = Address.from(x);
+            setIP(nextAddress);
+            this.instructionPointerChanged$.onNext(nextAddress);
         } else {
             JOptionPane.showMessageDialog(this, "IP exceeding 3FFF (16383)");
         }
@@ -2734,7 +2739,29 @@ public class Main extends javax.swing.JFrame implements IView {
     public Main() {
         initComponents();
         initializePatt();
+        initializeDomain();
+        subscribeInstructionPointer();
         jStep.setEnabled(false);
+    }
+
+    public PublishSubject<IAddress> getInstructionPointerChanged$() {
+        return instructionPointerChanged$;
+    }
+
+    public void setInstructionPointerChanged$(PublishSubject<IAddress> instructionPointerChanged$) {
+        this.instructionPointerChanged$ = instructionPointerChanged$;
+    }
+
+    private void subscribeInstructionPointer() {
+        this.getInstructionPointerChanged$()
+                .subscribe( newAddress -> {
+                    System.out.println("Debug new Address="+newAddress.hexValue());
+                    updateView();
+                });
+    }
+
+    private void initializeDomain() {
+        this.instructionPointerChanged$ = PublishSubject.create();
     }
 
     /**
