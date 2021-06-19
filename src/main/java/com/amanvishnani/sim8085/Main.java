@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 @SpringBootApplication
-public class Main extends javax.swing.JFrame implements IView {
+public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor {
 
     private PublishSubject<IAddress> instructionPointerChanged$;
 
@@ -68,7 +68,8 @@ public class Main extends javax.swing.JFrame implements IView {
         updateViewPointers();
     }
 
-    void nextInstructionPointer() {
+    @Override
+    public void nextInstructionPointer() {
         int x = getIP().intValue();
         if (x < 16383) {
             IAddress codeHead = Address.from(CodeHead.getText());
@@ -87,31 +88,6 @@ public class Main extends javax.swing.JFrame implements IView {
         }
         this.updateView();
     }
-
-    String getLSB(String S) {
-        if (S.length() == 1) {
-            return "0" + S;
-        } else if (S.length() == 2) {
-            return S.substring(1, 2);
-        } else {
-            return S.substring(S.length() - 2);
-        }
-    }
-
-    String getMSB(String S) {
-        if (S.length() == 1) {
-            return "0";
-        }
-        if (S.length() == 2) {
-            return S.substring(0, 1);
-        } else if (S.length() > 2) {
-            return S.substring(S.length() - 4, S.length() - 2);
-        } else {
-            return "";
-        }
-    }
-
-    
 
     String[] getMyCode() {
         int i = 0, k = 0, j;
@@ -243,6 +219,7 @@ public class Main extends javax.swing.JFrame implements IView {
         }
     }
 
+    @Override
     public void execute(String op) {
         switch (op) {
             case "8F":
@@ -996,13 +973,16 @@ public class Main extends javax.swing.JFrame implements IView {
                 ST1[j][LABEL] = ST1[j][LABEL].trim();
                 if (ST1[j][LABEL].equals(localLabel)) {
                     String localval = ST1[j][MEM];
-                    setData(localmem, localval.substring(2, 4));
+                    IAddress address = Address.from(localmem);
+                    IData data = Data.from(localval.substring(2, 4));
+                    setData(address, data);
                     System.out.println(localval.substring(2, 4) + " is set at " + localmem);
                     int x = Integer.parseInt(localmem, 16);
                     x++;
                     localmem = Address.from(x).hexValue();
-                    setData(localmem, localval.substring(0, 2));
-                    System.out.println(localval.substring(0, 2) + " is set at " + localmem);
+                    address = Address.from(localmem);
+                    data = Data.from(localval.substring(0, 2));
+                    setData(address, data);
                 }
             }
 
@@ -1086,6 +1066,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
 
+    @Override
     public void setA(IData x) {
         IRegister a = getA();
         if(a == null) {
@@ -1094,6 +1075,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getA().update(x);
     }
 
+    @Override
     public void setB(IData x) {
         IRegister r = getB();
         if(r == null) {
@@ -1102,6 +1084,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getB().update(x);
     }
 
+    @Override
     public void setC(IData x) {
         IRegister r = getC();
         if(r == null) {
@@ -1110,6 +1093,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getC().update(x);
     }
 
+    @Override
     public void setD(IData x) {
         IRegister r = getD();
         if(r == null) {
@@ -1118,6 +1102,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getD().update(x);
     }
 
+    @Override
     public void setE(IData x) {
         IRegister r = getE();
         if(r == null) {
@@ -1126,6 +1111,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getE().update(x);
     }
 
+    @Override
     public void setH(IData x) {
         IRegister r = getH();
         if(r == null) {
@@ -1134,6 +1120,7 @@ public class Main extends javax.swing.JFrame implements IView {
         getH().update(x);
     }
 
+    @Override
     public void setL(IData x) {
         IRegister r = getL();
         if(r == null) {
@@ -1142,35 +1129,43 @@ public class Main extends javax.swing.JFrame implements IView {
         getL().update(x);
     }
 
+    @Override
     public void setSP(IAddress x) {
         SP = x;
     }
 
+    @Override
     public void setIP(IAddress x) {
         IP = x;
         updateCodeTable();
     }
 
+    @Override
     public IRegister getA() {
         return A;
     }
 
+    @Override
     public IRegister getB() {
         return B;
     }
 
+    @Override
     public IRegister getC() {
         return C;
     }
 
+    @Override
     public IRegister getD() {
         return D;
     }
 
+    @Override
     public IRegister getE() {
         return E;
     }
 
+    @Override
     public IRegister getH() {
         return H;
     }
@@ -1179,102 +1174,90 @@ public class Main extends javax.swing.JFrame implements IView {
         return L;
     }
 
+    @Override
     public IAddress getSP() {
         return SP;
     }
 
+    @Override
     public IAddress getIP() {
         return IP;
     }
 
-    public void setS(int x) {
+    @Override
+    public void setS(Integer x) {
         if (x < 2 && x > -1) {
             flags.setFlag(Flag.S, x);
         }
         // @TODO: Handel if not the case
     }
 
-    public void setZ(int x) {
+    @Override
+    public void setZ(Integer x) {
         if (x < 2 && x > -1) {
             flags.setFlag(Flag.Z, x);
         }
         // @TODO: Handel if not the case
     }
 
-    public void setAc(int x) {
+    @Override
+    public void setAc(Integer x) {
         if (x < 2 && x > -1) {
             flags.setFlag(Flag.Ac, x);
         }
         // @TODO: Handel if not the case
     }
 
-    public void setP(int x) {
+    @Override
+    public void setP(Integer x) {
         if (x < 2 && x > -1) {
             flags.setFlag(Flag.P, x);
         }
         // @TODO: Handel if not the case
     }
 
-    public void setCy(int x) {
+    @Override
+    public void setCy(Integer x) {
         if (x < 2 && x > -1) {
             flags.setFlag(Flag.Cy, x);
         }
         // @TODO: Handel if not the case
     }
 
-    public int getS() {
+    public Integer getS() {
         return flags.getFlag(Flag.S);
     }
 
-    public int getZ() {
+    public Integer getZ() {
         return flags.getFlag(Flag.Z);
     }
 
-    public int getCy() {
+    public Integer getCy() {
         return flags.getFlag(Flag.Cy);
     }
 
-    public int getP() {
+    public Integer getP() {
         return flags.getFlag(Flag.P);
     }
 
-    public int getAc() {
+    public Integer getAc() {
         return flags.getFlag(Flag.Ac);
     }
 
-    public IData getData(String address) {
-        if (address.length() > 4) {
-            System.out.println("Greater than FFFF");
-            return IData.ZERO;
-        } else {
-            IAddress address1 = Address.from(address);
-            try {
-                return memory.getData(address1.intValue());
-            } catch (Exception e) {
-                System.out.println(e + "\n String not a Hex Number");
-            }
-        }
-        return IData.ZERO;
+    public IData getData(IAddress address) {
+        return memory.getData(address.intValue());
     }
 
-    public void setData(String address, String data) {
-        try {
-            if (data.length() != 2) {
-                System.out.println("Length != 2");
-                // @TODO: Handel if not the case
-            }
-            memory.setData(address, data);
-        } catch (Exception e) {
-            System.out.println(e + "\n String not a Hex Number");
-        }
+    public void setData(IAddress address, IData data) {
+        memory.setData(address, data);
     }
 
     public IData getM() {
-        return getData(getHlAddress().hexValue());
+        return getData(getHlAddress());
     }
 
     public void setM(IData x) {
-        setData(getHlAddress().hexValue(), x.hexValue());
+        setData(getHlAddress(), x);
     }
 
     public String ExtractData(String x) {
@@ -1311,372 +1294,372 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
     /* MOV INSTRUCTIONS */
-    void _7F() {
+    public void _7F() {
         setA(getA());
         nextInstructionPointer();
     }
 
-    void _78() {
+    public void _78() {
         setA(getB());
         nextInstructionPointer();
     }
 
-    void _79() {
+    public void _79() {
         setA(getC());
         nextInstructionPointer();
     }
 
-    void _7A() {
+    public void _7A() {
         setA(getD());
         nextInstructionPointer();
     }
 
-    void _7B() {
+    public void _7B() {
         setA(getE());
         nextInstructionPointer();
     }
 
-    void _7C() {
+    public void _7C() {
         setA(getH());
         nextInstructionPointer();
     }
 
-    void _7D() {
+    public void _7D() {
         setA(getL());
         nextInstructionPointer();
     }
 
-    void _7E() {
+    public void _7E() {
         setA(getM());
         nextInstructionPointer();
     }
 
-    void _47() {
+    public void _47() {
         setB(getA());
         nextInstructionPointer();
     }
 
-    void _40() {
+    public void _40() {
         setB(getB());
         nextInstructionPointer();
     }
 
-    void _41() {
+    public void _41() {
         setB(getC());
         nextInstructionPointer();
     }
 
-    void _42() {
+    public void _42() {
         setB(getD());
         nextInstructionPointer();
     }
 
-    void _43() {
+    public void _43() {
         setB(getE());
         nextInstructionPointer();
     }
 
-    void _44() {
+    public void _44() {
         setB(getH());
         nextInstructionPointer();
     }
 
-    void _45() {
+    public void _45() {
         setB(getL());
         nextInstructionPointer();
     }
 
-    void _46() {
+    public void _46() {
         setB(getM());
         nextInstructionPointer();
     }
 
-    void _4F() {
+    public void _4F() {
         setC(getA());
         nextInstructionPointer();
     }
 
-    void _48() {
+    public void _48() {
         setC(getB());
         nextInstructionPointer();
     }
 
-    void _49() {
+    public void _49() {
         setC(getC());
         nextInstructionPointer();
     }
 
-    void _4A() {
+    public void _4A() {
         setC(getD());
         nextInstructionPointer();
     }
 
-    void _4B() {
+    public void _4B() {
         setC(getE());
         nextInstructionPointer();
     }
 
-    void _4C() {
+    public void _4C() {
         setC(getH());
         nextInstructionPointer();
     }
 
-    void _4D() {
+    public void _4D() {
         setC(getL());
         nextInstructionPointer();
     }
 
-    void _4E() {
+    public void _4E() {
         setC(getM());
         nextInstructionPointer();
     }
 
-    void _57() {
+    public void _57() {
         setD(getA());
         nextInstructionPointer();
     }
 
-    void _50() {
+    public void _50() {
         setD(getB());
         nextInstructionPointer();
     }
 
-    void _51() {
+    public void _51() {
         setD(getC());
         nextInstructionPointer();
     }
 
-    void _52() {
+    public void _52() {
         setD(getD());
         nextInstructionPointer();
     }
 
-    void _53() {
+    public void _53() {
         setD(getE());
         nextInstructionPointer();
     }
 
-    void _54() {
+    public void _54() {
         setD(getH());
         nextInstructionPointer();
     }
 
-    void _55() {
+    public void _55() {
         setD(getL());
         nextInstructionPointer();
     }
 
-    void _56() {
+    public void _56() {
         setD(getM());
         nextInstructionPointer();
     }
 
-    void _5F() {
+    public void _5F() {
         setE(getA());
         nextInstructionPointer();
     }
 
-    void _58() {
+    public void _58() {
         setE(getB());
         nextInstructionPointer();
     }
 
-    void _59() {
+    public void _59() {
         setE(getC());
         nextInstructionPointer();
     }
 
-    void _5A() {
+    public void _5A() {
         setE(getD());
         nextInstructionPointer();
     }
 
-    void _5B() {
+    public void _5B() {
         setE(getE());
         nextInstructionPointer();
     }
 
-    void _5C() {
+    public void _5C() {
         setE(getH());
         nextInstructionPointer();
     }
 
-    void _5D() {
+    public void _5D() {
         setE(getL());
         nextInstructionPointer();
     }
 
-    void _5E() {
+    public void _5E() {
         setE(getM());
         nextInstructionPointer();
     }
 
-    void _67() {
+    public void _67() {
         setH(getA());
         nextInstructionPointer();
     }
 
-    void _60() {
+    public void _60() {
         setH(getB());
         nextInstructionPointer();
     }
 
-    void _61() {
+    public void _61() {
         setH(getC());
         nextInstructionPointer();
     }
 
-    void _62() {
+    public void _62() {
         setH(getD());
         nextInstructionPointer();
     }
 
-    void _63() {
+    public void _63() {
         setH(getE());
         nextInstructionPointer();
     }
 
-    void _64() {
+    public void _64() {
         setH(getH());
         nextInstructionPointer();
     }
 
-    void _65() {
+    public void _65() {
         setH(getL());
         nextInstructionPointer();
     }
 
-    void _66() {
+    public void _66() {
         setH(getM());
         nextInstructionPointer();
     }
 
-    void _6F() {
+    public void _6F() {
         setL(getA());
         nextInstructionPointer();
     }
 
-    void _68() {
+    public void _68() {
         setL(getB());
         nextInstructionPointer();
     }
 
-    void _69() {
+    public void _69() {
         setL(getC());
         nextInstructionPointer();
     }
 
-    void _6A() {
+    public void _6A() {
         setL(getD());
         nextInstructionPointer();
     }
 
-    void _6B() {
+    public void _6B() {
         setL(getE());
         nextInstructionPointer();
     }
 
-    void _6C() {
+    public void _6C() {
         setL(getH());
         nextInstructionPointer();
     }
 
-    void _6D() {
+    public void _6D() {
         setL(getL());
         nextInstructionPointer();
     }
 
-    void _6E() {
+    public void _6E() {
         setL(getM());
         nextInstructionPointer();
     }
 
-    void _77() {
+    public void _77() {
         setM(getA());
         nextInstructionPointer();
     }
 
-    void _70() {
+    public void _70() {
         setM(getB());
         nextInstructionPointer();
     }
 
-    void _71() {
+    public void _71() {
         setM(getC());
         nextInstructionPointer();
     }
 
-    void _72() {
+    public void _72() {
         setM(getD());
         nextInstructionPointer();
     }
 
-    void _73() {
+    public void _73() {
         setM(getE());
         nextInstructionPointer();
     }
 
-    void _74() {
+    public void _74() {
         setM(getH());
         nextInstructionPointer();
     }
 
-    void _75() {
+    public void _75() {
         setM(getL());
         nextInstructionPointer();
     }
 
-    void _76() {
+    public void _76() {
         jStep.setEnabled(false);
     }
 
     private IData getDataAtIP() {
-        return getData(getIP().hexValue());
+        return getData(getIP());
     }
     
-    void _3E() {
+    public void _3E() {
         nextInstructionPointer();
         setA(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _06() {
+    public void _06() {
         nextInstructionPointer();
         setB(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _0E() {
+    public void _0E() {
         nextInstructionPointer();
         setC(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _16() {
+    public void _16() {
         nextInstructionPointer();
         setD(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _1E() {
+    public void _1E() {
         nextInstructionPointer();
         setE(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _26() {
+    public void _26() {
         nextInstructionPointer();
         setH(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _2E() {
+    public void _2E() {
         nextInstructionPointer();
         setL(getDataAtIP());
         nextInstructionPointer();
     }
 
-    void _36() {
+    public void _36() {
         nextInstructionPointer();
         setM(getDataAtIP());
         nextInstructionPointer();
@@ -2761,7 +2744,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
     private void initializeDomain() {
-        this.instructionPointerChanged$ = PublishSubject.create();
+        setInstructionPointerChanged$(PublishSubject.create());
     }
 
     /**
@@ -3650,7 +3633,7 @@ public class Main extends javax.swing.JFrame implements IView {
                     JOptionPane.showMessageDialog(this, q + " is not a 1 Byte Hex digit");
                     DataTable.setValueAt("00", i, 1);
                 } else {
-                    setData(p, q);
+                    setData(Address.from(p), Data.from(q));
                 }
             }
         }
@@ -3670,7 +3653,7 @@ public class Main extends javax.swing.JFrame implements IView {
                 JOptionPane.showMessageDialog(this, q + " is not a 1 Byte Hex digit");
                 DataTable.setValueAt("00", i, 1);
             } else {
-                setData(p, q);
+                setData(Address.from(p), Data.from(q));
             }
         }
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -3926,47 +3909,47 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 //SUB A
 
-    void _97() {
+    public void _97() {
         this.sub(getA());
     }
 //SUB B
 
-    void _90() {
+    public void _90() {
         this.sub(getB());
     }
 //SUB C
 
-    void _91() {
+    public void _91() {
         this.sub(getC());
     }
 //SUB D
 
-    void _92() {
+    public void _92() {
         this.sub(getD());
     }
 //SUB E
 
-    void _93() {
+    public void _93() {
         this.sub(getE());
     }
 //SUB H
 
-    void _94() {
+    public void _94() {
         this.sub(getH());
     }
 //SUB L
 
-    void _95() {
+    public void _95() {
         this.sub(getL());
     }
 //SUB M
 
-    void _96() {
+    public void _96() {
         this.sub(getM());
     }
 //SUI Data
 
-    void _D6() {
+    public void _D6() {
         IData r = getDataAtIP();
         this.sub(r);
     }
@@ -5090,11 +5073,11 @@ public class Main extends javax.swing.JFrame implements IView {
         String s2 = getDataAtIP().hexValue();
         nextInstructionPointer();
         String s3 = getIP().hexValue();
-        String t1 = getMSB(s3);
-        String t2 = getLSB(s3);
-        setData(getSP().hexValue(), t2);
+        IData t1 = getIP().getMSB();
+        IData t2 = getIP().getLSB();
+        setData(getSP(), t2);
         decrementSP();
-        setData(getSP().hexValue(), t1);
+        setData(getSP(), t1);
         decrementSP();
         setIP(Address.from(s2 + s1));
     }
@@ -5102,9 +5085,9 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public void _C9() {
         incrementSP();
-        String s1 = getData(getSP().hexValue()).hexValue();
+        String s1 = getData(getSP()).hexValue();
         incrementSP();
-        String s2 = getData(getSP().hexValue()).hexValue();
+        String s2 = getData(getSP()).hexValue();
         setIP(Address.from(s1 + s2));
     }
 //JMP
@@ -5339,11 +5322,12 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public void _3A() {
         nextInstructionPointer();
-        String s1 = getDataAtIP().hexValue();
+        IData s1 = getDataAtIP();
         nextInstructionPointer();
-        String s2 = getDataAtIP().hexValue();
+        IData s2 = getDataAtIP();
         nextInstructionPointer();
-        setA(getData(s2 + s1));
+
+        setA(getData(Address.from(s2, s1)));
     }
 
 //LDAX B
@@ -5406,35 +5390,35 @@ public class Main extends javax.swing.JFrame implements IView {
         nextInstructionPointer();
         IData d2 = getDataAtIP();
         IAddress x = Address.from(d2, d1);
-        setL(getData(x.hexValue()));
+        setL(getData(x));
         IAddress nextAddr = Address.from(x.intValue() + 1);
-        setH(getData(nextAddr.hexValue()));
+        setH(getData(nextAddr));
         nextInstructionPointer();
     }
 //STA 
 
     public void _32() {
         nextInstructionPointer();
-        String s1 = getDataAtIP().hexValue();
+        IData s1 = getDataAtIP();
         nextInstructionPointer();
-        String s2 = getDataAtIP().hexValue();
-        setData(s2 + s1, getA().hexValue());
+        IData s2 = getDataAtIP();
+        setData(Address.from(s2, s1), getA());
         nextInstructionPointer();
     }
 //STAX B
 
     public void _02() {
-        String s1 = getB().hexValue();
-        String s2 = getC().hexValue();
-        setData(s1 + s2, getA().hexValue());
+        IData s1 = getB();
+        IData s2 = getC();
+        setData(Address.from(s1, s2), getA());
         nextInstructionPointer();
     }
 //STAX D
 
     public void _12() {
-        String s1 = getD().hexValue();
-        String s2 = getE().hexValue();
-        setData(s1 + s2, getA().hexValue());
+        IData s1 = getD();
+        IData s2 = getE();
+        setData(Address.from(s1, s2), getA());
         nextInstructionPointer();
     }
 //SHLD
@@ -5445,9 +5429,9 @@ public class Main extends javax.swing.JFrame implements IView {
         nextInstructionPointer();
         IData s2 = getDataAtIP();
         IAddress x = Address.from(s2, s1);
-        setData(x.hexValue(), getL().hexValue());
+        setData(x, getL());
         IAddress nextAddr = Address.from(x.intValue() + 1);
-        setData(nextAddr.hexValue(), getH().hexValue());
+        setData(nextAddr, getH());
         nextInstructionPointer();
     }
 
@@ -5556,36 +5540,36 @@ public class Main extends javax.swing.JFrame implements IView {
 //XTHL
 
     public void _E3() {
-        setData(getSP().hexValue(), getL().hexValue());
+        setData(getSP(), getL());
         decrementSP();
-        setData(getSP().hexValue(), getH().hexValue());
+        setData(getSP(), getH());
         decrementSP();
         nextInstructionPointer();
     }
 
 //PUSH B
     public void _C5() {
-        setData(getSP().hexValue(), getB().hexValue());
+        setData(getSP(), getB());
         decrementSP();
-        setData(getSP().hexValue(), getC().hexValue());
+        setData(getSP(), getC());
         decrementSP();
         nextInstructionPointer();
     }
 //PUSH D
 
     public void _D5() {
-        setData(getSP().hexValue(), getD().hexValue());
+        setData(getSP(), getD());
         decrementSP();
-        setData(getSP().hexValue(), getE().hexValue());
+        setData(getSP(), getE());
         decrementSP();
         nextInstructionPointer();
     }
 //PUSH H
 
     public void _E5() {
-        setData(getSP().hexValue(), getH().hexValue());
+        setData(getSP(), getH());
         decrementSP();
-        setData(getSP().hexValue(), getL().hexValue());
+        setData(getSP(), getL());
         decrementSP();
         nextInstructionPointer();
     }
@@ -5593,35 +5577,34 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public void _C1() {
         incrementSP();
-        setC(getData(getSP().hexValue()));
+        setC(getData(getSP()));
         incrementSP();
-        setB(getData(getSP().hexValue()));
+        setB(getData(getSP()));
         nextInstructionPointer();
     }
 //POP D
 
     public void _D1() {
         incrementSP();
-        setE(getData(getSP().hexValue()));
+        setE(getData(getSP()));
         incrementSP();
-        setD(getData(getSP().hexValue()));
+        setD(getData(getSP()));
         nextInstructionPointer();
-
     }
 //POP H
 
     public void _E1() {
         incrementSP();
-        setL(getData(getSP().hexValue()));
+        setL(getData(getSP()));
         incrementSP();
-        setH(getData(getSP().hexValue()));
+        setH(getData(getSP()));
         nextInstructionPointer();
     }
 //POP PSW
 
     public void _F1() {
         incrementSP();
-        int y = getData(getSP().hexValue()).intValue();
+        int y = getData(getSP()).intValue();
         if ((y & 128) == 128) {
             setS(1);
         }
@@ -5660,7 +5643,7 @@ public class Main extends javax.swing.JFrame implements IView {
         if (getCy() == 1) {
             x = x | 1;
         }
-        setData(getSP().hexValue(), Integer.toHexString(x));
+        setData(getSP(), Data.from(x));
         decrementSP();
         setS(0);
         setZ(0);
