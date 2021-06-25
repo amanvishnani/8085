@@ -3,6 +3,7 @@ package com.amanvishnani.sim8085;
 
 import com.amanvishnani.sim8085.domain.*;
 import com.amanvishnani.sim8085.domain.Impl.*;
+import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +17,8 @@ import javax.swing.table.DefaultTableModel;
 @SpringBootApplication
 public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor {
 
-    private PublishSubject<IAddress> instructionPointerChanged$;
+    private PublishSubject<InstructionExecuted> instructionExecuted$;
+    private PublishSubject<RuntimeException> onError$;
 
     public static IMemory memory = Memory.makeMemory();
     public IRegister A, B, C, D, E, H, L;
@@ -33,7 +35,16 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
     public final String addr = "[0-9A-F]{4}(H)?";
     public final String space = "( )*";
     public final String space1 = "( )+";
+    private Disposable instructionExecutedSub = Disposable.disposed();
+    private Disposable errorSub = Disposable.disposed();
 
+    public PublishSubject<RuntimeException> getOnError$() {
+        return onError$;
+    }
+
+    public void setOnError$(PublishSubject<RuntimeException> onError$) {
+        this.onError$ = onError$;
+    }
 
     @Override
     public void updateViewFlags() {
@@ -66,33 +77,29 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         updateViewFlags();
         updateViewRegisters();
         updateViewPointers();
+        updateCodeTable();
+    }
+
+    private RuntimeException newException(String message) {
+        return new RuntimeException(message);
     }
 
     @Override
     public void nextInstructionPointer() {
         int x = getIP().intValue();
         if (x < 16383) {
-            IAddress codeHead = Address.from(CodeHead.getText());
-
-            if (x >= (codeHead.intValue() + 20)) {
-                IAddress nextAddress = Address.from(codeHead.intValue() + 1);
-                CodeHead.setText(nextAddress.hexValue());
-                updateCodeTable();
-            }
             x++;
             IAddress nextAddress = Address.from(x);
             setIP(nextAddress);
-            this.instructionPointerChanged$.onNext(nextAddress);
         } else {
-            JOptionPane.showMessageDialog(this, "IP exceeding 3FFF (16383)");
+            throw newException("IP exceeding 3FFF (16383)");
         }
-        this.updateView();
     }
 
-    String[] getMyCode() {
+    String[] getLineInstructions() {
         int i = 0, k = 0, j;
         String code = code_av.getText().toUpperCase();
-        code_token = code.split("\\n");
+        String[] code_token = code.split("\\n");
         String[] temp = new String[code_token.length];
 
         for (j = 0; j < code_token.length; j++) {
@@ -116,20 +123,6 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
             map[i][LABEL] = "";
             map[i][OPCODE] = "";
         }
-        setA(IData.ZERO);
-        setB(IData.ZERO);
-        setC(IData.ZERO);
-        setD(IData.ZERO);
-        setE(IData.ZERO);
-        setH(IData.ZERO);
-        setL(IData.ZERO);
-        setCy(0);
-        setAc(0);
-        setS(0);
-        setZ(0);
-        setP(0);
-        setIP(IAddress.ZERO);
-        setSP(IAddress.FFFF);
     }
 
     void updateCodeTable() {
@@ -962,6 +955,10 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
                 break;
 
         }
+        InstructionExecuted instructionExecuted = new InstructionExecuted();
+        instructionExecuted.setInstruction(Data.from(op));
+        instructionExecuted.setNextAddress(getIP());
+        this.getInstructionExecuted$().onNext(instructionExecuted);
     }
 
     public void PassTwo() {
@@ -2713,7 +2710,6 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         return 0;
     }
 
-    String[] code_token;
     public int run_code_index = 0;
 
     /**
@@ -2723,28 +2719,49 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         initComponents();
         initializePatt();
         initializeDomain();
-        subscribeInstructionPointer();
         jStep.setEnabled(false);
     }
 
-    public PublishSubject<IAddress> getInstructionPointerChanged$() {
-        return instructionPointerChanged$;
+    public PublishSubject<InstructionExecuted> getInstructionExecuted$() {
+        return instructionExecuted$;
     }
 
-    public void setInstructionPointerChanged$(PublishSubject<IAddress> instructionPointerChanged$) {
-        this.instructionPointerChanged$ = instructionPointerChanged$;
+    public void setInstructionExecuted$(PublishSubject<InstructionExecuted> instructionExecuted$) {
+        this.instructionExecuted$ = instructionExecuted$;
     }
 
     private void subscribeInstructionPointer() {
-        this.getInstructionPointerChanged$()
-                .subscribe( newAddress -> {
-                    System.out.println("Debug new Address="+newAddress.hexValue());
-                    updateView();
+        this.instructionExecutedSub.dispose();
+        this.instructionExecutedSub = this.getInstructionExecuted$()
+            .subscribe( instructionExecuted -> {
+                System.out.println("Debug new Address="+instructionExecuted.getNextAddress().hexValue());
+                updateView();
+            });
+
+        this.errorSub.dispose();
+        this.errorSub = getOnError$()
+                .subscribe(err -> {
+                    JOptionPane.showMessageDialog(this, err.getMessage());
                 });
     }
 
     private void initializeDomain() {
-        setInstructionPointerChanged$(PublishSubject.create());
+        setA(IData.ZERO);
+        setB(IData.ZERO);
+        setC(IData.ZERO);
+        setD(IData.ZERO);
+        setE(IData.ZERO);
+        setH(IData.ZERO);
+        setL(IData.ZERO);
+        setCy(0);
+        setAc(0);
+        setS(0);
+        setZ(0);
+        setP(0);
+        setIP(IAddress.ZERO);
+        setSP(IAddress.FFFF);
+        setInstructionExecuted$(PublishSubject.create());
+        setOnError$(PublishSubject.create());
     }
 
     /**
@@ -3528,8 +3545,11 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         oldIP = 0;
         jStep.setEnabled(true);
+        initializeDomain();
+        subscribeInstructionPointer();
         iniMap();
-        PassOne(getMyCode());
+        String[] instructions = getLineInstructions();
+        PassOne(instructions);
         PassTwo();
         String test123[] = memory.getSlice(0, 20).getHexDataArray();
         run_code.setListData(test123);
