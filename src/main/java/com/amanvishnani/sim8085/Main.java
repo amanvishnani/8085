@@ -24,10 +24,10 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
     public IRegister A, B, C, D, E, H, L;
     public IAddress IP, SP;
     static Flags flags = Flags.newInstance();
-    public static int LABEL = 0, OPCODE = 1, MEM = 1, SYMPTR, SYMPTR1, oldIP;
+    public static int LABEL = 0, MEM = 1, SYMPTR, SYMPTR1, oldIP;
     public static String[][] ST = new String[100][2];
     public static String[][] ST1 = new String[100][2];
-    public static String[][] map = new String[16384][2];
+    private Instruction[] instructionMap = new InstructionImpl[16384];
     public Matcher m;
     public Pattern[] patterns = new Pattern[246];
     public final String data = "[0-9A-F]{2}(H)?";
@@ -118,10 +118,9 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         return temp2;
     }
 
-    public void iniMap() {
+    public void initializeInstructionMap() {
         for (int i = 0; i < 16383; i++) {
-            map[i][LABEL] = "";
-            map[i][OPCODE] = "";
+            instructionMap[i] = InstructionImpl.newInstructionImpl();
         }
     }
 
@@ -145,8 +144,8 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
                 END = codehead + 20;
                 for (int i = START; i < END; i++) {
                     obj[0] = Address.from(i).hexValue();
-                    obj[1] = map[i][LABEL];
-                    obj[2] = map[i][OPCODE];
+                    obj[1] = instructionMap[i].getLabel();
+                    obj[2] = instructionMap[i].getOpcode();
                     obj[3] = memory.getHexData(i);
                     x.addRow(obj);
                 }
@@ -1002,9 +1001,8 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
                 int a3 = OpcodeLength(a2);
                 memory.setData(LP, a2);
                 String l = ExtractLabel(s);
-                map[LP][LABEL] = l;
-                map[LP][OPCODE] = m.group();
-//                System.out.println(map[LP][OPCODE]+" for "+i);
+                instructionMap[LP].setLabel(l);
+                instructionMap[LP].setOpcode(m.group());
                 if (l.length() != 0) {
                     for (int g = 0; g < SYMPTR1; g++) {
                         if (ST1[g][LABEL].equalsIgnoreCase(l)) {
@@ -1024,20 +1022,20 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
                 } else if (a3 == 2) {
                     LP = LP + 1;
                     memory.setData(LP, ExtractData(s));
-                    map[LP][OPCODE] = "";
-                    map[LP][LABEL] = "";
+                    instructionMap[LP].setOpcode("");
+                    instructionMap[LP].setLabel("");
                     LP = LP + 1;
                 } else if (a3 == 3) {
                     l = extractAddress(s);
 
                     if (l.length() != 0) {
                         LP = LP + 1;
-                        map[LP][OPCODE] = "";
-                        map[LP][LABEL] = "";
+                        instructionMap[LP].setOpcode("");
+                        instructionMap[LP].setLabel("");
                         memory.setData(LP, l.substring(2, 4));
                         LP = LP + 1;
-                        map[LP][OPCODE] = "";
-                        map[LP][LABEL] = "";
+                        instructionMap[LP].setOpcode("");
+                        instructionMap[LP].setLabel("");
                         memory.setData(LP, l.substring(0, 2));
                         LP = LP + 1;
                     } else {
@@ -1047,11 +1045,11 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
                         ST[SYMPTR][LABEL] = l;
                         ST[SYMPTR][MEM] = Address.from(LP).hexValue();
                         SYMPTR++;
-                        map[LP][OPCODE] = "";
-                        map[LP][LABEL] = "";
+                        instructionMap[LP].setOpcode("");
+                        instructionMap[LP].setLabel("");
                         LP = LP + 1;
-                        map[LP][OPCODE] = "";
-                        map[LP][LABEL] = "";
+                        instructionMap[LP].setOpcode("");
+                        instructionMap[LP].setLabel("");
                         LP = LP + 1;
                     }
                 }
@@ -1134,7 +1132,6 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
     @Override
     public void setIP(IAddress x) {
         IP = x;
-        updateCodeTable();
     }
 
     @Override
@@ -2719,6 +2716,7 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         initComponents();
         initializePatt();
         initializeDomain();
+        initializeInstructionMap();
         jStep.setEnabled(false);
     }
 
@@ -3547,7 +3545,7 @@ public class Main extends javax.swing.JFrame implements IView, I8085, IExecutor 
         jStep.setEnabled(true);
         initializeDomain();
         subscribeInstructionPointer();
-        iniMap();
+        initializeInstructionMap();
         String[] instructions = getLineInstructions();
         PassOne(instructions);
         PassTwo();
