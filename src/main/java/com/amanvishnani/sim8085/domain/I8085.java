@@ -6,6 +6,10 @@ package com.amanvishnani.sim8085.domain;
  * and open the template in the editor.
  */
 
+import com.amanvishnani.sim8085.domain.Impl.Flags;
+import com.amanvishnani.sim8085.domain.Impl.InstructionExecuted;
+import io.reactivex.rxjava3.subjects.PublishSubject;
+
 /**
  *
  * @author Aman Vishnani
@@ -20,6 +24,8 @@ public interface I8085 {
     IRegister getE();
     IRegister getH();
     IRegister getL();
+    IData getM();
+    Flags getFlags();
     void setA(IData x);
     void setB(IData x);
     void setC(IData x);
@@ -27,6 +33,7 @@ public interface I8085 {
     void setE(IData x);
     void setH(IData x);
     void setL(IData x);
+    void setM(IData x);
 
     void execute(String op);
 
@@ -45,4 +52,20 @@ public interface I8085 {
     Integer getP();
     Integer getCy();
     Integer getAc();
+
+    IData getData(Integer i);
+    IData getData(IAddress i);
+
+    void setData(IAddress i, IData data);
+    void setData(Integer i, String data);
+
+    PublishSubject<InstructionExecuted> getInstructionExecuted$();
+    PublishSubject<RuntimeException> getOnError$();
+    void initialize();
+    IData getDataAtIP();
+    void updateFlags(IFlags flags);
+    void decrementSP();
+    void incrementSP();
+
+    IMemory getMemory();
 }
