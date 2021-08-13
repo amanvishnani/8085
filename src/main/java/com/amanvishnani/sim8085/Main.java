@@ -7,7 +7,8 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -71,26 +72,35 @@ public class Main extends javax.swing.JFrame implements IView {
         return new RuntimeException(message);
     }
 
-    String[] getLineInstructions() {
-        int i = 0, k = 0, j;
-        String code = code_av.getText().toUpperCase();
-        String[] code_token = code.split("\\n");
-        String[] temp = new String[code_token.length];
+    public void loadInstructions() {
+        simulator.initialize();
+        subscribeInstructionPointer();
 
-        for (j = 0; j < code_token.length; j++) {
-            code_token[j] = Trimmer(code_token[j]);
+        initializeInstructionMap();
+        oldIP = 0;
+        String code = code_av.getText().toUpperCase();
+        List<String> instructions = getLineInstructions(code);
+        PassOne(instructions);
+        PassTwo();
+        String test123[] = simulator.getMemory().getSlice(0, 20).getHexDataArray();
+        run_code.setListData(test123);
+        run_code_index = 0;
+
+        jStep.setEnabled(true);
+        updateCodeTable();
+    }
+
+    List<String> getLineInstructions(String code) {
+        String[] code_token = code.split("\\n");
+        List<String> temp= new ArrayList<>();
+
+        for (int j = 0; j < code_token.length; j++) {
+            code_token[j] = trimSpaces(code_token[j]);
             if (0 != code_token[j].length()) {
-                temp[i] = code_token[j];
-                i++;
-            } else {
-                k++;
+                temp.add(code_token[j]);
             }
         }
-        String[] temp2 = new String[temp.length - k];
-        for (j = 0; j < temp.length - k; j++) {
-            temp2[j] = temp[j];
-        }
-        return temp2;
+        return temp;
     }
 
     public void initializeInstructionMap() {
@@ -198,7 +208,6 @@ public class Main extends javax.swing.JFrame implements IView {
                     IAddress address = Address.from(localmem);
                     IData data = Data.from(localval.substring(2, 4));
                     simulator.setData(address, data);
-                    System.out.println(localval.substring(2, 4) + " is set at " + localmem);
                     int x = Integer.parseInt(localmem, 16);
                     x++;
                     localmem = Address.from(x).hexValue();
@@ -211,7 +220,7 @@ public class Main extends javax.swing.JFrame implements IView {
         }
     }
 
-    public void PassOne(String[] x) {
+    public void PassOne(List<String> x) {
         int LP = 0;
         ST = null;
         ST = new String[100][2];
@@ -223,35 +232,34 @@ public class Main extends javax.swing.JFrame implements IView {
             int a1 = findI(s);
             if (a1 >= 0) {
                 int flag = 0;
-                String a2 = findOpcode(a1);
-                int a3 = OpcodeLength(a2);
-                simulator.setData(LP, a2);
+                String opcode = findOpcode(a1);
+                int opcodeLength = OpcodeLength(opcode);
+                simulator.setData(LP, opcode);
                 String l = ExtractLabel(s);
                 instructionMap[LP].setLabel(l);
                 instructionMap[LP].setOpcode(m.group());
-                if (l.length() != 0) {
+                if (!l.isEmpty()) {
                     for (int g = 0; g < SYMPTR1; g++) {
                         if (ST1[g][LABEL].equalsIgnoreCase(l)) {
-                            JOptionPane.showMessageDialog(this, l + " already Exists at " + ST1[g][MEM] + " Terminating rest of the process");
+                            // JOptionPane.showMessageDialog(this, l + " already Exists at " + ST1[g][MEM] + " Terminating rest of the process");
                             flag = 1;
                         }
                     }
                     if (flag == 0) {
                         ST1[SYMPTR1][LABEL] = l;
-                        //System.out.println("Breakpoint");
                         ST1[SYMPTR1][MEM] = Address.from(LP).hexValue();
                         SYMPTR1++;
                     }
                 }
-                if (a3 == 1) {
+                if (opcodeLength == 1) {
                     LP = LP + 1;
-                } else if (a3 == 2) {
+                } else if (opcodeLength == 2) {
                     LP = LP + 1;
                     simulator.setData(LP, ExtractData(s));
                     instructionMap[LP].setOpcode("");
                     instructionMap[LP].setLabel("");
                     LP = LP + 1;
-                } else if (a3 == 3) {
+                } else if (opcodeLength == 3) {
                     l = extractAddress(s);
 
                     if (l.length() != 0) {
@@ -318,7 +326,7 @@ public class Main extends javax.swing.JFrame implements IView {
         jStep.setEnabled(false);
     }
 
-    public String Trimmer(String x) {
+    public String trimSpaces(String x) {
         x = x.trim().replaceAll(" +", " ");
         return x;
     }
@@ -335,7 +343,7 @@ public class Main extends javax.swing.JFrame implements IView {
 
     public String getLabel(String x) {
         int d = x.indexOf(":");
-        x = Trimmer(x.substring(d + 1));
+        x = trimSpaces(x.substring(d + 1));
         d = x.indexOf(" ");
         x = x.substring(d + 1).trim();
         if (x.length() == 0) {
@@ -1361,9 +1369,8 @@ public class Main extends javax.swing.JFrame implements IView {
             case "32":
                 return 3;
             default:
-                System.out.print("Invalied opcode");
+                throw  newException("Invalid opcode");
         }
-        return 0;
     }
 
     public int run_code_index = 0;
@@ -1374,7 +1381,7 @@ public class Main extends javax.swing.JFrame implements IView {
     public Main() {
         initComponents();
         initializePatt();
-        simulator.initialize();;
+        simulator.initialize();
         initializeInstructionMap();
         jStep.setEnabled(false);
     }
@@ -1386,7 +1393,6 @@ public class Main extends javax.swing.JFrame implements IView {
                 if(instructionExecuted.getInstruction().hexValue().equals("76")) {
                     jStep.setEnabled(false);
                 }
-                System.out.println("Debug new Address="+instructionExecuted.getNextAddress().hexValue());
                 updateView();
             });
 
@@ -2176,27 +2182,7 @@ public class Main extends javax.swing.JFrame implements IView {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        oldIP = 0;
-        jStep.setEnabled(true);
-        simulator.initialize();
-        subscribeInstructionPointer();
-        initializeInstructionMap();
-        String[] instructions = getLineInstructions();
-        PassOne(instructions);
-        PassTwo();
-        String test123[] = simulator.getMemory().getSlice(0, 20).getHexDataArray();
-        run_code.setListData(test123);
-        run_code_index = 0;
-        System.out.println("Symbol Table for Where to Load\nLABEL\tMEMORY");
-        for (int e = 0; e < 10; e++) {
-            System.out.println(ST[e][LABEL] + "\t" + ST[e][MEM]);
-        }
-        System.out.println("Symbol Table for Symbol and their LOACTIONS\nLABEL\tMEMORY");
-        for (int e = 0; e < 10; e++) {
-            System.out.println(ST1[e][LABEL] + "\t" + ST1[e][MEM]);
-        }
-
-        updateCodeTable();
+        this.loadInstructions();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -2211,9 +2197,6 @@ public class Main extends javax.swing.JFrame implements IView {
             CodeTable.removeRowSelectionInterval(oldIP, oldIP);
         }
         oldIP = nip;
-        // run_code.setSelectedIndex(run_code_index);
-        // run_code_index++;
-        // System.out.println(run_code.getSelectedValue());
     }//GEN-LAST:event_jStepActionPerformed
 
     private void jBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBActionPerformed
