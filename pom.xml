@@ -13,7 +13,7 @@
 	<name>sim8085</name>
 	<description>A Java 8085 Simulator</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>16</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>io.reactivex.rxjava3</groupId>
 			<artifactId>rxjava</artifactId>
-			<version>3.0.4</version>
+			<version>3.1.0</version>
 		</dependency>
 
 	</dependencies>

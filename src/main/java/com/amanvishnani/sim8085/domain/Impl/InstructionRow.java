@@ -17,6 +17,7 @@ public class InstructionRow {
     private InstructionRow(Integer address) {
         this.address = Address.from(address);
         setLabel("");
+        setInstruction("");
     }
 
     public static InstructionRow createInstructionRow(Integer address) {

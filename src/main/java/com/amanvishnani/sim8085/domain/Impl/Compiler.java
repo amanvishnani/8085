@@ -95,6 +95,7 @@ public class Compiler {
     }
 
     private void passTwo() {
+        var instructionsToAdd = new ArrayList<InstructionRow>();
         for (Map.Entry<Integer, InstructionRow> entry :
                 instructionRowMap.entrySet()) {
             Integer addr = entry.getKey();
@@ -106,8 +107,14 @@ public class Compiler {
                 InstructionRow row1 = InstructionRow.createInstructionRow(addr+1);
                 InstructionRow row2 = InstructionRow.createInstructionRow(addr+2);
                 row1.setData(labelAddress.getLSB());
+                instructionsToAdd.add(row1);
                 row2.setData(labelAddress.getMSB());
+                instructionsToAdd.add(row2);
             }
+        }
+        for (var i:
+             instructionsToAdd) {
+            instructionRowMap.put(i.getAddress().intValue(), i);
         }
     }
 }

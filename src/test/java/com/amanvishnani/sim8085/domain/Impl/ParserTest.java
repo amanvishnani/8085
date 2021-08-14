@@ -15,10 +15,12 @@ class ParserTest {
 
     @Test
     void getLineInstructions() {
-        String code = "MVI A, 05H \n" +
-                "MOV B, A \n" +
-                "STA 5000H \n" +
-                "LABEL: HLT \n";
+        String code = """
+                MVI A, 05H
+                MOV B, A
+                STA 5000H
+                LABEL: HLT
+                """;
         List<String> instructions = parser.getLineInstructions(code);
         assertEquals(4, instructions.size());
         assertTrue(instructions.contains("LABEL: HLT"));
