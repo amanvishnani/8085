@@ -13,9 +13,12 @@
 	<name>sim8085</name>
 	<description>A Java 8085 Simulator</description>
 	<properties>
+		<maven.test.skip>true</maven.test.skip>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>16</java.version>
 		<maven.compiler.source>16</maven.compiler.source>
 		<maven.compiler.target>16</maven.compiler.target>
+		<maven.compiler.release>16</maven.compiler.release>
 		<sonar.organization>amanvishnani</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
