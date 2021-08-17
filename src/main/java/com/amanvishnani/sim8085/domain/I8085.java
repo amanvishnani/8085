@@ -8,7 +8,10 @@ package com.amanvishnani.sim8085.domain;
 
 import com.amanvishnani.sim8085.domain.Impl.Flags;
 import com.amanvishnani.sim8085.domain.Impl.InstructionExecuted;
+import com.amanvishnani.sim8085.domain.Impl.InstructionRow;
 import io.reactivex.rxjava3.subjects.PublishSubject;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -68,4 +71,6 @@ public interface I8085 {
     void incrementSP();
 
     IMemory getMemory();
+
+    ArrayList<InstructionRow> compile(String code);
 }

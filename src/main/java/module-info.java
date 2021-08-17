@@ -1,8 +1,8 @@
-module com.amanvishnani.sim8085 {
+module com.amanvishnani.simulator {
     requires java.desktop;
     requires io.reactivex.rxjava3;
     requires spring.boot;
     requires spring.boot.autoconfigure;
     requires java.logging;
-    opens com.amanvishnani.sim8085.domain.Impl;
+    exports com.amanvishnani.sim8085.domain;
 }
