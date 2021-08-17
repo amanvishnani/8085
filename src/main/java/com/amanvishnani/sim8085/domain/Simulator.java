@@ -1,9 +1,11 @@
 package com.amanvishnani.sim8085.domain;
 
 import com.amanvishnani.sim8085.domain.Impl.*;
+import com.amanvishnani.sim8085.domain.Impl.Compiler;
 import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Set;
 
 public class Simulator implements I8085 {
@@ -12,6 +14,8 @@ public class Simulator implements I8085 {
     private IRegister A, B, C, D, E, H, L;
     private IAddress IP, SP;
     private final IMemory memory = Memory.makeMemory();
+
+    private Compiler compiler;
 
     private PublishSubject<InstructionExecuted> instructionExecuted$;
     private PublishSubject<RuntimeException> onError$;
@@ -26,6 +30,16 @@ public class Simulator implements I8085 {
 
     public IMemory getMemory() {
         return memory;
+    }
+
+    @Override
+    public ArrayList<InstructionRow> compile(String code) {
+        var rows = compiler.compile(code);
+        var rowSize = rows.size();
+        for (int i = 0; i < rowSize; i++) {
+            setData(i, rows.get(i).getData().hexValue());
+        }
+        return rows;
     }
 
     @Override
@@ -46,6 +60,7 @@ public class Simulator implements I8085 {
         setSP(IAddress.FFFF);
         setInstructionExecuted$(PublishSubject.create());
         setOnError$(PublishSubject.create());
+        this.compiler = new Compiler();
     }
 
     @Override

@@ -9,6 +9,8 @@ import com.amanvishnani.sim8085.Util;
 import com.amanvishnani.sim8085.domain.IAddress;
 import com.amanvishnani.sim8085.domain.IData;
 
+import java.util.Objects;
+
 /**
  *
  * @author Aman Vishnani
@@ -83,5 +85,27 @@ public class Address implements IAddress{
         IData lsb = Data.from(hexAddress.substring(2, 4));
         return Address.from(msb, lsb, data);
     }
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address1 = (Address) o;
+        return Objects.equals(LSB, address1.LSB) && Objects.equals(MSB, address1.MSB) && Objects.equals(address, address1.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(LSB, MSB, address);
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "LSB=" + LSB +
+                ", MSB=" + MSB +
+                ", address='" + address + '\'' +
+                ", data=" + data +
+                '}';
+    }
 }

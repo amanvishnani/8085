@@ -2,8 +2,6 @@ package com.amanvishnani.sim8085.domain.Impl;
 
 import com.amanvishnani.sim8085.domain.Instruction;
 
-import java.util.Optional;
-
 public class InstructionImpl implements Instruction {
     private String opcode;
     private String label;

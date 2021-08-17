@@ -10,12 +10,14 @@ import com.amanvishnani.sim8085.domain.IData;
 import com.amanvishnani.sim8085.domain.IOperationResult;
 import com.amanvishnani.sim8085.domain.IRegister;
 
+import java.util.Objects;
+
 /**
  *
  * @author Aman Vishnani
  */
 public class Data implements IData {
-    
+
     String dataValue;
 
     public Data(String dataValue) {
@@ -85,6 +87,26 @@ public class Data implements IData {
     @Override
     public IRegister toRegister() {
         return new Register(this.dataValue);
+    }
+
+    @Override
+    public String toString() {
+        return "Data{" +
+                "dataValue='" + dataValue + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Data data = (Data) o;
+        return dataValue.equals(data.dataValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dataValue);
     }
 
     public static Data from(String value) {
