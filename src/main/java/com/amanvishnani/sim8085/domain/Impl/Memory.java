@@ -5,41 +5,33 @@
  */
 package com.amanvishnani.sim8085.domain.Impl;
 
-import com.amanvishnani.sim8085.domain.IAddress;
-import com.amanvishnani.sim8085.domain.IData;
-import com.amanvishnani.sim8085.domain.IMemory;
-import com.amanvishnani.sim8085.domain.IMemorySlice;
+import com.amanvishnani.sim8085.domain.*;
 
 /**
  *
  * @author Aman Vishnani
  */
 public class Memory implements IMemory {
-    public IAddress[] memory;
+    public IMemoryRow[] memory;
     
     private void initMemory() {
         for(int i=0; i<65536; i++) {
-            memory[i] = Address.from(i);
+            memory[i] = MemoryRow.from(i);
         } 
     }
 
     private Memory() {
-        memory = new IAddress[65536];
+        memory = new IMemoryRow[65536];
         initMemory();
     }
     
     public static IMemory makeMemory() {
         return new Memory();
     }
-    
-    @Override
-    public IAddress getAddress(Integer intAddress) {
-        return memory[intAddress];
-    }
 
     @Override
     public IData getData(Integer intAddress) {
-        return getAddress(intAddress).getData();
+        return memory[intAddress].geData();
     }
 
     @Override
@@ -55,15 +47,13 @@ public class Memory implements IMemory {
     
     @Override
     public void setData(IAddress address, IData data) {
-        address.setData(data);
-        memory[address.intValue()] = address;
+        memory[address.intValue()].setData(data);
     }
     
     @Override
     public void setData(IAddress address, String data) {
         IData hexData = Data.from(data);
-        address.setData(hexData);
-        memory[address.intValue()] = address;
+        memory[address.intValue()].setData(hexData);
     }
 
     @Override

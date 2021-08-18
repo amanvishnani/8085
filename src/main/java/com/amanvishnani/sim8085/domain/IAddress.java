@@ -16,8 +16,6 @@ public interface IAddress {
     Integer intValue();
     IData getLSB();
     IData getMSB();
-    IData getData();
-    void setData(IData data);
-    static IAddress ZERO = Address.from(0);
-    static IAddress FFFF = Address.from("FFFF");
+    IAddress ZERO = Address.from(0);
+    IAddress FFFF = Address.from("FFFF");
 }
