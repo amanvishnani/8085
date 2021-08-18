@@ -2,11 +2,12 @@ package com.amanvishnani.sim8085.domain;
 
 import com.amanvishnani.sim8085.domain.Impl.*;
 import com.amanvishnani.sim8085.domain.Impl.Compiler;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Consumer;
 
 public class Simulator implements I8085 {
 
@@ -14,11 +15,11 @@ public class Simulator implements I8085 {
     private IRegister A, B, C, D, E, H, L;
     private IAddress IP, SP;
     private final IMemory memory = Memory.makeMemory();
+    private Set<Consumer<InstructionExecuted>> IESubscription;
+    private Set<Consumer<RuntimeException>> errorSubscription;
 
     private Compiler compiler;
 
-    private PublishSubject<InstructionExecuted> instructionExecuted$;
-    private PublishSubject<RuntimeException> onError$;
 
     private final IExecutor executor;
 
@@ -43,6 +44,16 @@ public class Simulator implements I8085 {
     }
 
     @Override
+    public void onInstructionExecuted(Consumer<InstructionExecuted> callback) {
+        IESubscription.add(callback);
+    }
+
+    @Override
+    public void onError(Consumer<RuntimeException> callback) {
+        errorSubscription.add(callback);
+    }
+
+    @Override
     public void initialize() {
         setA(IData.ZERO);
         setB(IData.ZERO);
@@ -58,27 +69,9 @@ public class Simulator implements I8085 {
         setP(0);
         setIP(IAddress.ZERO);
         setSP(IAddress.FFFF);
-        setInstructionExecuted$(PublishSubject.create());
-        setOnError$(PublishSubject.create());
         this.compiler = new Compiler();
-    }
-
-    @Override
-    public PublishSubject<InstructionExecuted> getInstructionExecuted$() {
-        return instructionExecuted$;
-    }
-
-    public void setInstructionExecuted$(PublishSubject<InstructionExecuted> instructionExecuted$) {
-        this.instructionExecuted$ = instructionExecuted$;
-    }
-
-    @Override
-    public PublishSubject<RuntimeException> getOnError$() {
-        return onError$;
-    }
-
-    public void setOnError$(PublishSubject<RuntimeException> onError$) {
-        this.onError$ = onError$;
+        this.IESubscription = new HashSet<>();
+        this.errorSubscription = new HashSet<>();
     }
 
     @Override
@@ -222,9 +215,15 @@ public class Simulator implements I8085 {
             InstructionExecuted instructionExecuted = new InstructionExecuted();
             instructionExecuted.setInstruction(Data.from(op));
             instructionExecuted.setNextAddress(getIP());
-            this.getInstructionExecuted$().onNext(instructionExecuted);
+            for (var ie :
+                    IESubscription) {
+                ie.accept(instructionExecuted);
+            }
         } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            onError$.onNext(newException(e.getMessage()));
+            for (var sub :
+                    errorSubscription) {
+                sub.accept(newException(e.getMessage()));
+            }
         }
     }
 

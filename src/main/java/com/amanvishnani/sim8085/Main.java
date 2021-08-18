@@ -3,8 +3,6 @@ package com.amanvishnani.sim8085;
 
 import com.amanvishnani.sim8085.domain.*;
 import com.amanvishnani.sim8085.domain.Impl.*;
-import com.amanvishnani.sim8085.domain.Impl.Compiler;
-import io.reactivex.rxjava3.disposables.Disposable;
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -20,9 +18,6 @@ public class Main extends javax.swing.JFrame implements IView {
     private final I8085 simulator = new Simulator();
     public static int oldIP;
     private ArrayList<InstructionRow> rows = new ArrayList<>();
-    private Disposable instructionExecutedSub = Disposable.disposed();
-    private Disposable errorSub = Disposable.disposed();
-
     @Override
     public void updateViewFlags() {
         Flags flags = simulator.getFlags();
@@ -168,20 +163,16 @@ public class Main extends javax.swing.JFrame implements IView {
     }
 
     private void subscribeInstructionPointer() {
-        this.instructionExecutedSub.dispose();
-        this.instructionExecutedSub = simulator.getInstructionExecuted$()
-            .subscribe( instructionExecuted -> {
-                if(instructionExecuted.getInstruction().hexValue().equals("76")) {
-                    jStep.setEnabled(false);
-                }
-                updateView();
-            });
+        this.simulator.onInstructionExecuted(instructionExecuted -> {
+            if(instructionExecuted.getInstruction().hexValue().equals("76")) {
+                jStep.setEnabled(false);
+            }
+            updateView();
+        });
 
-        this.errorSub.dispose();
-        this.errorSub = simulator.getOnError$()
-                .subscribe(err -> {
-                    JOptionPane.showMessageDialog(this, err.getMessage());
-                });
+        simulator.onError(
+            err -> JOptionPane.showMessageDialog(this, err.getMessage())
+        );
     }
 
     /**
