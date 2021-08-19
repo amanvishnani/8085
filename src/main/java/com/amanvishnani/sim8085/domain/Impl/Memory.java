@@ -41,8 +41,8 @@ public class Memory implements IMemory {
 
     @Override
     public String getHexData(String hexAddress) {
-        IAddress addr = Address.from(hexAddress);
-        return getHexData(addr.intValue());
+        IAddress address = Address.from(hexAddress);
+        return getHexData(address.intValue());
     }
     
     @Override
@@ -58,14 +58,14 @@ public class Memory implements IMemory {
 
     @Override
     public void setData(String hexAddress, String data) {
-        IAddress addr = Address.from(hexAddress);
-        setData(addr, data);
+        IAddress address = Address.from(hexAddress);
+        setData(address, data);
     }
 
     @Override
     public void setData(Integer intAddress, String data) {
-        IAddress addr = Address.from(intAddress);
-        setData(addr.hexValue(), data);
+        IAddress address = Address.from(intAddress);
+        setData(address.hexValue(), data);
     }
 
     @Override

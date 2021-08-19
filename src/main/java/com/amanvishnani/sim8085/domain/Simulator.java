@@ -29,9 +29,6 @@ public class Simulator implements I8085 {
         executor = Executor.createExecutor(this);
     }
 
-    public IMemory getMemory() {
-        return memory;
-    }
 
     @Override
     public ArrayList<InstructionRow> compile(String code) {
@@ -338,26 +335,11 @@ public class Simulator implements I8085 {
         Set<Flag> keys = flags.getKeys();
         for(Flag k: keys) {
             switch (k) {
-                case P: {
-                    setP(flags.getFlag(Flag.P));
-                    break;
-                }
-                case S: {
-                    setS(flags.getFlag(Flag.S));
-                    break;
-                }
-                case Ac: {
-                    setAc(flags.getFlag(Flag.Ac));
-                    break;
-                }
-                case Cy: {
-                    setCy(flags.getFlag(Flag.Cy));
-                    break;
-                }
-                case Z: {
-                    setZ(flags.getFlag(Flag.Z));
-                    break;
-                }
+                case P -> setP(flags.getFlag(Flag.P));
+                case S -> setS(flags.getFlag(Flag.S));
+                case Ac -> setAc(flags.getFlag(Flag.Ac));
+                case Cy -> setCy(flags.getFlag(Flag.Cy));
+                case Z -> setZ(flags.getFlag(Flag.Z));
             }
         }
     }

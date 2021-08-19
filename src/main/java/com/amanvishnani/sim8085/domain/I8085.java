@@ -68,8 +68,6 @@ public interface I8085 {
     void decrementSP();
     void incrementSP();
 
-    IMemory getMemory();
-
     ArrayList<InstructionRow> compile(String code);
     void onInstructionExecuted(Consumer<InstructionExecuted> callback);
     void onError(Consumer<RuntimeException> callback);
