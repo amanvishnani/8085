@@ -43,12 +43,13 @@ public class Data implements IData {
     @Override
     public IData getLSB() {
         String s = this.getDataValue();
-        return Data.from(s.substring(s.length() - 2));
+        return Data.from(s.substring(1, 2));
     }
 
     @Override
     public IOperationResult add(IData data, Integer carry) {
         Flags flags = Flags.newInstance();
+        flags.fillZeros();
         int r1, r2, r3;
         r1 = this.intValue();
         r2 = data.intValue();
@@ -61,7 +62,13 @@ public class Data implements IData {
         }
         Data temp = Data.from(r1 + r2 + carry);
         flags.setFlag(Flag.P, temp.getParity());
+        flags.setFlag(Flag.S, temp.getSign());
+        flags.setFlag(Flag.Z, temp.getZero());
         return OperationResult.from(temp, flags);
+    }
+
+    private Integer getZero() {
+        return this.intValue() == 0 ? 1 : 0;
     }
 
     @Override
@@ -115,7 +122,9 @@ public class Data implements IData {
 
     public static Data from(int value) {
         String temp = Integer.toHexString(value);
-        temp = temp.substring((temp.length() - 2));
+        if(temp.length() > 2) {
+            temp = temp.substring((temp.length() - 2));
+        }
         return new Data(temp);
     }
 
@@ -131,7 +140,7 @@ public class Data implements IData {
     }
 
     public void setDataValue(String dataValue) {
-        this.dataValue = padOneZero(dataValue);
+        this.dataValue = padOneZero(dataValue).toUpperCase();
     }
 
     private int getParity() {
@@ -149,5 +158,14 @@ public class Data implements IData {
         } else {
             return 0;
         }
+    }
+
+    private Integer getSign() {
+        int x = this.intValue();
+        String s = Integer.toBinaryString(x);
+        if(s.length() == 8) {
+            return Integer.valueOf(s.charAt(0)+"");
+        }
+        return 0;
     }
 }

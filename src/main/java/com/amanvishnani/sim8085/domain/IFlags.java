@@ -6,4 +6,5 @@ public interface IFlags {
     void setFlag(Flag flagName, Integer value);
     Integer getFlag(Flag flagName);
     Set<Flag> getKeys();
+    void fillZeros();
 }

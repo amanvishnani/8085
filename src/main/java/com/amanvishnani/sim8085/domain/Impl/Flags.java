@@ -32,4 +32,13 @@ public class Flags implements IFlags {
     public Set<Flag> getKeys() {
         return store.keySet();
     }
+
+    @Override
+    public void fillZeros() {
+        this.setFlag(Flag.Cy, 0);
+        this.setFlag(Flag.Ac, 0);
+        this.setFlag(Flag.P, 0);
+        this.setFlag(Flag.S, 0);
+        this.setFlag(Flag.Z, 0);
+    }
 }
