@@ -86,8 +86,9 @@ public class Data implements IData {
             flags.setFlag(Flag.Z, 1);
         }
         String temp = Integer.toHexString(r3);
-        Data result = Data.from(temp);
+        var result = Data.from(temp);
         flags.setFlag(Flag.P, result.getParity());
+        flags.setFlag(Flag.Z, result.getZero());
         return OperationResult.from(result, flags);
     }
 
