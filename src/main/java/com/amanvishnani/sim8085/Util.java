@@ -1,10 +1,5 @@
 package com.amanvishnani.sim8085;
 
-import com.amanvishnani.sim8085.domain.IData;
-import com.amanvishnani.sim8085.domain.Impl.Data;
-import com.amanvishnani.sim8085.domain.IAddress;
-import com.amanvishnani.sim8085.domain.Impl.Address;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
