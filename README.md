@@ -37,7 +37,7 @@ Problem running software? Try compiling source code on your system.
 Aman & Darshan’s 8085 Simulator
 
 
-Copyright (C) 2016  Aman Vishnani & Darshan Sarje
+Copyright (C) 2016-2024  Aman Vishnani & Darshan Sarje
 
 
 This program is free software: you can redistribute it and/or modify
