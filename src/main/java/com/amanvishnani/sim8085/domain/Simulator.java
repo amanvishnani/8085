@@ -4,9 +4,8 @@ import com.amanvishnani.sim8085.domain.Impl.*;
 import com.amanvishnani.sim8085.domain.Impl.Compiler;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.lang.reflect.Method;
+import java.util.*;
 import java.util.function.Consumer;
 
 public class Simulator implements I8085 {
@@ -20,15 +19,37 @@ public class Simulator implements I8085 {
 
     private Compiler compiler;
 
-
     private final IExecutor executor;
+    private final Map<String, Runnable> instructionMap = new HashMap<>();
 
     public Simulator() {
         flags = Flags.newInstance();
+        A = Register.makeRegister();
+        B = Register.makeRegister();
+        C = Register.makeRegister();
+        D = Register.makeRegister();
+        E = Register.makeRegister();
+        H = Register.makeRegister();
+        L = Register.makeRegister();
         this.initialize();
         executor = Executor.createExecutor(this);
+        this.initializeInstructionMap();
     }
 
+    private void initializeInstructionMap() {
+        for (Method method : executor.getClass().getMethods()) {
+            if (method.getName().startsWith("_")) {
+                String op = method.getName().substring(1);
+                instructionMap.put(op, () -> {
+                    try {
+                        method.invoke(executor);
+                    } catch (IllegalAccessException | InvocationTargetException e) {
+                        throw new RuntimeException("Error executing instruction " + op, e);
+                    }
+                });
+            }
+        }
+    }
 
     @Override
     public ArrayList<InstructionRow> compile(String code) {
@@ -73,65 +94,37 @@ public class Simulator implements I8085 {
 
     @Override
     public void setA(IData x) {
-        IRegister a = getA();
-        if(a == null) {
-            this.A = Register.makeRegister();
-        }
-        getA().update(x);
+        A.update(x);
     }
 
     @Override
     public void setB(IData x) {
-        IRegister r = getB();
-        if(r == null) {
-            this.B = Register.makeRegister();
-        }
-        getB().update(x);
+        B.update(x);
     }
 
     @Override
     public void setC(IData x) {
-        IRegister r = getC();
-        if(r == null) {
-            this.C = Register.makeRegister();
-        }
-        getC().update(x);
+        C.update(x);
     }
 
     @Override
     public void setD(IData x) {
-        IRegister r = getD();
-        if(r == null) {
-            this.D = Register.makeRegister();
-        }
-        getD().update(x);
+        D.update(x);
     }
 
     @Override
     public void setE(IData x) {
-        IRegister r = getE();
-        if(r == null) {
-            this.E = Register.makeRegister();
-        }
-        getE().update(x);
+        E.update(x);
     }
 
     @Override
     public void setH(IData x) {
-        IRegister r = getH();
-        if(r == null) {
-            this.H = Register.makeRegister();
-        }
-        getH().update(x);
+        H.update(x);
     }
 
     @Override
     public void setL(IData x) {
-        IRegister r = getL();
-        if(r == null) {
-            this.L = Register.makeRegister();
-        }
-        getL().update(x);
+        L.update(x);
     }
 
     @Override
@@ -207,19 +200,18 @@ public class Simulator implements I8085 {
 
     @Override
     public void execute(String op) {
-        try {
-            executor.getClass().getMethod("_"+op).invoke(executor);
+        Runnable runnable = instructionMap.get(op);
+        if (runnable != null) {
+            runnable.run();
             InstructionExecuted instructionExecuted = new InstructionExecuted();
             instructionExecuted.setInstruction(Data.from(op));
             instructionExecuted.setNextAddress(getIP());
-            for (var ie :
-                    IESubscription) {
+            for (var ie : IESubscription) {
                 ie.accept(instructionExecuted);
             }
-        } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
-            for (var sub :
-                    errorSubscription) {
-                sub.accept(newException(e.getMessage()));
+        } else {
+            for (var sub : errorSubscription) {
+                sub.accept(newException("NoSuchMethodException: _" + op));
             }
         }
     }
@@ -333,7 +325,7 @@ public class Simulator implements I8085 {
     @Override
     public void updateFlags(IFlags flags) {
         Set<Flag> keys = flags.getKeys();
-        for(Flag k: keys) {
+        for (Flag k : keys) {
             switch (k) {
                 case P -> setP(flags.getFlag(Flag.P));
                 case S -> setS(flags.getFlag(Flag.S));
