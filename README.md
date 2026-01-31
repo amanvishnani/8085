@@ -3,10 +3,15 @@
 A modern, high-performance 8085 Microprocessor simulator built with Java. This tool allows users to write, compile, and execute 8085 Assembly Language Programs (ALP) with a real-time view of registers, flags, and memory.
 
 ## Features
-- **Clean GUI**: Intuitive interface built with Java Swing/AWT.
+- **Modern JavaFX GUI**: A clean, responsive interface with multi-theme support.
+- **Dark & Light Modes**: Seamlessly switch between themes for a personalized experience.
 - **Real-time Monitoring**: Track Accumulator (A), Registers (B, C, D, E, H, L), Flags, IP, and SP.
-- **Instruction Execution**: Step-through execution or run the full program.
+- **Instruction Execution**: Single-step execution with automatic row highlighting and scrolling.
 - **Efficient Engine**: Optimized with Map-based instruction dispatch and algorithmic opcode parsing.
+
+![8085 Simulator Preview](preview.png)
+
+---
 
 ## Requirements
 - **Java 17** or higher.
@@ -27,8 +32,8 @@ cd 8085
 # Run tests
 mvn test
 
-# Run the application from source
-mvn spring-boot:run
+# Run the JavaFX application
+mvn javafx:run
 ```
 
 ### Production Build
