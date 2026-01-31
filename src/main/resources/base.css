@@ -1,0 +1,164 @@
+.root-pane {
+    -fx-background-color: -fx-my-bg-primary;
+    -fx-font-family: 'Segoe UI', sans-serif;
+}
+
+.toolbar {
+    -fx-background-color: -fx-my-bg-secondary;
+    -fx-border-color: -fx-my-border-color;
+    -fx-border-width: 0 0 1 0;
+}
+
+.app-title {
+    -fx-text-fill: -fx-my-text-primary;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.section-label {
+    -fx-text-fill: -fx-my-text-secondary;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.code-editor {
+    -fx-control-inner-background: -fx-my-bg-editor;
+    -fx-text-fill: -fx-my-text-editor;
+    -fx-font-family: 'Consolas', monospace;
+    -fx-font-size: 14px;
+    -fx-border-color: -fx-my-border-color;
+}
+
+.sidebar {
+    -fx-background-color: -fx-my-bg-secondary;
+    -fx-border-color: -fx-my-border-color;
+    -fx-border-width: 0 0 0 1;
+}
+
+.sidebar-label {
+    -fx-text-fill: -fx-my-text-secondary;
+    -fx-font-weight: bold;
+}
+
+.sidebar-title {
+    -fx-text-fill: -fx-my-text-accent;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 5 0;
+    -fx-border-color: -fx-my-border-color;
+    -fx-border-width: 0 0 1 0;
+}
+
+.reg-value {
+    -fx-text-fill: -fx-my-text-highlight;
+    -fx-font-family: 'Consolas', monospace;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.flag-label {
+    -fx-background-color: -fx-my-bg-tertiary;
+    -fx-text-fill: -fx-my-text-secondary;
+    -fx-padding: 5 10;
+    -fx-background-radius: 15;
+    -fx-font-weight: bold;
+}
+
+.flag-on {
+    -fx-background-color: -fx-my-text-editor;
+    -fx-text-fill: -fx-my-bg-secondary;
+}
+
+.btn-primary {
+    -fx-background-color: #89b4fa;
+    -fx-text-fill: #11111b;
+    -fx-font-weight: bold;
+}
+
+.btn-secondary {
+    -fx-background-color: #94e2d5;
+    -fx-text-fill: #11111b;
+    -fx-font-weight: bold;
+}
+
+.btn-danger {
+    -fx-background-color: #f38ba8;
+    -fx-text-fill: #11111b;
+    -fx-font-weight: bold;
+}
+
+.btn-theme {
+    -fx-background-color: -fx-my-bg-tertiary;
+    -fx-text-fill: -fx-my-text-primary;
+    -fx-font-weight: bold;
+}
+
+/* Layout Blocks */
+.main-split-pane,
+.editor-box,
+.tables-box {
+    -fx-background-color: -fx-my-bg-primary;
+}
+
+.split-pane:horizontal>.split-pane-divider {
+    -fx-background-color: -fx-my-bg-secondary;
+    -fx-border-color: -fx-my-border-color;
+}
+
+/* Tables and Tabs */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: -fx-my-bg-editor;
+}
+
+.table-view .column-header,
+.table-view .column-header-background .filler {
+    -fx-background-color: -fx-my-bg-tertiary;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: -fx-my-text-primary;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: -fx-my-bg-primary;
+}
+
+.table-row-cell:even {
+    -fx-background-color: -fx-my-bg-editor;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: -fx-my-bg-selected;
+}
+
+.table-row-cell:selected .label {
+    -fx-text-fill: -fx-my-text-on-selected;
+}
+
+.tab-pane .tab-header-area .tab-header-background {
+    -fx-background-color: -fx-my-bg-secondary;
+}
+
+.tab {
+    -fx-background-color: -fx-my-bg-tertiary;
+    -fx-background-insets: 0 1 0 1;
+}
+
+.tab:selected {
+    -fx-background-color: -fx-my-bg-primary;
+}
+
+.tab .tab-label {
+    -fx-text-fill: -fx-my-text-secondary;
+}
+
+.tab:selected .tab-label {
+    -fx-text-fill: -fx-my-text-primary;
+}
+
+.tab-pane .tab-content-area {
+    -fx-background-color: -fx-my-bg-primary;
+    -fx-border-color: -fx-my-border-color;
+    -fx-border-width: 1 0 0 0;
+}

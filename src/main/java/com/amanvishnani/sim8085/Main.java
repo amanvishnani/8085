@@ -9,6 +9,7 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+@Deprecated
 public class Main extends javax.swing.JFrame implements IView {
 
         private final I8085 simulator = new Simulator();
@@ -1353,7 +1354,7 @@ public class Main extends javax.swing.JFrame implements IView {
         /**
          * @param args the command line arguments
          */
-        public static void main(String args[]) {
+        private void main(String args[]) {
                 // SpringApplication.run(Main.class, args);
                 /* Set the Nimbus look and feel */
                 // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code

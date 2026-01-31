@@ -1,0 +1,14 @@
+.root {
+    -fx-my-bg-primary: #eff1f5;
+    -fx-my-bg-secondary: #e6e9ef;
+    -fx-my-bg-tertiary: #ccd0da;
+    -fx-my-bg-editor: #ffffff;
+    -fx-my-bg-selected: #7287fd;
+    -fx-my-border-color: #bcc0cc;
+    -fx-my-text-primary: #4c4f69;
+    -fx-my-text-secondary: #6c6f85;
+    -fx-my-text-accent: #ea76cb;
+    -fx-my-text-highlight: #fe640b;
+    -fx-my-text-editor: #40a02b;
+    -fx-my-text-on-selected: #ffffff;
+}
