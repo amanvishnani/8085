@@ -1,7 +1,5 @@
 open module com.amanvishnani.simulator {
     requires java.desktop;
-    requires spring.boot;
-    requires spring.boot.autoconfigure;
     requires java.logging;
     requires javafx.controls;
     requires javafx.fxml;
