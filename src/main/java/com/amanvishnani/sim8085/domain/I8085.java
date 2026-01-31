@@ -9,9 +9,9 @@ package com.amanvishnani.sim8085.domain;
 import com.amanvishnani.sim8085.domain.Impl.Flags;
 import com.amanvishnani.sim8085.domain.Impl.InstructionExecuted;
 import com.amanvishnani.sim8085.domain.Impl.InstructionRow;
-import io.reactivex.rxjava3.subjects.PublishSubject;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 /**
  *
@@ -62,15 +62,13 @@ public interface I8085 {
     void setData(IAddress i, IData data);
     void setData(Integer i, String data);
 
-    PublishSubject<InstructionExecuted> getInstructionExecuted$();
-    PublishSubject<RuntimeException> getOnError$();
     void initialize();
     IData getDataAtIP();
     void updateFlags(IFlags flags);
     void decrementSP();
     void incrementSP();
 
-    IMemory getMemory();
-
     ArrayList<InstructionRow> compile(String code);
+    void onInstructionExecuted(Consumer<InstructionExecuted> callback);
+    void onError(Consumer<RuntimeException> callback);
 }

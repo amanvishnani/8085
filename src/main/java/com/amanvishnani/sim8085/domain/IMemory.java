@@ -11,12 +11,11 @@ package com.amanvishnani.sim8085.domain;
  */
 public interface IMemory {
     IData getData(Integer intAddress);
-    IAddress getAddress(Integer intAddress);
     String getHexData(Integer intAddress);
-    String getHexData(String hexAddress);
     void setData(String hexAddress, String data);
     void setData(Integer intAddress, String data);
     void setData(IAddress address, String data);
     void setData(IAddress address, IData data);
     IMemorySlice getSlice(Integer start, Integer end);
+    String getHexData(String hexAddress);
 }

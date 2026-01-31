@@ -1,7 +1,5 @@
 package com.amanvishnani.sim8085.domain;
 
-import java.util.Optional;
-
 public interface Instruction {
     String getOpcode();
     String getLabel();

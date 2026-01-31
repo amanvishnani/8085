@@ -6,8 +6,6 @@
 package com.amanvishnani.sim8085.domain;
 
 import com.amanvishnani.sim8085.domain.Impl.Data;
-import com.amanvishnani.sim8085.domain.Impl.Flags;
-import com.amanvishnani.sim8085.domain.Impl.OperationResult;
 
 /**
  *
