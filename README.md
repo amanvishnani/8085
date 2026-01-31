@@ -39,17 +39,17 @@ To create a standalone executable JAR:
 mvn clean package
 
 # Run the generated JAR
-java -jar target/sim8085-0.0.1-SNAPSHOT.jar
+java -jar target/sim8085-1.0.0.jar
 ```
 
 ---
 
 ## Technical Details
-The simulator has been recently modernized:
-- **Build System**: Consolidated to Maven (removed Ant/NetBeans legacy).
-- **Instruction Dispatch**: Replaced reflection with a high-performance `Map<String, Runnable>` system.
-- **Parser**: Refactored to an algorithmic approach, reducing technical debt and improving maintenance.
-- **Framework**: Powered by Spring Boot 3.2.2.
+The simulator was modernized in **Version 1.0.0**:
+- **Build System**: Consolidated to Maven (Spring Boot 3.2.2).
+- **Instruction Dispatch**: Optimized with a high-performance `Map<String, Runnable>` system.
+- **Parser**: Re-engineered using an algorithmic approach for opcode resolution.
+- **Java 17**: Upgraded to leverage modern language features.
 
 ---
 
