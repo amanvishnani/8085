@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>com.amanvishnani</groupId>
 	<artifactId>sim8085</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>sim8085</name>
 	<description>A Java 8085 Simulator</description>
 	<properties>

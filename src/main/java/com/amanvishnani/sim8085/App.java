@@ -81,6 +81,12 @@ public class App extends Application {
         loadBtn.getStyleClass().add("btn-primary");
         loadBtn.setOnAction(e -> loadInstructions());
 
+        Button runBtn = new Button("RUN");
+        runBtn.getStyleClass().add("btn-primary");
+        runBtn.setId("runBtn");
+        runBtn.setDisable(true);
+        runBtn.setOnAction(e -> runProgram());
+
         Button stepBtn = new Button("1 STEP >");
         stepBtn.getStyleClass().add("btn-secondary");
         stepBtn.setId("stepBtn");
@@ -93,6 +99,8 @@ public class App extends Application {
         resetBtn.getStyleClass().add("btn-danger");
         resetBtn.setOnAction(e -> {
             simulator.initialize();
+            scene.lookup("#runBtn").setDisable(false);
+            scene.lookup("#stepBtn").setDisable(false);
             updateView();
         });
 
@@ -111,7 +119,7 @@ public class App extends Application {
             applyTheme();
         });
 
-        toolbar.getChildren().addAll(themeBtn, loadBtn, stepBtn, resetBtn);
+        toolbar.getChildren().addAll(themeBtn, loadBtn, runBtn, stepBtn, resetBtn);
         return toolbar;
     }
 
@@ -146,6 +154,26 @@ public class App extends Application {
         if (index >= 0 && index < codeTable.getItems().size()) {
             codeTable.getSelectionModel().select(index);
             codeTable.scrollTo(index);
+        }
+    }
+
+    private void runProgram() {
+        scene.lookup("#runBtn").setDisable(true);
+        scene.lookup("#stepBtn").setDisable(true);
+
+        int maxInstructions = 1000;
+        int count = 0;
+        while (count < maxInstructions) {
+            String op = simulator.getDataAtIP().hexValue();
+            simulator.execute(op);
+            count++;
+            if (op.equals("76")) { // HLT
+                break;
+            }
+        }
+
+        if (count >= maxInstructions) {
+            alert("Program Execution stopped: Safety limit reached (1000 instructions).");
         }
     }
 
@@ -394,6 +422,7 @@ public class App extends Application {
         subscribeInstructionPointer();
         String code = codeEditor.getText().toUpperCase();
         this.rows = simulator.compile(code);
+        scene.lookup("#runBtn").setDisable(false);
         scene.lookup("#stepBtn").setDisable(false);
         updateView();
         highlightCurrentInstruction();

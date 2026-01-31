@@ -44,13 +44,13 @@ To create a standalone executable JAR:
 mvn clean package
 
 # Run the generated JAR
-java -jar target/sim8085-1.0.0.jar
+java -jar target/sim8085-1.0.1.jar
 ```
 
 ---
 
 ## Technical Details
-The simulator was modernized in **Version 1.0.0**:
+The simulator was modernized in **Version 1.0.1**:
 - **Build System**: Consolidated to Maven (Spring Boot 3.2.2).
 - **Instruction Dispatch**: Optimized with a high-performance `Map<String, Runnable>` system.
 - **Parser**: Re-engineered using an algorithmic approach for opcode resolution.
