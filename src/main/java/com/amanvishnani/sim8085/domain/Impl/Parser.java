@@ -8,6 +8,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parser for 8085 assembly code.
+ * Converts assembly instructions into their corresponding opcodes and operands.
+ */
 public class Parser {
     private static final Map<String, Integer> REG_OFFSETS = Map.of(
             "B", 0, "C", 1, "D", 2, "E", 3, "H", 4, "L", 5, "M", 6, "A", 7);

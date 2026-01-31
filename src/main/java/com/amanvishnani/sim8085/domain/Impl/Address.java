@@ -12,11 +12,10 @@ import com.amanvishnani.sim8085.domain.IData;
 import java.util.Objects;
 
 /**
- *
- * @author Aman Vishnani
+ * Implementation of a 16-bit memory address.
  */
-public class Address implements IAddress{
-    
+public class Address implements IAddress {
+
     private final IData LSB;
     private final IData MSB;
     private final String address;
@@ -46,16 +45,35 @@ public class Address implements IAddress{
     public IData getMSB() {
         return MSB;
     }
-    
+
+    /**
+     * Creates an address from MSB and LSB data objects.
+     * 
+     * @param msb Most Significant Byte.
+     * @param lsb Least Significant Byte.
+     * @return A new IAddress instance.
+     */
     public static IAddress from(IData msb, IData lsb) {
         return new Address(msb.hexValue(), lsb.hexValue());
     }
-    
+
+    /**
+     * Creates an address from an integer value.
+     * 
+     * @param intAddress Integer representation of the address.
+     * @return A new IAddress instance.
+     */
     public static IAddress from(Integer intAddress) {
         String hexAddress = Integer.toHexString(intAddress);
         return Address.from(hexAddress);
     }
-    
+
+    /**
+     * Creates an address from a hexadecimal string.
+     * 
+     * @param hexAddress 1-4 digit hex string.
+     * @return A new IAddress instance.
+     */
     public static IAddress from(String hexAddress) {
         hexAddress = hexAddress.toUpperCase();
         hexAddress = Util.padThreeZeros(hexAddress);
@@ -66,10 +84,13 @@ public class Address implements IAddress{
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Address address1 = (Address) o;
-        return Objects.equals(LSB, address1.LSB) && Objects.equals(MSB, address1.MSB) && Objects.equals(address, address1.address);
+        return Objects.equals(LSB, address1.LSB) && Objects.equals(MSB, address1.MSB)
+                && Objects.equals(address, address1.address);
     }
 
     @Override

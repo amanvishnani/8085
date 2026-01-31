@@ -8,6 +8,10 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Core implementation of the 8085 simulator.
+ * Orchestrates registers, memory, and instruction execution.
+ */
 public class Simulator implements I8085 {
 
     private final Flags flags;
@@ -22,6 +26,9 @@ public class Simulator implements I8085 {
     private final IExecutor executor;
     private final Map<String, Runnable> instructionMap = new HashMap<>();
 
+    /**
+     * Constructs a new Simulator instance, initializing all registers and flags.
+     */
     public Simulator() {
         flags = Flags.newInstance();
         A = Register.makeRegister();

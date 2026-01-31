@@ -13,8 +13,7 @@ import com.amanvishnani.sim8085.domain.IRegister;
 import java.util.Objects;
 
 /**
- *
- * @author Aman Vishnani
+ * Implementation of an 8-bit data byte.
  */
 public class Data implements IData {
 
@@ -23,7 +22,7 @@ public class Data implements IData {
     public Data(String dataValue) {
         this.setDataValue(dataValue);
     }
-    
+
     @Override
     public String hexValue() {
         return getDataValue();
@@ -106,8 +105,10 @@ public class Data implements IData {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Data data = (Data) o;
         return dataValue.equals(data.dataValue);
     }
@@ -117,13 +118,25 @@ public class Data implements IData {
         return Objects.hash(dataValue);
     }
 
+    /**
+     * Creates a Data object from a hex string.
+     * 
+     * @param value 1-2 digit hex string.
+     * @return A new IData instance.
+     */
     public static Data from(String value) {
         return new Data(value);
     }
 
+    /**
+     * Creates a Data object from an integer value.
+     * 
+     * @param value Integer value (0-255).
+     * @return A new IData instance.
+     */
     public static Data from(int value) {
         String temp = Integer.toHexString(value);
-        if(temp.length() > 2) {
+        if (temp.length() > 2) {
             temp = temp.substring((temp.length() - 2));
         }
         return new Data(temp);
@@ -164,8 +177,8 @@ public class Data implements IData {
     private Integer getSign() {
         int x = this.intValue();
         String s = Integer.toBinaryString(x);
-        if(s.length() == 8) {
-            return Integer.valueOf(s.charAt(0)+"");
+        if (s.length() == 8) {
+            return Integer.valueOf(s.charAt(0) + "");
         }
         return 0;
     }

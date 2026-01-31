@@ -9,8 +9,7 @@ import com.amanvishnani.sim8085.domain.IMemory;
 import com.amanvishnani.sim8085.domain.IMemorySlice;
 
 /**
- *
- * @author Aman Vishnani
+ * Implementation of a memory slice.
  */
 public class MemorySlice implements IMemorySlice {
 
@@ -26,19 +25,27 @@ public class MemorySlice implements IMemorySlice {
 
     @Override
     public String[] getHexDataArray() {
-        if(data == null) {
+        if (data == null) {
             makeDataCopy();
         }
         return data;
     }
 
     private void makeDataCopy() {
-        data = new String[end-start-1];
-        for (int i=start; i<end-1; i++) {
+        data = new String[end - start - 1];
+        for (int i = start; i < end - 1; i++) {
             data[i] = memoryRef.getHexData(i);
         }
     }
 
+    /**
+     * Creates a MemorySlice for the given range.
+     * 
+     * @param memeory Reference to memory.
+     * @param start   Start address.
+     * @param end     End address.
+     * @return A new MemorySlice instance.
+     */
     public static MemorySlice from(IMemory memeory, Integer start, Integer end) {
         return new MemorySlice(memeory, start, end);
     }

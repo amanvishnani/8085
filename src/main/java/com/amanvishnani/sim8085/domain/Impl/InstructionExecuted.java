@@ -3,6 +3,10 @@ package com.amanvishnani.sim8085.domain.Impl;
 import com.amanvishnani.sim8085.domain.IAddress;
 import com.amanvishnani.sim8085.domain.IData;
 
+/**
+ * Object representing an instruction that has been executed.
+ * Used for event notification.
+ */
 public class InstructionExecuted {
     IData instruction;
     IAddress nextAddress;

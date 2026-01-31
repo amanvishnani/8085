@@ -4,6 +4,9 @@ import com.amanvishnani.sim8085.domain.IAddress;
 import com.amanvishnani.sim8085.domain.IData;
 import com.amanvishnani.sim8085.domain.IMemoryRow;
 
+/**
+ * Implementation of a single memory row.
+ */
 public class MemoryRow implements IMemoryRow {
     private IData data;
     private IAddress address;
@@ -13,6 +16,12 @@ public class MemoryRow implements IMemoryRow {
         this.data = IData.ZERO;
     }
 
+    /**
+     * Creates a MemoryRow for the given address.
+     * 
+     * @param address Integer address.
+     * @return A new MemoryRow instance.
+     */
     public static MemoryRow from(Integer address) {
         return new MemoryRow(Address.from(address));
     }

@@ -8,10 +8,11 @@ package com.amanvishnani.sim8085.domain.Impl;
 import com.amanvishnani.sim8085.domain.*;
 
 /**
- *
- * @author Aman Vishnani
+ * Implementation of the memory for the 8085 simulator.
+ * Represents a 64KB memory space.
  */
 public class Memory implements IMemory {
+    /** Internal storage for memory rows. */
     public IMemoryRow[] memory;
 
     private void initMemory() {
@@ -25,6 +26,11 @@ public class Memory implements IMemory {
         initMemory();
     }
 
+    /**
+     * Factory method to create and initialize a new Memory instance.
+     * 
+     * @return A new IMemory instance.
+     */
     public static IMemory makeMemory() {
         return new Memory();
     }

@@ -6,10 +6,16 @@ import com.amanvishnani.sim8085.domain.IOpcode;
 
 import java.util.*;
 
+/**
+ * Compiles 8085 assembly code into machine code instruction rows.
+ * This class performs a two-pass compilation process.
+ */
 public class Compiler {
 
     private final Parser parser;
+    /** Map of addresses to instruction rows. */
     Map<Integer, InstructionRow> instructionRowMap;
+    /** Map of labels to their memory addresses. */
     Map<String, Integer> labelMap;
 
     public Compiler(Parser parser) {
@@ -21,6 +27,12 @@ public class Compiler {
         this(new Parser());
     }
 
+    /**
+     * Compiles the given assembly code.
+     * 
+     * @param code Assembly code as a string.
+     * @return Sorted list of compiled instruction rows.
+     */
     public ArrayList<InstructionRow> compile(String code) {
         this.resetParams();
         List<String> instructions = parser.getLineInstructions(code);
@@ -38,15 +50,14 @@ public class Compiler {
 
     private void passOne(List<String> instructions) {
         int localPointer = 0;
-        for (String lineInstruction :
-                instructions) {
+        for (String lineInstruction : instructions) {
 
             // Get Opcode
             IOpcode opcode = parser.getOpcode(lineInstruction);
 
             // extract label
             String label = parser.extractLabel(lineInstruction);
-            if(!label.isEmpty()) {
+            if (!label.isEmpty()) {
                 labelMap.put(label, localPointer);
             }
 
@@ -96,24 +107,22 @@ public class Compiler {
 
     private void passTwo() {
         var instructionsToAdd = new ArrayList<InstructionRow>();
-        for (Map.Entry<Integer, InstructionRow> entry :
-                instructionRowMap.entrySet()) {
+        for (Map.Entry<Integer, InstructionRow> entry : instructionRowMap.entrySet()) {
             Integer addr = entry.getKey();
             InstructionRow row = entry.getValue();
             if (row.getHasLabelOperand()) {
                 String label = row.getLabelOperand();
                 Integer labelAddr = this.labelMap.get(label);
                 IAddress labelAddress = Address.from(labelAddr);
-                InstructionRow row1 = InstructionRow.createInstructionRow(addr+1);
-                InstructionRow row2 = InstructionRow.createInstructionRow(addr+2);
+                InstructionRow row1 = InstructionRow.createInstructionRow(addr + 1);
+                InstructionRow row2 = InstructionRow.createInstructionRow(addr + 2);
                 row1.setData(labelAddress.getLSB());
                 instructionsToAdd.add(row1);
                 row2.setData(labelAddress.getMSB());
                 instructionsToAdd.add(row2);
             }
         }
-        for (var i:
-             instructionsToAdd) {
+        for (var i : instructionsToAdd) {
             instructionRowMap.put(i.getAddress().intValue(), i);
         }
     }

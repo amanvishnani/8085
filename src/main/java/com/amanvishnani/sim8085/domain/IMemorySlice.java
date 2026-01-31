@@ -9,6 +9,14 @@ package com.amanvishnani.sim8085.domain;
  *
  * @author aman6
  */
+/**
+ * Interface representing a slice (subset) of memory.
+ */
 public interface IMemorySlice {
+    /**
+     * Returns an array of hex strings representing the data in this slice.
+     * 
+     * @return Array of hex strings.
+     */
     String[] getHexDataArray();
 }

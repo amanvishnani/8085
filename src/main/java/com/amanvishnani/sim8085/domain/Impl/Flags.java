@@ -7,17 +7,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Implementation of the CPU flags storage.
+ */
 public class Flags implements IFlags {
     Map<Flag, Integer> store;
 
+    /**
+     * Constructs a new Flags object, initializing the internal store.
+     */
     public Flags() {
         store = new HashMap<>();
     }
 
+    /** @return A new instance of Flags. */
     public static Flags newInstance() {
         return new Flags();
     }
 
+    /**
+     * Sets the value of a specific CPU flag.
+     * 
+     * @param flagName The name of the flag to set.
+     * @param value    The integer value to set for the flag (typically 0 or 1).
+     */
     @Override
     public void setFlag(Flag flagName, Integer value) {
         store.put(flagName, value);
