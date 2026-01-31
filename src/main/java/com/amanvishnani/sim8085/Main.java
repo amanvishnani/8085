@@ -4,6 +4,8 @@ import com.amanvishnani.sim8085.domain.*;
 import com.amanvishnani.sim8085.domain.Impl.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,30 +28,32 @@ public class Main extends javax.swing.JFrame implements IView {
 
                 DefaultTableModel model = (DefaultTableModel) table.getModel();
                 model.setRowCount(0);
-                for (int i = head; i < head + 20 && i <= max; i++) {
-                        model.addRow(new Object[] { Address.from(i).hexValue(), simulator.getData(i).hexValue() });
+                List<Object[]> data = MainHelper.getMemoryTableData(simulator, head, max);
+                for (Object[] row : data) {
+                        model.addRow(row);
                 }
         }
 
         @Override
         public void updateViewFlags() {
-                Flags flags = simulator.getFlags();
-                jS.setText(flags.getFlag(Flag.S).toString());
-                jCy.setText(flags.getFlag(Flag.Cy).toString());
-                jZ.setText(flags.getFlag(Flag.Z).toString());
-                jAc.setText(flags.getFlag(Flag.Ac).toString());
-                jP.setText(flags.getFlag(Flag.P).toString());
+                Map<String, String> flags = MainHelper.getFlagsMap(simulator);
+                jS.setText(flags.get("S"));
+                jCy.setText(flags.get("Cy"));
+                jZ.setText(flags.get("Z"));
+                jAc.setText(flags.get("Ac"));
+                jP.setText(flags.get("P"));
         }
 
         @Override
         public void updateViewRegisters() {
-                jA.setText(simulator.getA().hexValue());
-                jB.setText(simulator.getB().hexValue());
-                jC.setText(simulator.getC().hexValue());
-                jD.setText(simulator.getD().hexValue());
-                jE.setText(simulator.getE().hexValue());
-                jH.setText(simulator.getH().hexValue());
-                jL.setText(simulator.getL().hexValue());
+                Map<String, String> regs = MainHelper.getRegistersMap(simulator);
+                jA.setText(regs.get("A"));
+                jB.setText(regs.get("B"));
+                jC.setText(regs.get("C"));
+                jD.setText(regs.get("D"));
+                jE.setText(regs.get("E"));
+                jH.setText(regs.get("H"));
+                jL.setText(regs.get("L"));
         }
 
         @Override
@@ -83,14 +87,9 @@ public class Main extends javax.swing.JFrame implements IView {
 
                 DefaultTableModel model = (DefaultTableModel) CodeTable.getModel();
                 model.setRowCount(0);
-                for (int i = head; i < head + 20 && i < rows.size(); i++) {
-                        InstructionRow row = rows.get(i);
-                        model.addRow(new Object[] {
-                                        Address.from(i).hexValue(),
-                                        row.getLabel(),
-                                        row.getInstruction(),
-                                        row.getData().hexValue()
-                        });
+                List<Object[]> data = MainHelper.getCodeTableData(rows, head);
+                for (Object[] row : data) {
+                        model.addRow(row);
                 }
         }
 
