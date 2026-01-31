@@ -13,25 +13,25 @@ import com.amanvishnani.sim8085.domain.*;
  */
 public class Memory implements IMemory {
     public IMemoryRow[] memory;
-    
+
     private void initMemory() {
-        for(int i=0; i<65536; i++) {
+        for (int i = 0; i < 65536; i++) {
             memory[i] = MemoryRow.from(i);
-        } 
+        }
     }
 
     private Memory() {
         memory = new IMemoryRow[65536];
         initMemory();
     }
-    
+
     public static IMemory makeMemory() {
         return new Memory();
     }
 
     @Override
     public IData getData(Integer intAddress) {
-        return memory[intAddress].geData();
+        return memory[intAddress].getData();
     }
 
     @Override
@@ -44,12 +44,12 @@ public class Memory implements IMemory {
         IAddress address = Address.from(hexAddress);
         return getHexData(address.intValue());
     }
-    
+
     @Override
     public void setData(IAddress address, IData data) {
         memory[address.intValue()].setData(data);
     }
-    
+
     @Override
     public void setData(IAddress address, String data) {
         IData hexData = Data.from(data);

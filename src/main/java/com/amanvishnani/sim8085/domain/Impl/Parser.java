@@ -91,13 +91,18 @@ public class Parser {
             case "CM" -> "FC";
             case "CPE" -> "EC";
             case "CPO" -> "E4";
-            case "LXI" -> switch (operands.split(",")[0]) {
-                case "B" -> "01";
-                case "D" -> "11";
-                case "H" -> "21";
-                case "SP" -> "31";
-                default -> null;
-            };
+            case "LXI" -> {
+                String[] regs = operands.split(",");
+                if (regs.length < 2)
+                    yield null;
+                yield switch (regs[0]) {
+                    case "B" -> "01";
+                    case "D" -> "11";
+                    case "H" -> "21";
+                    case "SP" -> "31";
+                    default -> null;
+                };
+            }
             case "LDA" -> "3A";
             case "STA" -> "32";
             case "LHLD" -> "2A";

@@ -17,7 +17,6 @@ public class MemoryRow implements IMemoryRow {
         return new MemoryRow(Address.from(address));
     }
 
-
     @Override
     public void setData(IData data) {
         this.data = data;
@@ -29,7 +28,7 @@ public class MemoryRow implements IMemoryRow {
     }
 
     @Override
-    public IData geData() {
+    public IData getData() {
         return data;
     }
 

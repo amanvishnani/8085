@@ -44,7 +44,66 @@ class ParserTest {
             "'INR A', '3C'",
             "'DCR B', '05'",
             "'MVI A, 05', '3E'",
-            "'MVI M, FF', '36'"
+            "'MVI M, FF', '36'",
+            "'PUSH B', 'C5'",
+            "'PUSH D', 'D5'",
+            "'PUSH H', 'E5'",
+            "'PUSH PSW', 'F5'",
+            "'POP B', 'C1'",
+            "'POP D', 'D1'",
+            "'POP H', 'E1'",
+            "'POP PSW', 'F1'",
+            "'JMP 1000H', 'C3'",
+            "'JZ 1000H', 'CA'",
+            "'JNZ 1000H', 'C2'",
+            "'JC 1000H', 'DA'",
+            "'JNC 1000H', 'D2'",
+            "'JP 1000H', 'F2'",
+            "'JM 1000H', 'FA'",
+            "'JPE 1000H', 'EA'",
+            "'JPO 1000H', 'E2'",
+            "'CALL 1000H', 'CD'",
+            "'CZ 1000H', 'CC'",
+            "'CNZ 1000H', 'C4'",
+            "'CC 1000H', 'DC'",
+            "'CNC 1000H', 'D4'",
+            "'CP 1000H', 'F4'",
+            "'CM 1000H', 'FC'",
+            "'CPE 1000H', 'EC'",
+            "'CPO 1000H', 'E4'",
+            "'ADI 10H', 'C6'",
+            "'ACI 10H', 'CE'",
+            "'SUI 10H', 'D6'",
+            "'SBI 10H', 'DE'",
+            "'ANI 10H', 'E6'",
+            "'XRI 10H', 'EE'",
+            "'ORI 10H', 'F6'",
+            "'CPI 10H', 'FE'",
+            "'CMA', '2F'",
+            "'CMC', '3F'",
+            "'DAA', '27'",
+            "'DI', 'F3'",
+            "'EI', 'FB'",
+            "'HLT', '76'",
+            "'NOP', '00'",
+            "'PCHL', 'E9'",
+            "'RAL', '17'",
+            "'RAR', '1F'",
+            "'RET', 'C9'",
+            "'RIM', '20'",
+            "'RLC', '07'",
+            "'RRC', '0F'",
+            "'SIM', '30'",
+            "'STC', '37'",
+            "'XCHG', 'EB'",
+            "'XTHL', 'E3'",
+            "'SPHL', 'F9'",
+            "'LHLD 2000H', '2A'",
+            "'SHLD 2000H', '22'",
+            "'LXI B, 1000H', '01'",
+            "'LXI D, 1000H', '11'",
+            "'LXI H, 1000H', '21'",
+            "'LXI SP, 1000H', '31'"
     })
     void testOpcodeResolution(String instruction, String expectedHex) {
         IOpcode opcode = parser.getOpcode(instruction);
@@ -120,6 +179,11 @@ class ParserTest {
     void testInvalidInstructions() {
         assertThrows(RuntimeException.class, () -> parser.getOpcode("INVALID A, B"));
         assertThrows(RuntimeException.class, () -> parser.getOpcode("MOV X, Y"));
-        assertThrows(RuntimeException.class, () -> parser.getOpcode("LXI A, 1000")); // A is not valid for LXI
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("LXI A, 1000H"));
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("LXI B")); // Missing operand
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("PUSH A"));
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("POP C"));
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("LXI X, 0000H"));
+        assertThrows(RuntimeException.class, () -> parser.getOpcode("ADD X"));
     }
 }
